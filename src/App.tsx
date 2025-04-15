@@ -37,6 +37,8 @@ const App: React.FC = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 minHeight: '100vh',
+                width: '100%',
+                overflowX: 'hidden',
               }}
             >
               <Header />
@@ -46,6 +48,10 @@ const App: React.FC = () => {
                   flexGrow: 1,
                   display: 'flex',
                   flexDirection: 'column',
+                  width: '100%',
+                  maxWidth: '100%',
+                  px: { xs: 2, sm: 3, md: 4 },
+                  py: { xs: 2, sm: 3 },
                 }}
               >
                 <Routes>

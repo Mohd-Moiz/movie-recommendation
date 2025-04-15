@@ -8,6 +8,7 @@ import {
   Chip,
   Rating,
   useTheme,
+  useMediaQuery,
 } from '@mui/material';
 import { Movie } from '../types/Movie';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -19,6 +20,7 @@ interface MovieCardProps {
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie, onClick }) => {
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const { t } = useLanguage();
 
   return (
@@ -27,7 +29,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onClick }) => {
       sx={{
         position: 'relative',
         cursor: 'pointer',
-        height: 400,
+        height: { xs: 300, sm: 350, md: 400 },
         transition: 'transform 0.2s',
         '&:hover': {
           transform: 'scale(1.02)',
@@ -64,18 +66,31 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onClick }) => {
           left: 0,
           width: '100%',
           color: 'white',
-          padding: 2,
+          padding: { xs: 1.5, sm: 2 },
         }}
       >
-        <Typography variant="h6" component="div" gutterBottom>
+        <Typography 
+          variant={isMobile ? "subtitle1" : "h6"} 
+          component="div" 
+          gutterBottom
+          sx={{
+            fontWeight: 600,
+            mb: { xs: 0.5, sm: 1 },
+          }}
+        >
           {movie.title}
         </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Box sx={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          gap: 1,
+          mb: { xs: 0.5, sm: 1 },
+        }}>
           <Rating
             value={movie.rating / 2}
             precision={0.5}
             readOnly
-            size="small"
+            size={isMobile ? "small" : "medium"}
           />
           <Typography variant="body2" color="text.secondary">
             ({movie.rating}/10)
@@ -86,22 +101,29 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onClick }) => {
             display: 'flex',
             flexWrap: 'wrap',
             gap: 0.5,
-            mt: 1,
+            mt: { xs: 0.5, sm: 1 },
           }}
         >
           {movie.genres.map((genre, index) => (
             <Chip
               key={index}
               label={genre}
-              size="small"
+              size={isMobile ? "small" : "medium"}
               sx={{
                 backgroundColor: 'rgba(255, 255, 255, 0.2)',
                 color: 'white',
+                fontSize: { xs: '0.7rem', sm: '0.8rem' },
               }}
             />
           ))}
         </Box>
-        <Typography variant="body2" sx={{ mt: 1 }}>
+        <Typography 
+          variant="body2" 
+          sx={{ 
+            mt: { xs: 0.5, sm: 1 },
+            fontSize: { xs: '0.75rem', sm: '0.875rem' },
+          }}
+        >
           {movie.industry}
         </Typography>
       </CardContent>

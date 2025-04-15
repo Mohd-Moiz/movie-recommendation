@@ -5,6 +5,8 @@ import {
   Box,
   Typography,
   InputAdornment,
+  useTheme,
+  useMediaQuery,
 } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
 import MovieCard from '../components/MovieCard';
@@ -19,6 +21,8 @@ interface HomeProps {
 const Home: React.FC<HomeProps> = ({ onMovieSelect }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const { t } = useLanguage();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const filteredMovies = mockMovies.filter(movie =>
     movie.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -27,12 +31,34 @@ const Home: React.FC<HomeProps> = ({ onMovieSelect }) => {
   );
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
+    <Container 
+      maxWidth="lg" 
+      sx={{ 
+        py: { xs: 2, sm: 3, md: 4 },
+        px: { xs: 1, sm: 2, md: 3 },
+      }}
+    >
+      <Box sx={{ mb: { xs: 2, sm: 3, md: 4 } }}>
+        <Typography 
+          variant={isMobile ? "h5" : "h4"} 
+          component="h1" 
+          gutterBottom
+          sx={{ 
+            textAlign: { xs: 'center', sm: 'left' },
+            mb: { xs: 1, sm: 2 }
+          }}
+        >
           {t('home.title')}
         </Typography>
-        <Typography variant="subtitle1" color="text.secondary" paragraph>
+        <Typography 
+          variant={isMobile ? "body1" : "subtitle1"} 
+          color="text.secondary" 
+          paragraph
+          sx={{ 
+            textAlign: { xs: 'center', sm: 'left' },
+            mb: { xs: 2, sm: 3 }
+          }}
+        >
           {t('home.subtitle')}
         </Typography>
         <TextField
@@ -41,6 +67,12 @@ const Home: React.FC<HomeProps> = ({ onMovieSelect }) => {
           placeholder={t('home.search')}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          sx={{
+            '& .MuiOutlinedInput-root': {
+              borderRadius: 2,
+              height: { xs: 40, sm: 48 },
+            }
+          }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -59,7 +91,7 @@ const Home: React.FC<HomeProps> = ({ onMovieSelect }) => {
             md: 'repeat(3, 1fr)',
             lg: 'repeat(4, 1fr)',
           },
-          gap: 3,
+          gap: { xs: 2, sm: 3 },
         }}
       >
         {filteredMovies.map((movie) => (
