@@ -1,26 +1,85 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { CssBaseline, Box } from '@mui/material';
+import { AuthProvider } from './contexts/AuthContext';
+import { ThemeContextProvider } from './contexts/ThemeContext';
+import { LanguageProvider } from './contexts/LanguageContext';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import MovieDetail from './components/MovieDetail';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import About from './pages/About';
+import Home from './pages/Home';
+import { Movie } from './types/Movie';
+import BookingDialog from './components/BookingDialog';
 
-function App() {
+const App: React.FC = () => {
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+
+  const handleBookMovie = () => {
+    setIsBookingOpen(true);
+  };
+
+  const handleCloseBooking = () => {
+    setIsBookingOpen(false);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <ThemeContextProvider>
+        <LanguageProvider>
+          <AuthProvider>
+            <CssBaseline />
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                minHeight: '100vh',
+              }}
+            >
+              <Header />
+              <Box
+                component="main"
+                sx={{
+                  flexGrow: 1,
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                <Routes>
+                  <Route
+                    path="/"
+                    element={
+                      <Home onMovieSelect={setSelectedMovie} />
+                    }
+                  />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/about" element={<About />} />
+                </Routes>
+              </Box>
+              <Footer />
+              <MovieDetail
+                movie={selectedMovie}
+                open={Boolean(selectedMovie)}
+                onClose={() => setSelectedMovie(null)}
+                onBook={handleBookMovie}
+              />
+              {selectedMovie && (
+                <BookingDialog
+                  open={isBookingOpen}
+                  onClose={handleCloseBooking}
+                  movie={selectedMovie}
+                />
+              )}
+            </Box>
+          </AuthProvider>
+        </LanguageProvider>
+      </ThemeContextProvider>
+    </Router>
   );
-}
+};
 
 export default App;
