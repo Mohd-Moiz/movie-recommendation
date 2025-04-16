@@ -13,7 +13,7 @@ type TranslationKey =
   | 'footer.rights' | 'footer.developed'
   | 'booking.name' | 'booking.email' | 'booking.phone' | 'booking.cancel'
   | 'login.password' | 'login.error.required' | 'login.error.email' | 'login.error.password'
-  | 'login.error.failed';
+  | 'login.error.failed' | 'login.google' | 'login.noAccount';
 
 interface Translations {
   [key: string]: {
@@ -75,6 +75,8 @@ const translations: Translations = {
     'login.error.email': 'Please enter a valid email address',
     'login.error.password': 'Password must be at least 6 characters',
     'login.error.failed': 'Failed to login. Please check your credentials.',
+    'login.google': 'Sign in with Google',
+    'login.noAccount': "Don't have an account?",
   },
   es: {
     // Navigation
@@ -129,6 +131,8 @@ const translations: Translations = {
     'login.error.email': 'Por favor ingrese un correo electrónico válido',
     'login.error.password': 'La contraseña debe tener al menos 6 caracteres',
     'login.error.failed': 'Error al iniciar sesión. Por favor verifique sus credenciales.',
+    'login.google': 'Iniciar sesión con Google',
+    'login.noAccount': '¿No tienes una cuenta?',
   }
 };
 

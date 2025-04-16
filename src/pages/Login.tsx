@@ -1,68 +1,56 @@
 import React, { useState } from 'react';
 import {
-  Box,
-  Button,
-  TextField,
-  Typography,
   Container,
+  Box,
+  TextField,
+  Button,
+  Typography,
   Paper,
+  Divider,
+  Alert,
   CircularProgress,
 } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
+import GoogleIcon from '@mui/icons-material/Google';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const navigate = useNavigate();
-  const { login } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const { login, googleSignIn } = useAuth();
   const { t } = useLanguage();
-
-  const validateForm = () => {
-    let isValid = true;
-    setEmailError('');
-    setPasswordError('');
-
-    if (!email) {
-      setEmailError(t('login.error.required'));
-      isValid = false;
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      setEmailError(t('login.error.email'));
-      isValid = false;
-    }
-
-    if (!password) {
-      setPasswordError(t('login.error.required'));
-      isValid = false;
-    } else if (password.length < 6) {
-      setPasswordError(t('login.error.password'));
-      isValid = false;
-    }
-
-    return isValid;
-  };
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
-
-    if (!validateForm()) {
-      return;
-    }
-
-    setIsLoading(true);
     try {
+      setError('');
+      setLoading(true);
+      console.log('Attempting login with:', { email });
       await login(email, password);
+      console.log('Login successful');
       navigate('/');
     } catch (err) {
-      setError(t('login.error.failed'));
+      console.error('Login error:', err);
+      setError(err instanceof Error ? err.message : 'Failed to sign in');
     } finally {
-      setIsLoading(false);
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      setError('');
+      setLoading(true);
+      await googleSignIn();
+      navigate('/');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to sign in with Google');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -89,9 +77,14 @@ const Login: React.FC = () => {
           <Typography component="h1" variant="h5">
             {t('nav.login')}
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+          {error && (
+            <Alert severity="error" sx={{ mt: 2, width: '100%' }}>
+              {error}
+            </Alert>
+          )}
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, width: '100%' }}>
             <TextField
-              sx={{ mt: 2, mb: 1 }}
+              margin="normal"
               required
               fullWidth
               id="email"
@@ -101,12 +94,10 @@ const Login: React.FC = () => {
               autoFocus
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              error={!!emailError}
-              helperText={emailError}
-              disabled={isLoading}
+              disabled={loading}
             />
             <TextField
-              sx={{ mt: 2, mb: 1 }}
+              margin="normal"
               required
               fullWidth
               name="password"
@@ -116,35 +107,32 @@ const Login: React.FC = () => {
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              error={!!passwordError}
-              helperText={passwordError}
-              disabled={isLoading}
+              disabled={loading}
             />
-            {error && (
-              <Typography color="error" sx={{ mt: 2 }}>
-                {t('login.error.failed')}
-              </Typography>
-            )}
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              disabled={isLoading}
+              disabled={loading}
             >
-              {isLoading ? (
-                <CircularProgress size={24} color="inherit" />
-              ) : (
-                t('nav.login')
-              )}
+              {loading ? <CircularProgress size={24} /> : t('nav.login')}
+            </Button>
+            <Divider sx={{ my: 2 }}>OR</Divider>
+            <Button
+              fullWidth
+              variant="outlined"
+              startIcon={<GoogleIcon />}
+              onClick={handleGoogleSignIn}
+              disabled={loading}
+              sx={{ mb: 2 }}
+            >
+              {t('login.signInWithGoogle')}
             </Button>
             <Box sx={{ textAlign: 'center' }}>
-              <Link
-                to="/register"
-                style={{ textDecoration: 'none', color: 'inherit' }}
-              >
+              <Link to="/register" style={{ textDecoration: 'none' }}>
                 <Typography variant="body2" color="primary">
-                  {t('nav.register')}
+                  {t('login.noAccount')} {t('nav.register')}
                 </Typography>
               </Link>
             </Box>

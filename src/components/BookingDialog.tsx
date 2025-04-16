@@ -115,7 +115,7 @@ const BookingDialog: React.FC<BookingDialogProps> = ({ open, onClose, movie }) =
 
           <Box>
             <Typography variant="h6" align="right">
-              {t('booking.total')}: ${(movie.price * seats).toFixed(2)}
+              {t('booking.total')}: ₹{(movie.price * 83.33 * seats).toFixed(2)}
             </Typography>
           </Box>
         </Box>

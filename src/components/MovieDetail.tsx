@@ -55,7 +55,7 @@ const MovieDetail: React.FC<MovieDetailProps> = ({ movie, open, onClose, onBook 
                 {t('movie.rating')}: {movie.rating}/10
               </Typography>
               <Typography variant="h6" color="primary">
-                ${movie.price}
+                ₹{(movie.price * 83.33).toFixed(2)}
               </Typography>
             </Box>
           </Box>
