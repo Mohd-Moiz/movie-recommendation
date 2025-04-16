@@ -11,7 +11,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import About from './pages/About';
 import Home from './pages/Home';
-import { Movie } from './types/Movie';
+import { Movie } from './types';
 import BookingDialog from './components/BookingDialog';
 
 const App: React.FC = () => {
@@ -31,6 +31,7 @@ const App: React.FC = () => {
       <ThemeContextProvider>
         <LanguageProvider>
           <AuthProvider>
+            <UserProvider>
             <CssBaseline />
             <Box
               sx={{
@@ -81,6 +82,7 @@ const App: React.FC = () => {
                 />
               )}
             </Box>
+            </UserProvider>
           </AuthProvider>
         </LanguageProvider>
       </ThemeContextProvider>

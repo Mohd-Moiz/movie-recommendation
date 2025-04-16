@@ -19,6 +19,7 @@ export interface Movie {
   popularity: number;
   price: number;
   genres: string[];
+  tags: string[];
   industry: string;
   releaseDate: string;
   trailerUrl?: string;
