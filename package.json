@@ -25,6 +25,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-firebase-hooks": "^5.1.1",
+    "react-intersection-observer": "^9.16.0",
     "react-router-dom": "^6.22.1",
     "typescript": "^4.9.5",
     "web-vitals": "^3.5.2"

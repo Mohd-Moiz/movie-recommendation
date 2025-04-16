@@ -1,110 +1,74 @@
 import React, { useState } from 'react';
-import {
-  Container,
-  TextField,
-  Box,
-  Typography,
-  InputAdornment,
-  useTheme,
-  useMediaQuery,
-} from '@mui/material';
-import { Search as SearchIcon } from '@mui/icons-material';
-import MovieCard from '../components/MovieCard';
+import { Box, Container, Typography, Grid } from '@mui/material';
+import MovieGrid from '../components/movies/MovieGrid';
+import { ChatBot } from '../components/ChatBot';
 import { mockMovies } from '../data/mockMovies';
-import { useLanguage } from '../contexts/LanguageContext';
-import { Movie } from '../types/Movie';
+import { Movie } from '../types';
+import SearchBar, { SearchCriteria } from '../components/SearchBar';
+import { UserProvider } from '../context/UserContext';
 
 interface HomeProps {
   onMovieSelect: (movie: Movie) => void;
 }
 
 const Home: React.FC<HomeProps> = ({ onMovieSelect }) => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const { t } = useLanguage();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [filteredMovies, setFilteredMovies] = useState<Movie[]>(mockMovies.map(movie => ({
+    ...movie,
+    tags: movie.genres // Add tags property required by Movie type
+  })));
 
-  const filteredMovies = mockMovies.filter(movie =>
-    movie.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    movie.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    movie.genres.some(genre => genre.toLowerCase().includes(searchTerm.toLowerCase()))
-  );
+  const handleSearch = (searchTerm: string, criteria: SearchCriteria) => {
+    const filtered = mockMovies.map(movie => ({
+      ...movie,
+      tags: movie.genres
+    })).filter(movie => {
+      const searchLower = searchTerm.toLowerCase();
+      switch (criteria) {
+        case 'title':
+          return movie.title.toLowerCase().includes(searchLower);
+        case 'actor':
+          return movie.insights.cast.some(actor =>
+            actor.name.toLowerCase().includes(searchLower)
+          );
+        case 'director':
+          return movie.insights.crew.some(
+            member =>
+              member.role === 'Director' &&
+              member.name.toLowerCase().includes(searchLower)
+          );
+        case 'genre':
+          return movie.genres.some(genre =>
+            genre.toLowerCase().includes(searchLower)
+          );
+        default:
+          return true;
+      }
+    });
+    setFilteredMovies(filtered);
+  };
+
+  const handleMovieSelect = (movie: Movie) => {
+    onMovieSelect(movie);
+  };
 
   return (
-    <Container 
-      maxWidth="lg" 
-      sx={{ 
-        py: { xs: 2, sm: 3, md: 4 },
-        px: { xs: 1, sm: 2, md: 3 },
-      }}
-    >
-      <Box sx={{ mb: { xs: 2, sm: 3, md: 4 } }}>
-        <Typography 
-          variant={isMobile ? "h5" : "h4"} 
-          component="h1" 
-          gutterBottom
-          sx={{ 
-            textAlign: { xs: 'center', sm: 'left' },
-            mb: { xs: 1, sm: 2 }
-          }}
-        >
-          {t('home.title')}
-        </Typography>
-        <Typography 
-          variant={isMobile ? "body1" : "subtitle1"} 
-          color="text.secondary" 
-          paragraph
-          sx={{ 
-            textAlign: { xs: 'center', sm: 'left' },
-            mb: { xs: 2, sm: 3 }
-          }}
-        >
-          {t('home.subtitle')}
-        </Typography>
-        <TextField
-          fullWidth
-          variant="outlined"
-          placeholder={t('home.search')}
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          sx={{
-            '& .MuiOutlinedInput-root': {
-              borderRadius: 2,
-              height: { xs: 40, sm: 48 },
-            }
-          }}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
-      </Box>
-      <Box
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: {
-            xs: '1fr',
-            sm: 'repeat(2, 1fr)',
-            md: 'repeat(3, 1fr)',
-            lg: 'repeat(4, 1fr)',
-          },
-          gap: { xs: 2, sm: 3 },
-        }}
-      >
-        {filteredMovies.map((movie) => (
-          <Box key={movie.id}>
-            <MovieCard
-              movie={movie}
-              onClick={() => onMovieSelect(movie)}
-            />
+    <UserProvider>
+      <Container maxWidth="xl">
+        <Box sx={{ pb: { xs: '60vh', sm: 0 } }}>
+          <Box sx={{ mb: 4 }}>
+            <SearchBar onSearch={handleSearch} />
           </Box>
-        ))}
-      </Box>
-    </Container>
+          
+          <MovieGrid
+            movies={filteredMovies}
+            onMovieClick={onMovieSelect}
+          />
+        </Box>
+
+        <ChatBot onMovieSelect={(movie: Movie) => handleMovieSelect(movie)} />
+      </Container>
+    </UserProvider>
   );
 };
 
-export default Home; 
+export default Home;

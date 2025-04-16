@@ -15,17 +15,17 @@ import { useLanguage } from '../contexts/LanguageContext';
 
 interface MovieCardProps {
   movie: Movie;
-  onClick: () => void;
+  onSelect: () => void;
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({ movie, onClick }) => {
+const MovieCard: React.FC<MovieCardProps> = ({ movie, onSelect }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const { t } = useLanguage();
 
   return (
     <Card
-      onClick={onClick}
+      onClick={onSelect}
       sx={{
         position: 'relative',
         cursor: 'pointer',
