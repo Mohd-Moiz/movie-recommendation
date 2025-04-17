@@ -31,24 +31,18 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onSelect }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const { t } = useLanguage();
-  const { dispatch } = useBag();
+  const { addToWatchlist, addToFavorites, addToWatched } = useBag();
 
   const handleAddToWatchlist = () => {
-    if (dispatch) {
-      dispatch({ type: 'ADD_TO_WATCHLIST', payload: movie });
-    }
+    addToWatchlist(movie);
   };
 
   const handleAddToFavorites = () => {
-    if (dispatch) {
-      dispatch({ type: 'ADD_TO_FAVORITES', payload: movie });
-    }
+    addToFavorites(movie);
   };
 
   const handleMarkAsWatched = () => {
-    if (dispatch) {
-      dispatch({ type: 'ADD_TO_WATCHED', payload: movie });
-    }
+    addToWatched(movie);
   };
 
   return (

@@ -1,34 +1,23 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { Movie } from '../types';
+import { Movie } from '../types/movie';
 
 interface Bag {
-  watchlist: number[];
-  favorites: number[];
-  watched: number[];
+  watchlist: Movie[];
+  favorites: Movie[];
+  watched: Movie[];
 }
 
 interface BagContextType {
   bag: Bag;
-  addToWatchlist: (movieId: number) => void;
+  addToWatchlist: (movie: Movie) => void;
+  addToFavorites: (movie: Movie) => void;
+  addToWatched: (movie: Movie) => void;
   removeFromWatchlist: (movieId: number) => void;
-  addToFavorites: (movieId: number) => void;
   removeFromFavorites: (movieId: number) => void;
-  addToWatched: (movieId: number) => void;
   removeFromWatched: (movieId: number) => void;
-  dispatch?: (action: { type: string; payload: Movie }) => void;
 }
 
-const defaultContext: BagContextType = {
-  bag: { watchlist: [], favorites: [], watched: [] },
-  addToWatchlist: () => {},
-  removeFromWatchlist: () => {},
-  addToFavorites: () => {},
-  removeFromFavorites: () => {},
-  addToWatched: () => {},
-  removeFromWatched: () => {},
-};
-
-export const BagContext = createContext<BagContextType>(defaultContext);
+const BagContext = createContext<BagContextType | undefined>(undefined);
 
 export const useBag = () => {
   const context = useContext(BagContext);
@@ -42,93 +31,67 @@ interface BagProviderProps {
   children: ReactNode;
 }
 
-export const BagProvider: React.FC<BagProviderProps> = ({ children }) => {
+export const BagProvider = ({ children }: BagProviderProps) => {
   const [bag, setBag] = useState<Bag>({
     watchlist: [],
     favorites: [],
-    watched: [],
+    watched: []
   });
 
-  const addToWatchlist = (movieId: number) => {
+  const addToWatchlist = (movie: Movie) => {
     setBag(prev => ({
       ...prev,
-      watchlist: [...prev.watchlist, movieId],
+      watchlist: [...prev.watchlist, movie]
+    }));
+  };
+
+  const addToFavorites = (movie: Movie) => {
+    setBag(prev => ({
+      ...prev,
+      favorites: [...prev.favorites, movie]
+    }));
+  };
+
+  const addToWatched = (movie: Movie) => {
+    setBag(prev => ({
+      ...prev,
+      watched: [...prev.watched, movie]
     }));
   };
 
   const removeFromWatchlist = (movieId: number) => {
     setBag(prev => ({
       ...prev,
-      watchlist: prev.watchlist.filter(id => id !== movieId),
-    }));
-  };
-
-  const addToFavorites = (movieId: number) => {
-    setBag(prev => ({
-      ...prev,
-      favorites: [...prev.favorites, movieId],
+      watchlist: prev.watchlist.filter(movie => movie.id !== movieId)
     }));
   };
 
   const removeFromFavorites = (movieId: number) => {
     setBag(prev => ({
       ...prev,
-      favorites: prev.favorites.filter(id => id !== movieId),
-    }));
-  };
-
-  const addToWatched = (movieId: number) => {
-    setBag(prev => ({
-      ...prev,
-      watched: [...prev.watched, movieId],
+      favorites: prev.favorites.filter(movie => movie.id !== movieId)
     }));
   };
 
   const removeFromWatched = (movieId: number) => {
     setBag(prev => ({
       ...prev,
-      watched: prev.watched.filter(id => id !== movieId),
+      watched: prev.watched.filter(movie => movie.id !== movieId)
     }));
   };
 
-  const dispatch = (action: { type: string; payload: Movie }) => {
-    switch (action.type) {
-      case 'ADD_TO_WATCHLIST':
-        addToWatchlist(action.payload.id);
-        break;
-      case 'REMOVE_FROM_WATCHLIST':
-        removeFromWatchlist(action.payload.id);
-        break;
-      case 'ADD_TO_FAVORITES':
-        addToFavorites(action.payload.id);
-        break;
-      case 'REMOVE_FROM_FAVORITES':
-        removeFromFavorites(action.payload.id);
-        break;
-      case 'ADD_TO_WATCHED':
-        addToWatched(action.payload.id);
-        break;
-      case 'REMOVE_FROM_WATCHED':
-        removeFromWatched(action.payload.id);
-        break;
-      default:
-        break;
-    }
+  const value = {
+    bag,
+    addToWatchlist,
+    addToFavorites,
+    addToWatched,
+    removeFromWatchlist,
+    removeFromFavorites,
+    removeFromWatched
   };
 
   return (
-    <BagContext.Provider
-      value={{
-        bag,
-        addToWatchlist,
-        removeFromWatchlist,
-        addToFavorites,
-        removeFromFavorites,
-        addToWatched,
-        removeFromWatched,
-        dispatch,
-      }}
-    >
+    <BagContext.Provider value={value}>
       {children}
     </BagContext.Provider>
   );

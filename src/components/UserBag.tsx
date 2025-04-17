@@ -1,19 +1,19 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Typography, List, ListItem, ListItemText, ListItemSecondaryAction, IconButton, Divider } from '@mui/material';
 import { Delete as DeleteIcon } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
-import { BagContext } from '../contexts/BagContext';
-import { Movie } from '../types';
+import { useBag } from '../contexts/BagContext';
+import { Movie } from '../types/movie';
 import { getMovieById } from '../services/movieService';
 
-const UserBagList: React.FC = () => {
+export const UserBag = () => {
   const { t } = useTranslation();
-  const bagContext = useContext(BagContext);
+  const { bag, removeFromWatchlist, removeFromFavorites, removeFromWatched } = useBag();
   const [movies, setMovies] = useState<{ [key: number]: Movie }>({});
 
   useEffect(() => {
     const fetchMovies = async () => {
-      const allMovieIds = [...bagContext.bag.watchlist, ...bagContext.bag.favorites, ...bagContext.bag.watched];
+      const allMovieIds = [...bag.watchlist, ...bag.favorites, ...bag.watched];
       const uniqueMovieIds = Array.from(new Set(allMovieIds));
       
       const moviePromises = uniqueMovieIds.map(id => getMovieById(id));
@@ -28,7 +28,7 @@ const UserBagList: React.FC = () => {
     };
 
     fetchMovies();
-  }, [bagContext.bag]);
+  }, [bag]);
 
   const renderMovieList = (movieIds: number[], onRemove: (id: number) => void) => (
     <List>
@@ -40,7 +40,7 @@ const UserBagList: React.FC = () => {
           <ListItem key={id}>
             <ListItemText
               primary={movie.title}
-              secondary={movie.description}
+              secondary={movie.overview}
             />
             <ListItemSecondaryAction>
               <IconButton edge="end" onClick={() => onRemove(id)}>
@@ -62,23 +62,21 @@ const UserBagList: React.FC = () => {
       <Typography variant="h6" gutterBottom>
         {t('userBag.watchlist')}
       </Typography>
-      {renderMovieList(bagContext.bag.watchlist, bagContext.removeFromWatchlist)}
+      {renderMovieList(bag.watchlist, removeFromWatchlist)}
       
       <Divider sx={{ my: 2 }} />
       
       <Typography variant="h6" gutterBottom>
         {t('userBag.favorites')}
       </Typography>
-      {renderMovieList(bagContext.bag.favorites, bagContext.removeFromFavorites)}
+      {renderMovieList(bag.favorites, removeFromFavorites)}
       
       <Divider sx={{ my: 2 }} />
       
       <Typography variant="h6" gutterBottom>
         {t('userBag.watched')}
       </Typography>
-      {renderMovieList(bagContext.bag.watched, bagContext.removeFromWatched)}
+      {renderMovieList(bag.watched, removeFromWatched)}
     </Box>
   );
-};
-
-export default UserBagList; 
+}; 

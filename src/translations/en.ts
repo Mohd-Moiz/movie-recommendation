@@ -50,6 +50,12 @@ export const en = {
     close: 'Close',
     book: 'Book Now'
   },
+  userBag: {
+    title: 'My Movie Lists',
+    watchlist: 'Watchlist',
+    favorites: 'Favorites',
+    watched: 'Watched'
+  },
   errors: {
     emailRequired: 'Email is required',
     emailInvalid: 'Invalid email address',
