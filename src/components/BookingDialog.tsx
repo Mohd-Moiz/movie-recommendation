@@ -26,7 +26,7 @@ interface BookingDialogProps {
 
 const BookingDialog: React.FC<BookingDialogProps> = ({ open, onClose, movie }) => {
   const { t } = useLanguage();
-  const translations = en.booking;
+  const translations = t('booking') as unknown as { [key: string]: string };
   const [date, setDate] = useState<Date | null>(null);
   const [time, setTime] = useState('');
   const [seats, setSeats] = useState(1);
@@ -122,7 +122,9 @@ const BookingDialog: React.FC<BookingDialogProps> = ({ open, onClose, movie }) =
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>{t('booking.cancel')}</Button>
+        <Button onClick={onClose} color="secondary">
+          {t('booking').cancel}
+        </Button>
         <Button
           variant="contained"
           onClick={handleBooking}

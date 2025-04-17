@@ -6,7 +6,7 @@ export interface Review {
   comment: string;
   createdAt: string;
   likes: number;
-  movieId?: number;
+  movieId: number;
   timestamp?: string;
 }
 

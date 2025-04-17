@@ -7,7 +7,7 @@ export type TranslationKey = keyof typeof en;
 type LanguageContextType = {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: TranslationKey) => string;
+  t: (key: TranslationKey) => any;
 };
 
 const translations = { en };
@@ -21,7 +21,7 @@ const LanguageContext = createContext<LanguageContextType>({
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('en');
 
-  const t = (key: TranslationKey): string => {
+  const t = (key: TranslationKey): any => {
     const translation = translations[language];
     const keys = key.split('.');
     let value: any = translation;
