@@ -22,7 +22,7 @@ import {
   Edit as EditIcon,
   Delete as DeleteIcon,
 } from '@mui/icons-material';
-import { Review } from '../types/Movie';
+import { Movie, Review } from '../types';
 
 
 interface ReviewSectionProps {

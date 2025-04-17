@@ -1,9 +1,11 @@
 import { Movie } from './index';
 
+export type { Movie };
+
 export interface UserBag {
-  watchlist: Movie[];
-  favorites: Movie[];
-  watched: Movie[];
+  watchlist: number[];
+  favorites: number[];
+  watched: number[];
 }
 
 export type BagAction =

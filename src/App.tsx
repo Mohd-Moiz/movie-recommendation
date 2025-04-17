@@ -15,7 +15,7 @@ import Home from './pages/Home';
 import { Movie } from './types';
 import BookingDialog from './components/BookingDialog';
 import { BagProvider } from './contexts/BagContext';
-import { UserBag } from './components/UserBag';
+import UserBagList from './components/UserBag';
 import ChatBot from './components/ChatBot';
 
 const App: React.FC = () => {
@@ -35,11 +35,11 @@ const App: React.FC = () => {
   };
 
   return (
-    <ThemeContextProvider>
-      <CssBaseline />
-      <LanguageProvider>
-        <BagProvider>
-          <AuthProvider>
+    <BagProvider>
+      <AuthProvider>
+        <ThemeContextProvider>
+          <CssBaseline />
+          <LanguageProvider>
             <UserProvider>
               <Router>
                 <Box
@@ -87,7 +87,7 @@ const App: React.FC = () => {
                           />
                         } 
                       />
-                      <Route path="/my-bag" element={<UserBag />} />
+                      <Route path="/my-bag" element={<UserBagList />} />
                     </Routes>
                   </Box>
                   <Footer />
@@ -110,10 +110,10 @@ const App: React.FC = () => {
                 </Box>
               </Router>
             </UserProvider>
-          </AuthProvider>
-        </BagProvider>
-      </LanguageProvider>
-    </ThemeContextProvider>
+          </LanguageProvider>
+        </ThemeContextProvider>
+      </AuthProvider>
+    </BagProvider>
   );
 };
 

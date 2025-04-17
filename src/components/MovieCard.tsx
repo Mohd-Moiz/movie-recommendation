@@ -11,17 +11,20 @@ import {
   useMediaQuery,
   Button,
   IconButton,
+  CardActions,
 } from '@mui/material';
+import {
+  Bookmark as BookmarkIcon,
+  Favorite as FavoriteIcon,
+  CheckCircle as CheckCircleIcon,
+} from '@mui/icons-material';
 import { Movie } from '../types';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useBag } from '../contexts/BagContext';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 
 interface MovieCardProps {
   movie: Movie;
-  onSelect: () => void;
+  onSelect: (movie: Movie) => void;
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie, onSelect }) => {
@@ -31,20 +34,25 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onSelect }) => {
   const { dispatch } = useBag();
 
   const handleAddToWatchlist = () => {
-    dispatch({ type: 'ADD_TO_WATCHLIST', payload: movie });
+    if (dispatch) {
+      dispatch({ type: 'ADD_TO_WATCHLIST', payload: movie });
+    }
   };
 
   const handleAddToFavorites = () => {
-    dispatch({ type: 'ADD_TO_FAVORITES', payload: movie });
+    if (dispatch) {
+      dispatch({ type: 'ADD_TO_FAVORITES', payload: movie });
+    }
   };
 
-  const handleAddToWatched = () => {
-    dispatch({ type: 'ADD_TO_WATCHED', payload: movie });
+  const handleMarkAsWatched = () => {
+    if (dispatch) {
+      dispatch({ type: 'ADD_TO_WATCHED', payload: movie });
+    }
   };
 
   return (
     <Card
-      onClick={onSelect}
       sx={{
         position: 'relative',
         cursor: 'pointer',
@@ -67,6 +75,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onSelect }) => {
           height: '100%',
           objectFit: 'cover',
         }}
+        onClick={() => onSelect(movie)}
       />
       <Box
         sx={{
@@ -145,6 +154,8 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onSelect }) => {
         >
           {movie.industry}
         </Typography>
+      </CardContent>
+      <CardActions>
         <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-between' }}>
           <IconButton onClick={handleAddToWatchlist} title="Add to Watchlist">
             <BookmarkIcon />
@@ -152,11 +163,11 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onSelect }) => {
           <IconButton onClick={handleAddToFavorites} title="Add to Favorites">
             <FavoriteIcon />
           </IconButton>
-          <IconButton onClick={handleAddToWatched} title="Mark as Watched">
-            <VisibilityIcon />
+          <IconButton onClick={handleMarkAsWatched} title="Mark as Watched">
+            <CheckCircleIcon />
           </IconButton>
         </Box>
-      </CardContent>
+      </CardActions>
     </Card>
   );
 };

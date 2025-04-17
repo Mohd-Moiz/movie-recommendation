@@ -1,68 +1,135 @@
-import React, { createContext, useContext, useReducer, ReactNode } from 'react';
-import { Movie, UserBag, BagAction } from '../types/UserBag';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { Movie } from '../types';
 
-const initialState: UserBag = {
-  watchlist: [],
-  favorites: [],
-  watched: []
+interface Bag {
+  watchlist: number[];
+  favorites: number[];
+  watched: number[];
+}
+
+interface BagContextType {
+  bag: Bag;
+  addToWatchlist: (movieId: number) => void;
+  removeFromWatchlist: (movieId: number) => void;
+  addToFavorites: (movieId: number) => void;
+  removeFromFavorites: (movieId: number) => void;
+  addToWatched: (movieId: number) => void;
+  removeFromWatched: (movieId: number) => void;
+  dispatch?: (action: { type: string; payload: Movie }) => void;
+}
+
+const defaultContext: BagContextType = {
+  bag: { watchlist: [], favorites: [], watched: [] },
+  addToWatchlist: () => {},
+  removeFromWatchlist: () => {},
+  addToFavorites: () => {},
+  removeFromFavorites: () => {},
+  addToWatched: () => {},
+  removeFromWatched: () => {},
 };
 
-const BagContext = createContext<{
-  bag: UserBag;
-  dispatch: React.Dispatch<BagAction>;
-} | undefined>(undefined);
+export const BagContext = createContext<BagContextType>(defaultContext);
 
-function bagReducer(state: UserBag, action: BagAction): UserBag {
-  switch (action.type) {
-    case 'ADD_TO_WATCHLIST':
-      return {
-        ...state,
-        watchlist: [...state.watchlist, action.payload]
-      };
-    case 'REMOVE_FROM_WATCHLIST':
-      return {
-        ...state,
-        watchlist: state.watchlist.filter(movie => movie.id !== action.payload.id)
-      };
-    case 'ADD_TO_FAVORITES':
-      return {
-        ...state,
-        favorites: [...state.favorites, action.payload]
-      };
-    case 'REMOVE_FROM_FAVORITES':
-      return {
-        ...state,
-        favorites: state.favorites.filter(movie => movie.id !== action.payload.id)
-      };
-    case 'ADD_TO_WATCHED':
-      return {
-        ...state,
-        watched: [...state.watched, action.payload]
-      };
-    case 'REMOVE_FROM_WATCHED':
-      return {
-        ...state,
-        watched: state.watched.filter(movie => movie.id !== action.payload.id)
-      };
-    default:
-      return state;
-  }
-}
-
-export function BagProvider({ children }: { children: ReactNode }) {
-  const [bag, dispatch] = useReducer(bagReducer, initialState);
-
-  return (
-    <BagContext.Provider value={{ bag, dispatch }}>
-      {children}
-    </BagContext.Provider>
-  );
-}
-
-export function useBag() {
+export const useBag = () => {
   const context = useContext(BagContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useBag must be used within a BagProvider');
   }
   return context;
-} 
+};
+
+interface BagProviderProps {
+  children: ReactNode;
+}
+
+export const BagProvider: React.FC<BagProviderProps> = ({ children }) => {
+  const [bag, setBag] = useState<Bag>({
+    watchlist: [],
+    favorites: [],
+    watched: [],
+  });
+
+  const addToWatchlist = (movieId: number) => {
+    setBag(prev => ({
+      ...prev,
+      watchlist: [...prev.watchlist, movieId],
+    }));
+  };
+
+  const removeFromWatchlist = (movieId: number) => {
+    setBag(prev => ({
+      ...prev,
+      watchlist: prev.watchlist.filter(id => id !== movieId),
+    }));
+  };
+
+  const addToFavorites = (movieId: number) => {
+    setBag(prev => ({
+      ...prev,
+      favorites: [...prev.favorites, movieId],
+    }));
+  };
+
+  const removeFromFavorites = (movieId: number) => {
+    setBag(prev => ({
+      ...prev,
+      favorites: prev.favorites.filter(id => id !== movieId),
+    }));
+  };
+
+  const addToWatched = (movieId: number) => {
+    setBag(prev => ({
+      ...prev,
+      watched: [...prev.watched, movieId],
+    }));
+  };
+
+  const removeFromWatched = (movieId: number) => {
+    setBag(prev => ({
+      ...prev,
+      watched: prev.watched.filter(id => id !== movieId),
+    }));
+  };
+
+  const dispatch = (action: { type: string; payload: Movie }) => {
+    switch (action.type) {
+      case 'ADD_TO_WATCHLIST':
+        addToWatchlist(action.payload.id);
+        break;
+      case 'REMOVE_FROM_WATCHLIST':
+        removeFromWatchlist(action.payload.id);
+        break;
+      case 'ADD_TO_FAVORITES':
+        addToFavorites(action.payload.id);
+        break;
+      case 'REMOVE_FROM_FAVORITES':
+        removeFromFavorites(action.payload.id);
+        break;
+      case 'ADD_TO_WATCHED':
+        addToWatched(action.payload.id);
+        break;
+      case 'REMOVE_FROM_WATCHED':
+        removeFromWatched(action.payload.id);
+        break;
+      default:
+        break;
+    }
+  };
+
+  return (
+    <BagContext.Provider
+      value={{
+        bag,
+        addToWatchlist,
+        removeFromWatchlist,
+        addToFavorites,
+        removeFromFavorites,
+        addToWatched,
+        removeFromWatched,
+        dispatch,
+      }}
+    >
+      {children}
+    </BagContext.Provider>
+  );
+}; 

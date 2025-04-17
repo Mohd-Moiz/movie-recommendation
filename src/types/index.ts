@@ -32,6 +32,7 @@ export interface Review {
   rating: number;
   comment: string;
   timestamp: string;
+  createdAt: string;
   likes: number;
 }
 

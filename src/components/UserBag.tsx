@@ -1,96 +1,84 @@
-import React from 'react';
-import { Box, Typography, List, ListItem, ListItemText, IconButton, Divider } from '@mui/material';
-import { useBag } from '../contexts/BagContext';
-import { Movie } from '../types/UserBag';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import DeleteIcon from '@mui/icons-material/Delete';
+import React, { useContext, useEffect, useState } from 'react';
+import { Box, Typography, List, ListItem, ListItemText, ListItemSecondaryAction, IconButton, Divider } from '@mui/material';
+import { Delete as DeleteIcon } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
+import { BagContext } from '../contexts/BagContext';
+import { Movie } from '../types';
+import { getMovieById } from '../services/movieService';
 
-export function UserBag() {
-  const { bag, dispatch } = useBag();
+const UserBagList: React.FC = () => {
+  const { t } = useTranslation();
+  const bagContext = useContext(BagContext);
+  const [movies, setMovies] = useState<{ [key: number]: Movie }>({});
 
-  const handleRemoveFromWatchlist = (movie: Movie) => {
-    dispatch({ type: 'REMOVE_FROM_WATCHLIST', payload: movie });
-  };
+  useEffect(() => {
+    const fetchMovies = async () => {
+      const allMovieIds = [...bagContext.bag.watchlist, ...bagContext.bag.favorites, ...bagContext.bag.watched];
+      const uniqueMovieIds = Array.from(new Set(allMovieIds));
+      
+      const moviePromises = uniqueMovieIds.map(id => getMovieById(id));
+      const movieResults = await Promise.all(moviePromises);
+      
+      const movieMap = movieResults.reduce((acc, movie) => {
+        if (movie) acc[movie.id] = movie;
+        return acc;
+      }, {} as { [key: number]: Movie });
+      
+      setMovies(movieMap);
+    };
 
-  const handleRemoveFromFavorites = (movie: Movie) => {
-    dispatch({ type: 'REMOVE_FROM_FAVORITES', payload: movie });
-  };
+    fetchMovies();
+  }, [bagContext.bag]);
 
-  const handleRemoveFromWatched = (movie: Movie) => {
-    dispatch({ type: 'REMOVE_FROM_WATCHED', payload: movie });
-  };
+  const renderMovieList = (movieIds: number[], onRemove: (id: number) => void) => (
+    <List>
+      {movieIds.map(id => {
+        const movie = movies[id];
+        if (!movie) return null;
+        
+        return (
+          <ListItem key={id}>
+            <ListItemText
+              primary={movie.title}
+              secondary={movie.description}
+            />
+            <ListItemSecondaryAction>
+              <IconButton edge="end" onClick={() => onRemove(id)}>
+                <DeleteIcon />
+              </IconButton>
+            </ListItemSecondaryAction>
+          </ListItem>
+        );
+      })}
+    </List>
+  );
 
   return (
-    <Box sx={{ p: 3 }}>
-      <Typography variant="h4" gutterBottom>
-        My Movie Collections
+    <Box sx={{ p: 2 }}>
+      <Typography variant="h5" gutterBottom>
+        {t('userBag.title')}
       </Typography>
-
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h6" gutterBottom>
-          Watchlist <BookmarkIcon />
-        </Typography>
-        <List>
-          {bag.watchlist.map((movie: Movie) => (
-            <ListItem
-              key={movie.id}
-              secondaryAction={
-                <IconButton edge="end" onClick={() => handleRemoveFromWatchlist(movie)}>
-                  <DeleteIcon />
-                </IconButton>
-              }
-            >
-              <ListItemText primary={movie.title} secondary={movie.overview} />
-            </ListItem>
-          ))}
-        </List>
-      </Box>
-
-      <Divider />
-
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h6" gutterBottom>
-          Favorites <FavoriteIcon />
-        </Typography>
-        <List>
-          {bag.favorites.map((movie: Movie) => (
-            <ListItem
-              key={movie.id}
-              secondaryAction={
-                <IconButton edge="end" onClick={() => handleRemoveFromFavorites(movie)}>
-                  <DeleteIcon />
-                </IconButton>
-              }
-            >
-              <ListItemText primary={movie.title} secondary={movie.overview} />
-            </ListItem>
-          ))}
-        </List>
-      </Box>
-
-      <Divider />
-
-      <Box>
-        <Typography variant="h6" gutterBottom>
-          Watched <VisibilityIcon />
-        </Typography>
-        <List>
-          {bag.watched.map((movie: Movie) => (
-            <ListItem
-              key={movie.id}
-              secondaryAction={
-                <IconButton edge="end" onClick={() => handleRemoveFromWatched(movie)}>
-                  <DeleteIcon />
-                </IconButton>
-              }
-            >
-              <ListItemText primary={movie.title} secondary={movie.overview} />
-            </ListItem>
-          ))}
-        </List>
-      </Box>
+      
+      <Typography variant="h6" gutterBottom>
+        {t('userBag.watchlist')}
+      </Typography>
+      {renderMovieList(bagContext.bag.watchlist, bagContext.removeFromWatchlist)}
+      
+      <Divider sx={{ my: 2 }} />
+      
+      <Typography variant="h6" gutterBottom>
+        {t('userBag.favorites')}
+      </Typography>
+      {renderMovieList(bagContext.bag.favorites, bagContext.removeFromFavorites)}
+      
+      <Divider sx={{ my: 2 }} />
+      
+      <Typography variant="h6" gutterBottom>
+        {t('userBag.watched')}
+      </Typography>
+      {renderMovieList(bagContext.bag.watched, bagContext.removeFromWatched)}
     </Box>
   );
-} 
+};
+
+export default UserBagList; 
