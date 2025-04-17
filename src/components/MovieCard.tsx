@@ -12,7 +12,7 @@ import {
   Button,
   IconButton,
 } from '@mui/material';
-import { Movie } from '../types/Movie';
+import { Movie } from '../types';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useBag } from '../contexts/BagContext';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
