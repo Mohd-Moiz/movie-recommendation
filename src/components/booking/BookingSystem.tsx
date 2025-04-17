@@ -57,7 +57,7 @@ const BookingSystem: React.FC<BookingSystemProps> = ({ movie, open, onClose }) =
   };
 
   const selectedShowTime = SHOWTIMES.find(st => st.id === selectedTime);
-  const totalPrice = selectedShowTime ? selectedShowTime.price * selectedSeats : 0;
+  const totalPrice = selectedShowTime ? selectedShowTime.price * selectedSeats * 83.33 : 0;
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
@@ -114,7 +114,7 @@ const BookingSystem: React.FC<BookingSystemProps> = ({ movie, open, onClose }) =
                 onClick={() => setSelectedTime(showtime.id)}
               >
                 <Typography variant="h6">{showtime.time}</Typography>
-                <Typography>Price: ${showtime.price}</Typography>
+                <Typography>Price: ₹{(showtime.price * 83.33).toFixed(2)}</Typography>
                 <Typography>Available Seats: {showtime.availableSeats}</Typography>
               </Paper>
             </Grid>
@@ -141,28 +141,27 @@ const BookingSystem: React.FC<BookingSystemProps> = ({ movie, open, onClose }) =
           <Grid item xs={12} sm={6}>
             <Paper sx={{ p: 2 }}>
               <Typography variant="h6">Total Price</Typography>
-              <Typography variant="h4">${totalPrice.toFixed(2)}</Typography>
+              <Typography variant="h4">₹{totalPrice.toFixed(2)}</Typography>
             </Paper>
           </Grid>
         </Grid>
-
-        {bookingSuccess && (
-          <Alert severity="success" sx={{ mt: 2 }}>
-            Booking successful! Confirmation has been sent to your email.
-          </Alert>
-        )}
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
-        <Button
-          variant="contained"
+        <Button 
+          variant="contained" 
+          onClick={handleBooking} 
           color="primary"
-          disabled={!selectedTime || bookingSuccess}
-          onClick={handleBooking}
+          disabled={!selectedTime}
         >
-          Book Now
+          Confirm Booking
         </Button>
       </DialogActions>
+      {bookingSuccess && (
+        <Alert severity="success" sx={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
+          Booking successful!
+        </Alert>
+      )}
     </Dialog>
   );
 };

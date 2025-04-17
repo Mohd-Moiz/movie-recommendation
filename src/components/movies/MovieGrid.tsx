@@ -198,6 +198,9 @@ const MovieGrid: React.FC<MovieGridProps> = ({ movies, onMovieClick }) => {
                   >
                     Book Now
                   </Button>
+                  <Typography variant="body1" color="primary">
+                    ₹{(movie.price * 83.33).toFixed(2)}
+                  </Typography>
                 </Box>
                 <Typography variant="h6" gutterBottom>
                   {movie.title}
