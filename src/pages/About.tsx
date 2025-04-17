@@ -42,7 +42,7 @@ const About: React.FC = () => {
               <Avatar
                 sx={{ width: 130, height: 130, mb: 2 }}
                 alt="Mohammed Moiz"
-                src="/moiz.jpeg"
+                src="moiz.jpeg"
               />
               <Typography variant="h6">Mohammed Moiz</Typography>
               <Typography color="text.secondary">Full Stack Developer</Typography>
@@ -54,12 +54,13 @@ const About: React.FC = () => {
                   height: 130, 
                   mb: 2,
                   '& img': {
-                    objectFit: 'contain',
-                    objectPosition: 'center'
+                    objectFit: 'cover',
+                    width: '100%',
+                    height: '100%'
                   }
                 }}
                 alt="Mohammed Kaif"
-                src="/ko.jpeg"
+                src="kaif.jpeg"
               />
               <Typography variant="h6">Mohammed Kaif</Typography>
               <Typography color="text.secondary">Web Developer</Typography>
