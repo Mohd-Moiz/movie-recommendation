@@ -269,7 +269,7 @@ export const mockMovies: Movie[] = [
     id: 10,
     title: 'Killers of the Flower Moon',
     description: 'When oil is discovered in 1920s Oklahoma under Osage Nation land, the Osage people are murdered one by one - until the FBI steps in to unravel the mystery.',
-    imageUrl: 'https://image.tmdb.org/t/p/w500/dB6Krk806zeqd0YNp2ngQ9zXteH.jpg',
+    imageUrl: 'https://image.tmdb.org/t/p/original/dB6Krk806zeqd0YNp2ngQ9zXteH.jpg',
     rating: 8.9,
     popularity: 92,
     price: 19.99,
@@ -292,50 +292,14 @@ export const mockMovies: Movie[] = [
         'The film features many Osage Nation members in supporting roles'
       ],
       cast: [
-        { name: 'Leonardo DiCaprio', role: 'Ernest Burkhart', imageUrl: 'https://example.com/leo.jpg' },
-        { name: 'Robert De Niro', role: 'William Hale', imageUrl: 'https://example.com/deniro.jpg' },
-        { name: 'Lily Gladstone', role: 'Mollie Burkhart', imageUrl: 'https://example.com/lily.jpg' }
+        { name: 'Leonardo DiCaprio', role: 'Ernest Burkhart', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Robert De Niro', role: 'William Hale', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Lily Gladstone', role: 'Mollie Burkhart', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
       ],
       crew: [
-        { name: 'Martin Scorsese', role: 'Director', imageUrl: 'https://example.com/scorsese.jpg' },
-        { name: 'Eric Roth', role: 'Screenwriter', imageUrl: 'https://example.com/roth.jpg' },
-        { name: 'Rodrigo Prieto', role: 'Cinematographer', imageUrl: 'https://example.com/prieto.jpg' }
-      ]
-    }
-  },
-  {
-    id: 11,
-    title: 'The Holdovers',
-    description: 'A cranky history teacher at a remote prep school is forced to remain on campus over the holidays with a troubled student who has no place to go.',
-    imageUrl: 'https://image.tmdb.org/t/p/original/eqjNCdbX1R1w33i2nCsB5X2QmIR.jpg',
-    rating: 8.3,
-    popularity: 88,
-    price: 16.99,
-    genres: ['Comedy', 'Drama'],
-    industry: 'Hollywood',
-    releaseDate: '2023-10-27',
-    trailerUrl: 'https://www.youtube.com/watch?v=QwQw0tTQY1Y',
-    reviews: [],
-    tags: ['comedy', 'drama', 'holiday'],
-    insights: {
-      boxOffice: '$42 million',
-      awards: [
-        'Academy Award for Best Supporting Actress',
-        'Golden Globe Award for Best Actor - Motion Picture Musical or Comedy'
-      ],
-      trivia: [
-        'Paul Giamatti\'s first collaboration with director Alexander Payne since Sideways',
-        'Set in the 1970s, the film features authentic period details',
-        'Filmed on location in Massachusetts'
-      ],
-      cast: [
-        { name: 'Paul Giamatti', role: 'Paul Hunham', imageUrl: 'https://image.tmdb.org/t/p/w185/2Rdd6qXj5zYHv2BkpjkJYGZxTKb.jpg' },
-        { name: 'Da\'Vine Joy Randolph', role: 'Mary Lamb', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
-        { name: 'Dominic Sessa', role: 'Angus Tully', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
-      ],
-      crew: [
-        { name: 'Alexander Payne', role: 'Director', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
-        { name: 'David Hemingson', role: 'Screenwriter', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
+        { name: 'Martin Scorsese', role: 'Director', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Eric Roth', role: 'Screenwriter', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Rodrigo Prieto', role: 'Cinematographer', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
       ]
     }
   },
