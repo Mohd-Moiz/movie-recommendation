@@ -302,5 +302,300 @@ export const mockMovies: Movie[] = [
         { name: 'Rodrigo Prieto', role: 'Cinematographer', imageUrl: 'https://example.com/prieto.jpg' }
       ]
     }
+  },
+  {
+    id: 11,
+    title: 'The Holdovers',
+    description: 'A cranky history teacher at a remote prep school is forced to remain on campus over the holidays with a troubled student who has no place to go.',
+    imageUrl: 'https://m.media-amazon.com/images/M/MV5BOWY2YzA0Y2UtYjJkYy00YjM4LThkY2QtYjE0ZDRhYzY4YzM0XkEyXkFqcGdeQXVyMTUzNTgzNzM0._V1_.jpg',
+    rating: 8.3,
+    popularity: 88,
+    price: 16.99,
+    genres: ['Comedy', 'Drama'],
+    industry: 'Hollywood',
+    releaseDate: '2023-10-27',
+    trailerUrl: 'https://www.youtube.com/watch?v=QwQw0tTQY1Y',
+    reviews: [],
+    tags: ['comedy', 'drama', 'holiday'],
+    insights: {
+      boxOffice: '$42 million',
+      awards: [
+        'Academy Award for Best Supporting Actress',
+        'Golden Globe Award for Best Actor - Motion Picture Musical or Comedy'
+      ],
+      trivia: [
+        'Paul Giamatti\'s first collaboration with director Alexander Payne since Sideways',
+        'Set in the 1970s, the film features authentic period details',
+        'Filmed on location in Massachusetts'
+      ],
+      cast: [
+        { name: 'Paul Giamatti', role: 'Paul Hunham', imageUrl: 'https://example.com/giamatti.jpg' },
+        { name: 'Da\'Vine Joy Randolph', role: 'Mary Lamb', imageUrl: 'https://example.com/randolph.jpg' },
+        { name: 'Dominic Sessa', role: 'Angus Tully', imageUrl: 'https://example.com/sessa.jpg' }
+      ],
+      crew: [
+        { name: 'Alexander Payne', role: 'Director', imageUrl: 'https://example.com/payne.jpg' },
+        { name: 'David Hemingson', role: 'Screenwriter', imageUrl: 'https://example.com/hemingson.jpg' }
+      ]
+    }
+  },
+  {
+    id: 12,
+    title: 'Poor Things',
+    description: 'The incredible tale about the fantastical evolution of Bella Baxter, a young woman brought back to life by the brilliant and unorthodox scientist Dr. Godwin Baxter.',
+    imageUrl: 'https://m.media-amazon.com/images/M/MV5BNGIyYWMzNjMtNDU3MC00YWQxLTk5ZTUtYmMxOWRlNmY2NzFhXkEyXkFqcGdeQXVyMTUzNTgzNzM0._V1_.jpg',
+    rating: 8.7,
+    popularity: 90,
+    price: 18.99,
+    genres: ['Comedy', 'Drama', 'Romance', 'Sci-Fi'],
+    industry: 'Hollywood',
+    releaseDate: '2023-12-08',
+    trailerUrl: 'https://www.youtube.com/watch?v=RlbR5N6veqw',
+    reviews: [],
+    tags: ['comedy', 'drama', 'sci-fi'],
+    insights: {
+      boxOffice: '$112 million',
+      awards: [
+        'Academy Award for Best Actress',
+        'Golden Globe Award for Best Motion Picture - Musical or Comedy',
+        'BAFTA Award for Best Production Design'
+      ],
+      trivia: [
+        'Based on the novel by Alasdair Gray',
+        'Features elaborate Victorian-era production design',
+        'Emma Stone\'s second collaboration with director Yorgos Lanthimos'
+      ],
+      cast: [
+        { name: 'Emma Stone', role: 'Bella Baxter', imageUrl: 'https://example.com/stone.jpg' },
+        { name: 'Mark Ruffalo', role: 'Duncan Wedderburn', imageUrl: 'https://example.com/ruffalo.jpg' },
+        { name: 'Willem Dafoe', role: 'Dr. Godwin Baxter', imageUrl: 'https://example.com/dafoe.jpg' }
+      ],
+      crew: [
+        { name: 'Yorgos Lanthimos', role: 'Director', imageUrl: 'https://example.com/lanthimos.jpg' },
+        { name: 'Tony McNamara', role: 'Screenwriter', imageUrl: 'https://example.com/mcnamara.jpg' }
+      ]
+    }
+  },
+  {
+    id: 13,
+    title: 'Anatomy of a Fall',
+    description: 'A woman is suspected of her husband\'s murder, and their blind son faces a moral dilemma as the main witness.',
+    imageUrl: 'https://m.media-amazon.com/images/M/MV5BODZmNzYxZjEtZGE1MS00M2Q2LTg0YTQtZjM5Y2U4NjdjMjU3XkEyXkFqcGdeQXVyMTUzNTgzNzM0._V1_.jpg',
+    rating: 8.1,
+    popularity: 87,
+    price: 15.99,
+    genres: ['Crime', 'Drama', 'Thriller'],
+    industry: 'French',
+    releaseDate: '2023-08-23',
+    trailerUrl: 'https://www.youtube.com/watch?v=6qYi5yZQx3I',
+    reviews: [],
+    tags: ['crime', 'drama', 'thriller'],
+    insights: {
+      boxOffice: '$35 million',
+      awards: [
+        'Palme d\'Or at Cannes Film Festival',
+        'Golden Globe Award for Best Foreign Language Film',
+        'Academy Award for Best Original Screenplay'
+      ],
+      trivia: [
+        'The film\'s dialogue is in French, English, and German',
+        'Features a real-life courtroom in the French Alps',
+        'The director\'s first feature film in English'
+      ],
+      cast: [
+        { name: 'Sandra Hüller', role: 'Sandra Voyter', imageUrl: 'https://example.com/huller.jpg' },
+        { name: 'Swann Arlaud', role: 'Vincent Renzi', imageUrl: 'https://example.com/arlaud.jpg' },
+        { name: 'Milo Machado-Graner', role: 'Daniel Maleski', imageUrl: 'https://example.com/machado.jpg' }
+      ],
+      crew: [
+        { name: 'Justine Triet', role: 'Director', imageUrl: 'https://example.com/triet.jpg' },
+        { name: 'Arthur Harari', role: 'Screenwriter', imageUrl: 'https://example.com/harari.jpg' }
+      ]
+    }
+  },
+  {
+    id: 14,
+    title: 'The Zone of Interest',
+    description: 'The commandant of Auschwitz, Rudolf Höss, and his wife Hedwig strive to build a dream life for their family in a house and garden next to the camp.',
+    imageUrl: 'https://m.media-amazon.com/images/M/MV5BMTU5N2Y5YjQtYzU0Zi00Y2Q5LTg4YzYtYzY0YjQ5YzY0YzY0XkEyXkFqcGdeQXVyMTUzNTgzNzM0._V1_.jpg',
+    rating: 8.5,
+    popularity: 89,
+    price: 17.99,
+    genres: ['Drama', 'History', 'War'],
+    industry: 'British',
+    releaseDate: '2023-12-15',
+    trailerUrl: 'https://www.youtube.com/watch?v=EP34Yoxs3FQ',
+    reviews: [],
+    tags: ['drama', 'historical', 'war'],
+    insights: {
+      boxOffice: '$28 million',
+      awards: [
+        'Grand Prix at Cannes Film Festival',
+        'BAFTA Award for Best British Film',
+        'Academy Award for Best International Feature Film'
+      ],
+      trivia: [
+        'Based on the novel by Martin Amis',
+        'Filmed on location in Poland',
+        'Features minimal dialogue and maximum atmosphere'
+      ],
+      cast: [
+        { name: 'Christian Friedel', role: 'Rudolf Höss', imageUrl: 'https://example.com/friedel.jpg' },
+        { name: 'Sandra Hüller', role: 'Hedwig Höss', imageUrl: 'https://example.com/huller2.jpg' },
+        { name: 'Ralph Herforth', role: 'Gerhard Maurer', imageUrl: 'https://example.com/herforth.jpg' }
+      ],
+      crew: [
+        { name: 'Jonathan Glazer', role: 'Director', imageUrl: 'https://example.com/glazer.jpg' },
+        { name: 'Martin Amis', role: 'Novel Author', imageUrl: 'https://example.com/amis.jpg' }
+      ]
+    }
+  },
+  {
+    id: 15,
+    title: 'Past Lives',
+    description: 'Nora and Hae Sung, two deeply connected childhood friends, are wrested apart after Nora\'s family emigrates from South Korea. Twenty years later, they are reunited for one fateful week.',
+    imageUrl: 'https://m.media-amazon.com/images/M/MV5BOTg2Zjg0YjAtYzUwYi00YjVjLWE3YzctM2Y2YzE2Y2Y2Y2Y2XkEyXkFqcGdeQXVyMTUzNTgzNzM0._V1_.jpg',
+    rating: 8.4,
+    popularity: 86,
+    price: 16.99,
+    genres: ['Drama', 'Romance'],
+    industry: 'American',
+    releaseDate: '2023-06-02',
+    trailerUrl: 'https://www.youtube.com/watch?v=kA244xewjcI',
+    reviews: [],
+    tags: ['drama', 'romance', 'korean'],
+    insights: {
+      boxOffice: '$23 million',
+      awards: [
+        'Independent Spirit Award for Best Feature',
+        'Gotham Award for Best International Feature',
+        'Academy Award for Best Original Screenplay'
+      ],
+      trivia: [
+        'Celine Song\'s directorial debut',
+        'Filmed in both New York and South Korea',
+        'Features dialogue in both English and Korean'
+      ],
+      cast: [
+        { name: 'Greta Lee', role: 'Nora', imageUrl: 'https://example.com/lee.jpg' },
+        { name: 'Teo Yoo', role: 'Hae Sung', imageUrl: 'https://example.com/yoo.jpg' },
+        { name: 'John Magaro', role: 'Arthur', imageUrl: 'https://example.com/magaro.jpg' }
+      ],
+      crew: [
+        { name: 'Celine Song', role: 'Director', imageUrl: 'https://example.com/song.jpg' },
+        { name: 'Celine Song', role: 'Screenwriter', imageUrl: 'https://example.com/song.jpg' }
+      ]
+    }
+  },
+  {
+    id: 16,
+    title: 'American Fiction',
+    description: 'A frustrated novelist who\'s fed up with the establishment profiting from "Black" entertainment uses a pen name to write a book that propels him into the heart of hypocrisy and the madness he claims to disdain.',
+    imageUrl: 'https://m.media-amazon.com/images/M/MV5BOTg2Zjg0YjAtYzUwYi00YjVjLWE3YzctM2Y2YzE2Y2Y2Y2Y2XkEyXkFqcGdeQXVyMTUzNTgzNzM0._V1_.jpg',
+    rating: 8.2,
+    popularity: 85,
+    price: 17.99,
+    genres: ['Comedy', 'Drama'],
+    industry: 'Hollywood',
+    releaseDate: '2023-12-15',
+    trailerUrl: 'https://www.youtube.com/watch?v=EP34Yoxs3FQ',
+    reviews: [],
+    tags: ['comedy', 'drama', 'satire'],
+    insights: {
+      boxOffice: '$18 million',
+      awards: [
+        'People\'s Choice Award at Toronto International Film Festival',
+        'Independent Spirit Award for Best First Feature',
+        'Academy Award for Best Adapted Screenplay'
+      ],
+      trivia: [
+        'Based on the novel "Erasure" by Percival Everett',
+        'Features a star-studded supporting cast',
+        'Addresses themes of race and identity in publishing'
+      ],
+      cast: [
+        { name: 'Jeffrey Wright', role: 'Thelonious "Monk" Ellison', imageUrl: 'https://example.com/wright.jpg' },
+        { name: 'Tracee Ellis Ross', role: 'Lisa Ellison', imageUrl: 'https://example.com/ross.jpg' },
+        { name: 'Issa Rae', role: 'Sintara Golden', imageUrl: 'https://example.com/rae.jpg' }
+      ],
+      crew: [
+        { name: 'Cord Jefferson', role: 'Director', imageUrl: 'https://example.com/jefferson.jpg' },
+        { name: 'Cord Jefferson', role: 'Screenwriter', imageUrl: 'https://example.com/jefferson.jpg' }
+      ]
+    }
+  },
+  {
+    id: 17,
+    title: 'The Boy and the Heron',
+    description: 'A young boy named Mahito yearning for his mother ventures into a world shared by the living and the dead. There, death comes to an end, and life finds a new beginning.',
+    imageUrl: 'https://m.media-amazon.com/images/M/MV5BZWM3MDU2YWQtNDRjYy00YzVjLThkMTYtN2M0ZWE5NGM5YzY0XkEyXkFqcGdeQXVyMTUzNTgzNzM0._V1_.jpg',
+    rating: 8.6,
+    popularity: 91,
+    price: 19.99,
+    genres: ['Animation', 'Adventure', 'Fantasy'],
+    industry: 'Japanese',
+    releaseDate: '2023-12-08',
+    trailerUrl: 'https://www.youtube.com/watch?v=EP34Yoxs3FQ',
+    reviews: [],
+    tags: ['animation', 'fantasy', 'adventure'],
+    insights: {
+      boxOffice: '$167 million',
+      awards: [
+        'Academy Award for Best Animated Feature',
+        'Golden Globe Award for Best Animated Feature',
+        'BAFTA Award for Best Animated Film'
+      ],
+      trivia: [
+        'Hayao Miyazaki\'s first film in 10 years',
+        'Features hand-drawn animation',
+        'Inspired by the novel "How Do You Live?"'
+      ],
+      cast: [
+        { name: 'Soma Santoki', role: 'Mahito Maki (voice)', imageUrl: 'https://example.com/santoki.jpg' },
+        { name: 'Masaki Suda', role: 'The Gray Heron (voice)', imageUrl: 'https://example.com/suda.jpg' },
+        { name: 'Aimyon', role: 'Himi (voice)', imageUrl: 'https://example.com/aimyon.jpg' }
+      ],
+      crew: [
+        { name: 'Hayao Miyazaki', role: 'Director', imageUrl: 'https://example.com/miyazaki.jpg' },
+        { name: 'Hayao Miyazaki', role: 'Screenwriter', imageUrl: 'https://example.com/miyazaki.jpg' }
+      ]
+    }
+  },
+  {
+    id: 18,
+    title: 'Maestro',
+    description: 'A love story chronicling the lifelong relationship of conductor-composer Leonard Bernstein and actress Felicia Montealegre Cohn Bernstein.',
+    imageUrl: 'https://m.media-amazon.com/images/M/MV5BOTg2Zjg0YjAtYzUwYi00YjVjLWE3YzctM2Y2YzE2Y2Y2Y2Y2XkEyXkFqcGdeQXVyMTUzNTgzNzM0._V1_.jpg',
+    rating: 8.0,
+    popularity: 84,
+    price: 18.99,
+    genres: ['Biography', 'Drama', 'Music'],
+    industry: 'Hollywood',
+    releaseDate: '2023-12-20',
+    trailerUrl: 'https://www.youtube.com/watch?v=EP34Yoxs3FQ',
+    reviews: [],
+    tags: ['biography', 'drama', 'music'],
+    insights: {
+      boxOffice: '$45 million',
+      awards: [
+        'Academy Award for Best Actor',
+        'Golden Globe Award for Best Actor - Motion Picture Drama',
+        'BAFTA Award for Best Makeup and Hair'
+      ],
+      trivia: [
+        'Bradley Cooper\'s second directorial feature',
+        'Features extensive makeup to age Cooper into Bernstein',
+        'Includes actual recordings of Bernstein\'s performances'
+      ],
+      cast: [
+        { name: 'Bradley Cooper', role: 'Leonard Bernstein', imageUrl: 'https://example.com/cooper.jpg' },
+        { name: 'Carey Mulligan', role: 'Felicia Montealegre', imageUrl: 'https://example.com/mulligan.jpg' },
+        { name: 'Matt Bomer', role: 'David Oppenheim', imageUrl: 'https://example.com/bomer.jpg' }
+      ],
+      crew: [
+        { name: 'Bradley Cooper', role: 'Director', imageUrl: 'https://example.com/cooper.jpg' },
+        { name: 'Josh Singer', role: 'Screenwriter', imageUrl: 'https://example.com/singer.jpg' }
+      ]
+    }
   }
 ];
