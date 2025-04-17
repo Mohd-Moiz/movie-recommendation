@@ -1,4 +1,4 @@
-import { Movie, UserReview } from '../types';
+import { Movie, Review } from '../types/Movie';
 
 export const mockMovies: Movie[] = [
   {
@@ -13,7 +13,7 @@ export const mockMovies: Movie[] = [
     industry: 'Hollywood',
     releaseDate: '2023-07-21',
     trailerUrl: 'https://www.youtube.com/watch?v=uYPbbksJxIg',
-    reviews: [] as UserReview[],
+    reviews: [] as Review[],
     tags: ['Biography', 'Drama', 'History'],
     insights: {
       boxOffice: '$950 million',
@@ -126,7 +126,7 @@ export const mockMovies: Movie[] = [
     industry: 'Bollywood',
     releaseDate: '2023-01-25',
     trailerUrl: 'https://www.youtube.com/watch?v=vqu4z34wENw',
-    reviews: [] as UserReview[],
+    reviews: [] as Review[],
     tags: ['Action', 'Adventure', 'Thriller'],
     insights: {
       boxOffice: '₹1,050 crore (US$130 million)',
@@ -240,7 +240,7 @@ export const mockMovies: Movie[] = [
     industry: 'Hollywood',
     releaseDate: '2014-11-07',
     trailerUrl: 'https://www.youtube.com/watch?v=zSWdZVtXT7E',
-    reviews: [] as UserReview[],
+    reviews: [] as Review[],
     tags: ['Adventure', 'Drama', 'Sci-Fi'],
     insights: {
       boxOffice: '$677.5 million',
@@ -355,7 +355,7 @@ export const mockMovies: Movie[] = [
     industry: 'Hollywood',
     releaseDate: '2023-07-21',
     trailerUrl: 'https://www.youtube.com/watch?v=pBk4NYhWNMM',
-    reviews: [] as UserReview[],
+    reviews: [] as Review[],
     tags: ['Adventure', 'Comedy', 'Fantasy'],
     insights: {
       boxOffice: '$1.4 billion',
@@ -466,7 +466,7 @@ export const mockMovies: Movie[] = [
     industry: 'Hollywood',
     releaseDate: '2024-03-08',
     trailerUrl: 'https://www.youtube.com/watch?v=_inKs4eeHiI',
-    reviews: [] as UserReview[],
+    reviews: [] as Review[],
     tags: ['Animation', 'Action', 'Adventure'],
     insights: {
       boxOffice: "$380 million",

@@ -6,6 +6,8 @@ export interface Review {
   comment: string;
   createdAt: string;
   likes: number;
+  movieId?: number;
+  timestamp?: string;
 }
 
 export interface Movie {
@@ -22,7 +24,7 @@ export interface Movie {
   tags: string[];
   industry: string;
   releaseDate: string;
-  trailerUrl?: string;
+  trailerUrl: string;
   insights: {
     boxOffice: string;
     awards: string[];

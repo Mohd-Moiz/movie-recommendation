@@ -14,18 +14,19 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { useLanguage } from '../contexts/LanguageContext';
+import { en } from '../translations/en';
+
+import { Movie } from '../types/Movie';
 
 interface BookingDialogProps {
   open: boolean;
   onClose: () => void;
-  movie: {
-    title: string;
-    price: number;
-  };
+  movie: Movie;
 }
 
 const BookingDialog: React.FC<BookingDialogProps> = ({ open, onClose, movie }) => {
   const { t } = useLanguage();
+  const translations = en.booking;
   const [date, setDate] = useState<Date | null>(null);
   const [time, setTime] = useState('');
   const [seats, setSeats] = useState(1);
@@ -51,13 +52,13 @@ const BookingDialog: React.FC<BookingDialogProps> = ({ open, onClose, movie }) =
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
       <DialogTitle>
-        {t('booking.title')} - {movie.title}
+        {translations.title} - {movie.title}
       </DialogTitle>
       <DialogContent>
         <Box sx={{ display: 'grid', gap: 2, mt: 2 }}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
-              label={t('booking.date')}
+              label={translations.date}
               value={date}
               onChange={(newValue) => setDate(newValue)}
               slotProps={{ textField: { fullWidth: true } }}
@@ -65,7 +66,7 @@ const BookingDialog: React.FC<BookingDialogProps> = ({ open, onClose, movie }) =
           </LocalizationProvider>
 
           <TextField
-            label={t('booking.time')}
+            label={translations.time}
             type="time"
             value={time}
             onChange={(e) => setTime(e.target.value)}
@@ -79,7 +80,7 @@ const BookingDialog: React.FC<BookingDialogProps> = ({ open, onClose, movie }) =
           />
 
           <Box>
-            <Typography gutterBottom>{t('booking.seats')}</Typography>
+            <Typography gutterBottom>{translations.seats}</Typography>
             <Slider
               value={seats}
               onChange={(_, value) => setSeats(value as number)}
@@ -92,14 +93,14 @@ const BookingDialog: React.FC<BookingDialogProps> = ({ open, onClose, movie }) =
           </Box>
 
           <TextField
-            label={t('booking.name')}
+            label={translations.name}
             value={name}
             onChange={(e) => setName(e.target.value)}
             fullWidth
           />
 
           <TextField
-            label={t('booking.email')}
+            label={translations.email}
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -107,7 +108,7 @@ const BookingDialog: React.FC<BookingDialogProps> = ({ open, onClose, movie }) =
           />
 
           <TextField
-            label={t('booking.phone')}
+            label={translations.phone}
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             fullWidth
@@ -115,7 +116,7 @@ const BookingDialog: React.FC<BookingDialogProps> = ({ open, onClose, movie }) =
 
           <Box>
             <Typography variant="h6" align="right">
-              {t('booking.total')}: ₹{(movie.price * 83.33 * seats).toFixed(2)}
+              <Typography>{translations.total}: ${movie.price * seats}</Typography>
             </Typography>
           </Box>
         </Box>
@@ -127,7 +128,7 @@ const BookingDialog: React.FC<BookingDialogProps> = ({ open, onClose, movie }) =
           onClick={handleBooking}
           disabled={!date || !time || !name || !email || !phone}
         >
-          {t('booking.confirm')}
+          {translations.confirm}
         </Button>
       </DialogActions>
     </Dialog>

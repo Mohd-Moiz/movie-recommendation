@@ -4,6 +4,7 @@ import { CssBaseline, Box } from '@mui/material';
 import { AuthProvider } from './contexts/AuthContext';
 import { ThemeContextProvider } from './contexts/ThemeContext';
 import { LanguageProvider } from './contexts/LanguageContext';
+import { UserProvider } from './context/UserContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import MovieDetail from './components/MovieDetail';
@@ -11,7 +12,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import About from './pages/About';
 import Home from './pages/Home';
-import { Movie } from './types';
+import { Movie } from './types/Movie';
 import BookingDialog from './components/BookingDialog';
 
 const App: React.FC = () => {

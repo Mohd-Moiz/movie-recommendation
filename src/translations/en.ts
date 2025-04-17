@@ -25,6 +25,18 @@ export const en = {
     haveAccount: 'Already have an account?',
     signInWithGoogle: 'Sign in with Google'
   },
+  booking: {
+    title: 'Book Your Movie',
+    date: 'Select Date',
+    time: 'Select Time',
+    seats: 'Number of Seats',
+    name: 'Full Name',
+    email: 'Email',
+    phone: 'Phone Number',
+    total: 'Total Price',
+    cancel: 'Cancel',
+    confirm: 'Confirm Booking'
+  },
   errors: {
     emailRequired: 'Email is required',
     emailInvalid: 'Invalid email address',

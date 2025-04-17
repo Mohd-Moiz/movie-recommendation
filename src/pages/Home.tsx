@@ -3,7 +3,7 @@ import { Box, Container, Typography, Grid } from '@mui/material';
 import MovieGrid from '../components/movies/MovieGrid';
 import { ChatBot } from '../components/ChatBot';
 import { mockMovies } from '../data/mockMovies';
-import { Movie } from '../types';
+import { Movie } from '../types/Movie';
 import SearchBar, { SearchCriteria } from '../components/SearchBar';
 import { UserProvider } from '../context/UserContext';
 
