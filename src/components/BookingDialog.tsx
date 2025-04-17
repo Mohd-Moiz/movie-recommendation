@@ -9,13 +9,14 @@ import {
   Box,
   Typography,
   Slider,
+  Grid,
+  Paper,
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { useLanguage } from '../contexts/LanguageContext';
 import { en } from '../translations/en';
-
 import { Movie } from '../types/Movie';
 
 interface BookingDialogProps {
@@ -44,7 +45,7 @@ const BookingDialog: React.FC<BookingDialogProps> = ({ open, onClose, movie }) =
       name,
       email,
       phone,
-      total: movie.price * seats,
+      total: movie.price * seats * 83.33, // Convert to INR
     });
     onClose();
   };
@@ -56,6 +57,41 @@ const BookingDialog: React.FC<BookingDialogProps> = ({ open, onClose, movie }) =
       </DialogTitle>
       <DialogContent>
         <Box sx={{ display: 'grid', gap: 2, mt: 2 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <img
+                src={movie.imageUrl}
+                alt={movie.title}
+                style={{ width: '100%', borderRadius: 8 }}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Typography variant="h6" gutterBottom>
+                {movie.title}
+              </Typography>
+              <Typography variant="body2" color="text.secondary" gutterBottom>
+                {movie.description}
+              </Typography>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mb: 1 }}>
+                {movie.genres.map((genre) => (
+                  <Typography
+                    key={genre}
+                    variant="caption"
+                    sx={{
+                      bgcolor: 'primary.main',
+                      color: 'white',
+                      px: 1,
+                      py: 0.5,
+                      borderRadius: 1
+                    }}
+                  >
+                    {genre}
+                  </Typography>
+                ))}
+              </Box>
+            </Grid>
+          </Grid>
+
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
               label={translations.date}
@@ -114,23 +150,37 @@ const BookingDialog: React.FC<BookingDialogProps> = ({ open, onClose, movie }) =
             fullWidth
           />
 
-          <Box>
-            <Typography variant="h6" align="right">
-              <Typography>{translations.total}: ${movie.price * seats}</Typography>
+          <Paper sx={{ p: 2, mt: 2 }}>
+            <Typography variant="h6" gutterBottom>
+              Booking Summary
             </Typography>
-          </Box>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <Typography variant="body2">Base Price:</Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="body2" align="right">₹{(movie.price * 83.33).toFixed(2)}</Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="body2">Number of Seats:</Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="body2" align="right">{seats}</Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="h6">Total Price:</Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="h6" align="right">₹{(movie.price * seats * 83.33).toFixed(2)}</Typography>
+              </Grid>
+            </Grid>
+          </Paper>
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="secondary">
-          {t('booking').cancel}
-        </Button>
-        <Button
-          variant="contained"
-          onClick={handleBooking}
-          disabled={!date || !time || !name || !email || !phone}
-        >
-          {translations.confirm}
+        <Button onClick={onClose}>Cancel</Button>
+        <Button variant="contained" onClick={handleBooking} color="primary">
+          Confirm Booking
         </Button>
       </DialogActions>
     </Dialog>
