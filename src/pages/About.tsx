@@ -40,16 +40,26 @@ const About: React.FC = () => {
           >
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <Avatar
-                sx={{ width: 100, height: 100, mb: 2 }}
+                sx={{ width: 130, height: 130, mb: 2 }}
                 alt="Mohammed Moiz"
+                src="/moiz.jpeg"
               />
               <Typography variant="h6">Mohammed Moiz</Typography>
               <Typography color="text.secondary">Full Stack Developer</Typography>
             </Box>
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <Avatar
-                sx={{ width: 100, height: 100, mb: 2 }}
-                alt="Mohammed Kaid"
+                sx={{ 
+                  width: 130, 
+                  height: 130, 
+                  mb: 2,
+                  '& img': {
+                    objectFit: 'contain',
+                    objectPosition: 'center'
+                  }
+                }}
+                alt="Mohammed Kaif"
+                src="/ko.jpeg"
               />
               <Typography variant="h6">Mohammed Kaif</Typography>
               <Typography color="text.secondary">Web Developer</Typography>
