@@ -15,7 +15,7 @@ import {
   Paper,
   IconButton,
 } from '@mui/material';
-import { Movie } from '../types/Movie';
+import { Movie } from '../types';
 import { useLanguage } from '../contexts/LanguageContext';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';

@@ -9,7 +9,7 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import MovieCard from './MovieCard';
-import { Movie } from '../types/Movie';
+import { Movie } from '../types';
 
 interface TabPanelProps {
   children?: React.ReactNode;

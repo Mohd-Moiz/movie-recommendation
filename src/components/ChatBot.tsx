@@ -22,7 +22,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material/styles';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useBag } from '../contexts/BagContext';
-import { Movie } from '../types/Movie';
+import { Movie } from '../types';
 
 interface Message {
   id: string;

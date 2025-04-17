@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Container, Typography, Grid } from '@mui/material';
 import MovieGrid from '../components/movies/MovieGrid';
 import { mockMovies } from '../data/mockMovies';
-import { Movie } from '../types/Movie';
+import { Movie } from '../types';
 import SearchBar, { SearchCriteria } from '../components/SearchBar';
 
 interface HomeProps {

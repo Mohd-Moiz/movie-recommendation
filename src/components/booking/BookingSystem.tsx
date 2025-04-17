@@ -18,7 +18,7 @@ import {
   Alert,
 } from '@mui/material';
 import { Movie } from '../../types';
-import { useUser } from '../../context/UserContext';
+import { useUser } from '../../contexts/UserContext';
 
 interface BookingSystemProps {
   movie: Movie;

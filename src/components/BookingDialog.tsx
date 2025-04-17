@@ -21,7 +21,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import CloseIcon from '@mui/icons-material/Close';
 import { useLanguage } from '../contexts/LanguageContext';
 import { en } from '../translations/en';
-import { Movie } from '../types/Movie';
+import { Movie } from '../types';
 
 interface BookingDialogProps {
   open: boolean;

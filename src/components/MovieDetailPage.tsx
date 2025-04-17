@@ -16,7 +16,7 @@ import {
   useTheme,
   useMediaQuery,
 } from '@mui/material';
-import { Movie, Review } from '../types/Movie';
+import { Movie, Review } from '../types';
 import { useLanguage } from '../contexts/LanguageContext';
 import ReviewSection from './ReviewSection';
 

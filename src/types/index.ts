@@ -24,6 +24,17 @@ export interface UserReview {
   likes: number;
 }
 
+export interface Review {
+  id: string;
+  userId: string;
+  userName: string;
+  movieId: number;
+  rating: number;
+  comment: string;
+  timestamp: string;
+  likes: number;
+}
+
 export interface Movie {
   id: number;
   title: string;
@@ -37,7 +48,7 @@ export interface Movie {
   industry: string;
   releaseDate: string;
   trailerUrl: string;
-  reviews: UserReview[];
+  reviews: Review[];
   insights: {
     boxOffice: string;
     awards: string[];
