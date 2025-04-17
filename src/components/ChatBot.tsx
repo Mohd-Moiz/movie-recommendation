@@ -1,304 +1,231 @@
-import React, { useState } from 'react';
-import { Box, TextField, IconButton, Paper, Typography, List, ListItem, Tooltip, Button } from '@mui/material';
-import MinimizeIcon from '@mui/icons-material/Minimize';
-import ChatIcon from '@mui/icons-material/Chat';
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import React, { useState, useRef, useEffect } from 'react';
+import {
+  Box,
+  TextField,
+  IconButton,
+  Paper,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  Avatar,
+  CircularProgress,
+  Button,
+  Divider,
+} from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+import SmartToyIcon from '@mui/icons-material/SmartToy';
+import PersonIcon from '@mui/icons-material/Person';
+import { useTheme } from '@mui/material/styles';
+import { useLanguage } from '../contexts/LanguageContext';
+import { useBag } from '../contexts/BagContext';
 import { Movie } from '../types/Movie';
-import { mockMovies } from '../data/mockMovies';
 
 interface Message {
+  id: string;
   text: string;
-  isUser: boolean;
-  movie?: Movie;
+  sender: 'user' | 'bot';
+  timestamp: Date;
 }
 
-interface ChatBotProps {
-  onMovieSelect: (movie: Movie) => void;
-}
-
-export const ChatBot: React.FC<ChatBotProps> = ({ onMovieSelect }) => {
-  const [isMinimized, setIsMinimized] = useState(false);
-  const [savedMovies, setSavedMovies] = useState<Set<number>>(new Set());
-  const [favoriteMovies, setFavoriteMovies] = useState<Set<number>>(new Set());
-  const [messages, setMessages] = useState<Message[]>([
-    { text: "Hi! I can help you find movies based on your preferences. Try asking something like 'Recommend me a thriller like Inception'", isUser: false }
-  ]);
+const ChatBot: React.FC = () => {
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const theme = useTheme();
+  const { t } = useLanguage();
+  const { bag } = useBag();
 
-  const findSimilarMovies = (reference: string, genre?: string) => {
-    const referenceMovie = mockMovies.find(
-      movie => movie.title.toLowerCase() === reference.toLowerCase()
-    );
-
-    if (!referenceMovie) return [];
-
-    return mockMovies
-      .filter(movie => {
-        if (movie.id === referenceMovie.id) return false;
-        if (genre && !movie.genres.includes(genre)) return false;
-        
-        // Check for similar genres
-        const genreMatch = movie.genres.some(g => referenceMovie.genres.includes(g));
-        
-        // Check for similar tags
-        const tagMatch = movie.tags.some(t => referenceMovie.tags.includes(t));
-        
-        // Check for similar rating range
-        const ratingMatch = Math.abs(movie.rating - referenceMovie.rating) <= 1;
-        
-        return genreMatch && (tagMatch || ratingMatch);
-      })
-      .sort((a, b) => b.rating - a.rating)
-      .slice(0, 3);
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const processMessage = (message: string) => {
-    const lowerMessage = message.toLowerCase();
-    
-    // Pattern matching for "recommend me a [genre] like [movie]"
-    const recommendPattern = /recommend me a (\w+) like (.+)/i;
-    const match = message.match(recommendPattern);
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
-    if (match) {
-      const [, genre, movieName] = match;
-      const similarMovies = findSimilarMovies(movieName.trim(), genre.trim());
-      
-      if (similarMovies.length > 0) {
-        return {
-          text: `Based on your interest in ${movieName}, here are some ${genre} recommendations:`,
-          recommendations: similarMovies
-        };
-      } else {
-        return {
-          text: `I couldn't find any similar ${genre} movies like ${movieName}. Try asking about a different movie or genre!`,
-          recommendations: []
-        };
-      }
-    }
-
-    // Default response
-    return {
-      text: "I'm not sure what you're looking for. Try asking something like 'Recommend me a thriller like Inception'",
-      recommendations: []
-    };
-  };
-
-  const handleSend = () => {
+  const handleSendMessage = async () => {
     if (!input.trim()) return;
 
-    const userMessage = { text: input, isUser: true };
-    const response = processMessage(input);
-    const botMessage = { text: response.text, isUser: false };
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      text: input,
+      sender: 'user',
+      timestamp: new Date(),
+    };
 
-    setMessages(prev => [...prev, userMessage, botMessage]);
+    setMessages((prev) => [...prev, userMessage]);
+    setInput('');
+    setIsTyping(true);
+
+    // Simulate bot response
+    setTimeout(() => {
+      const botResponse = generateBotResponse(input, bag);
+      const botMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        text: botResponse,
+        sender: 'bot',
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, botMessage]);
+      setIsTyping(false);
+    }, 1000);
+  };
+
+  const generateBotResponse = (userInput: string, userBag: any): string => {
+    const input = userInput.toLowerCase();
     
-    if (response.recommendations?.length > 0) {
-      response.recommendations.forEach(movie => {
-        setMessages(prev => [
-          ...prev,
-          {
-            text: `${movie.title} (Rating: ${movie.rating}/10) - ${movie.description.substring(0, 100)}...`,
-            isUser: false,
-            movie
-          }
-        ]);
-      });
+    // Context-aware responses based on user's bag
+    if (input.includes('watchlist') || input.includes('watch list')) {
+      if (userBag.watchlist.length === 0) {
+        return "You don't have any movies in your watchlist yet. Would you like me to recommend some movies for you?";
+      }
+      return `You have ${userBag.watchlist.length} movies in your watchlist. Would you like to see them?`;
     }
 
-    setInput('');
+    if (input.includes('favorite') || input.includes('favourite')) {
+      if (userBag.favorites.length === 0) {
+        return "You haven't added any movies to your favorites yet. Would you like me to suggest some great movies?";
+      }
+      return `You have ${userBag.favorites.length} favorite movies. Would you like to see them?`;
+    }
+
+    if (input.includes('watched')) {
+      if (userBag.watched.length === 0) {
+        return "You haven't marked any movies as watched yet. Would you like to see some popular movies?";
+      }
+      return `You've watched ${userBag.watched.length} movies. Would you like to see your watched history?`;
+    }
+
+    // General responses
+    if (input.includes('hello') || input.includes('hi')) {
+      return "Hello! I'm your movie assistant. How can I help you today?";
+    }
+
+    if (input.includes('help')) {
+      return "I can help you with:\n- Finding movies\n- Managing your watchlist\n- Adding movies to favorites\n- Tracking watched movies\n- Getting movie recommendations\nWhat would you like to do?";
+    }
+
+    if (input.includes('recommend') || input.includes('suggest')) {
+      return "I'd be happy to recommend some movies! What kind of movies do you like? You can tell me your favorite genres or recent movies you enjoyed.";
+    }
+
+    return "I'm not sure I understand. Could you please rephrase your question? I can help you with movie recommendations, managing your watchlist, or finding specific movies.";
   };
 
   return (
-    <Box sx={{ position: 'fixed', bottom: { xs: 16, md: 24 }, right: { xs: 16, md: 24 }, zIndex: 1000 }}>
-      {isMinimized ? (
-        <IconButton
-          onClick={() => setIsMinimized(false)}
-          sx={{
-            bgcolor: 'primary.main',
-            color: 'white',
-            width: 56,
-            height: 56,
-            '&:hover': {
-              bgcolor: 'primary.dark',
-            },
-            boxShadow: 3,
-          }}
-        >
-          <ChatIcon />
-        </IconButton>
-      ) : (
-        <Paper 
-          elevation={3} 
-          sx={{ 
-            width: { xs: 'calc(100% - 32px)', sm: 400 },
-            maxHeight: { xs: '60vh', md: '70vh' },
-            display: 'flex',
-            flexDirection: 'column',
-            borderRadius: 2,
-            bgcolor: 'background.paper',
-            boxShadow: 24,
-          }}
-        >
-          <Box sx={{ 
-            p: 2, 
-            borderBottom: 1, 
-            borderColor: 'divider',
-            bgcolor: 'primary.main',
-            color: 'primary.contrastText',
-            borderRadius: '8px 8px 0 0',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center'
-          }}>
-            <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-              Movie AI Assistant
-            </Typography>
-            <IconButton
-              onClick={() => setIsMinimized(true)}
-              size="small"
-              sx={{ color: 'primary.contrastText' }}
-            >
-              <MinimizeIcon />
-            </IconButton>
-          </Box>
-          
-          <Box sx={{ 
-            flex: 1,
-            overflowY: 'auto',
-            p: 2,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 1,
-            minHeight: '300px',
-            maxHeight: { xs: 'calc(60vh - 140px)', md: 'calc(70vh - 140px)' },
-          }}>
-            <List>
-              {messages.map((message, index) => (
-                <ListItem
-                  key={index}
-                  sx={{
-                    justifyContent: message.isUser ? 'flex-end' : 'flex-start',
-                    mb: 1,
-                    padding: 1
-                  }}
-                >
-                  <Paper
-                    sx={{
-                      p: 2,
-                      backgroundColor: message.isUser ? 'primary.light' : 'grey.100',
-                      color: message.isUser ? 'primary.contrastText' : 'text.primary',
-                      maxWidth: '80%',
-                      borderRadius: message.isUser ? '20px 20px 0 20px' : '20px 20px 20px 0',
-                      boxShadow: 1
-                    }}
-                  >
-                    <Typography variant="body2">
-                      {message.text}
-                    </Typography>
-                    {!message.isUser && message.movie && (
-                      <Box sx={{ mt: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <Button
-                          variant="text"
-                          size="small"
-                          onClick={() => message.movie && onMovieSelect(message.movie)}
-                          sx={{ mr: 1 }}
-                        >
-                          View Details
-                        </Button>
-                        <Tooltip title="Save for later">
-                          <IconButton
-                            size="small"
-                            onClick={() => {
-                              if (message.movie) {
-                                const newSaved = new Set(savedMovies);
-                                if (newSaved.has(message.movie.id)) {
-                                  newSaved.delete(message.movie.id);
-                                } else {
-                                  newSaved.add(message.movie.id);
-                                }
-                                setSavedMovies(newSaved);
-                              }
-                            }}
-                          >
-                            {message.movie && savedMovies.has(message.movie.id) ? 
-                              <BookmarkIcon color="primary" /> : 
-                              <BookmarkBorderIcon />}
-                          </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Add to favorites">
-                          <IconButton
-                            size="small"
-                            onClick={() => {
-                              if (message.movie) {
-                                const newFavorites = new Set(favoriteMovies);
-                                if (newFavorites.has(message.movie.id)) {
-                                  newFavorites.delete(message.movie.id);
-                                } else {
-                                  newFavorites.add(message.movie.id);
-                                }
-                                setFavoriteMovies(newFavorites);
-                              }
-                            }}
-                          >
-                            {message.movie && favoriteMovies.has(message.movie.id) ? 
-                              <FavoriteIcon color="error" /> : 
-                              <FavoriteBorderIcon />}
-                          </IconButton>
-                        </Tooltip>
-                      </Box>
-                    )}
-                  </Paper>
-                </ListItem>
-              ))}
-            </List>
-          </Box>
+    <Box
+      sx={{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        bgcolor: theme.palette.background.default,
+      }}
+    >
+      <Box
+        sx={{
+          p: 2,
+          borderBottom: `1px solid ${theme.palette.divider}`,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 1,
+        }}
+      >
+        <SmartToyIcon color="primary" />
+        <Typography variant="h6">Movie Assistant</Typography>
+      </Box>
 
-          <Box sx={{ 
-            p: 2, 
-            borderTop: 1, 
-            borderColor: 'divider',
-            bgcolor: 'background.paper',
-            display: 'flex', 
-            gap: 1 
-          }}>
-            <TextField
-              fullWidth
-              size="small"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-              placeholder="Ask for movie recommendations..."
+      <Box
+        sx={{
+          flex: 1,
+          overflow: 'auto',
+          p: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 2,
+        }}
+      >
+        {messages.map((message) => (
+          <Box
+            key={message.id}
+            sx={{
+              display: 'flex',
+              justifyContent: message.sender === 'user' ? 'flex-end' : 'flex-start',
+              gap: 1,
+            }}
+          >
+            {message.sender === 'bot' && (
+              <Avatar sx={{ bgcolor: theme.palette.primary.main }}>
+                <SmartToyIcon />
+              </Avatar>
+            )}
+            <Paper
               sx={{
-                '& .MuiOutlinedInput-root': {
-                  borderRadius: '20px',
-                  '&:hover': {
-                    '& > fieldset': {
-                      borderColor: 'primary.main',
-                    },
-                  },
-                },
-              }}
-            />
-            <IconButton 
-              color="primary" 
-              onClick={handleSend}
-              sx={{ 
-                bgcolor: 'primary.main',
-                color: 'white',
-                '&:hover': {
-                  bgcolor: 'primary.dark',
-                },
+                p: 2,
+                maxWidth: '70%',
+                bgcolor: message.sender === 'user' ? theme.palette.primary.main : theme.palette.background.paper,
+                color: message.sender === 'user' ? theme.palette.primary.contrastText : theme.palette.text.primary,
               }}
             >
-              <SendIcon />
-            </IconButton>
+              <Typography variant="body1" sx={{ whiteSpace: 'pre-line' }}>
+                {message.text}
+              </Typography>
+              <Typography variant="caption" sx={{ display: 'block', mt: 1, opacity: 0.7 }}>
+                {message.timestamp.toLocaleTimeString()}
+              </Typography>
+            </Paper>
+            {message.sender === 'user' && (
+              <Avatar sx={{ bgcolor: theme.palette.secondary.main }}>
+                <PersonIcon />
+              </Avatar>
+            )}
           </Box>
-        </Paper>
-      )}
+        ))}
+        {isTyping && (
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <CircularProgress size={20} />
+            <Typography variant="body2" color="text.secondary">
+              Assistant is typing...
+            </Typography>
+          </Box>
+        )}
+        <div ref={messagesEndRef} />
+      </Box>
+
+      <Box
+        sx={{
+          p: 2,
+          borderTop: `1px solid ${theme.palette.divider}`,
+          display: 'flex',
+          gap: 1,
+        }}
+      >
+        <TextField
+          fullWidth
+          variant="outlined"
+          placeholder="Type your message..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+              e.preventDefault();
+              handleSendMessage();
+            }
+          }}
+          multiline
+          maxRows={4}
+        />
+        <IconButton
+          color="primary"
+          onClick={handleSendMessage}
+          disabled={!input.trim() || isTyping}
+        >
+          <SendIcon />
+        </IconButton>
+      </Box>
     </Box>
   );
 };
+
+export default ChatBot;

@@ -9,9 +9,15 @@ import {
   Rating,
   useTheme,
   useMediaQuery,
+  Button,
+  IconButton,
 } from '@mui/material';
 import { Movie } from '../types/Movie';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useBag } from '../contexts/BagContext';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 interface MovieCardProps {
   movie: Movie;
@@ -22,6 +28,19 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onSelect }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const { t } = useLanguage();
+  const { dispatch } = useBag();
+
+  const handleAddToWatchlist = () => {
+    dispatch({ type: 'ADD_TO_WATCHLIST', payload: movie });
+  };
+
+  const handleAddToFavorites = () => {
+    dispatch({ type: 'ADD_TO_FAVORITES', payload: movie });
+  };
+
+  const handleAddToWatched = () => {
+    dispatch({ type: 'ADD_TO_WATCHED', payload: movie });
+  };
 
   return (
     <Card
@@ -126,6 +145,17 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onSelect }) => {
         >
           {movie.industry}
         </Typography>
+        <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-between' }}>
+          <IconButton onClick={handleAddToWatchlist} title="Add to Watchlist">
+            <BookmarkIcon />
+          </IconButton>
+          <IconButton onClick={handleAddToFavorites} title="Add to Favorites">
+            <FavoriteIcon />
+          </IconButton>
+          <IconButton onClick={handleAddToWatched} title="Mark as Watched">
+            <VisibilityIcon />
+          </IconButton>
+        </Box>
       </CardContent>
     </Card>
   );

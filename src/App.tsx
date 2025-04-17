@@ -14,6 +14,9 @@ import About from './pages/About';
 import Home from './pages/Home';
 import { Movie } from './types/Movie';
 import BookingDialog from './components/BookingDialog';
+import { BagProvider } from './contexts/BagContext';
+import { UserBag } from './components/UserBag';
+import ChatBot from './components/ChatBot';
 
 const App: React.FC = () => {
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
@@ -28,66 +31,75 @@ const App: React.FC = () => {
   };
 
   return (
-    <Router>
-      <ThemeContextProvider>
-        <LanguageProvider>
+    <ThemeContextProvider>
+      <CssBaseline />
+      <LanguageProvider>
+        <BagProvider>
           <AuthProvider>
             <UserProvider>
-            <CssBaseline />
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                minHeight: '100vh',
-                width: '100%',
-                overflowX: 'hidden',
-              }}
-            >
-              <Header />
-              <Box
-                component="main"
-                sx={{
-                  flexGrow: 1,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  width: '100%',
-                  maxWidth: '100%',
-                  px: { xs: 2, sm: 3, md: 4 },
-                  py: { xs: 2, sm: 3 },
-                }}
-              >
-                <Routes>
-                  <Route
-                    path="/"
-                    element={
-                      <Home onMovieSelect={setSelectedMovie} />
-                    }
-                  />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<Register />} />
-                  <Route path="/about" element={<About />} />
-                </Routes>
-              </Box>
-              <Footer />
-              <MovieDetail
-                movie={selectedMovie}
-                open={Boolean(selectedMovie)}
-                onClose={() => setSelectedMovie(null)}
-                onBook={handleBookMovie}
-              />
-              {selectedMovie && (
-                <BookingDialog
-                  open={isBookingOpen}
-                  onClose={handleCloseBooking}
-                  movie={selectedMovie}
-                />
-              )}
-            </Box>
+              <Router>
+                <Header />
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    minHeight: '100vh',
+                    width: '100%',
+                    overflowX: 'hidden',
+                  }}
+                >
+                  <Box
+                    component="main"
+                    sx={{
+                      flexGrow: 1,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      width: '100%',
+                      maxWidth: '100%',
+                      px: { xs: 2, sm: 3, md: 4 },
+                      py: { xs: 2, sm: 3 },
+                    }}
+                  >
+                    <Routes>
+                      <Route
+                        path="/"
+                        element={
+                          <Home onMovieSelect={setSelectedMovie} />
+                        }
+                      />
+                      <Route path="/login" element={<Login />} />
+                      <Route path="/register" element={<Register />} />
+                      <Route path="/about" element={<About />} />
+                      <Route 
+                        path="/movie/:id" 
+                        element={
+                          <MovieDetail 
+                            movie={selectedMovie}
+                            open={Boolean(selectedMovie)}
+                            onClose={() => setSelectedMovie(null)}
+                            onBook={handleBookMovie}
+                          />
+                        } 
+                      />
+                      <Route path="/my-bag" element={<UserBag />} />
+                    </Routes>
+                  </Box>
+                  <Footer />
+                  {selectedMovie && (
+                    <BookingDialog
+                      open={isBookingOpen}
+                      onClose={handleCloseBooking}
+                      movie={selectedMovie}
+                    />
+                  )}
+                  <ChatBot />
+                </Box>
+              </Router>
             </UserProvider>
           </AuthProvider>
-        </LanguageProvider>
-      </ThemeContextProvider>
-    </Router>
+        </BagProvider>
+      </LanguageProvider>
+    </ThemeContextProvider>
   );
 };
 
