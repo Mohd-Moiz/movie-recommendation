@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography, List, ListItem, ListItemText, IconButton, Divider } from '@mui/material';
 import { useBag } from '../contexts/BagContext';
-import { Movie } from '../types/Movie';
+import { Movie } from '../types/UserBag';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -33,7 +33,7 @@ export function UserBag() {
           Watchlist <BookmarkIcon />
         </Typography>
         <List>
-          {bag.watchlist.map((movie) => (
+          {bag.watchlist.map((movie: Movie) => (
             <ListItem
               key={movie.id}
               secondaryAction={
@@ -42,7 +42,7 @@ export function UserBag() {
                 </IconButton>
               }
             >
-              <ListItemText primary={movie.title} secondary={movie.description} />
+              <ListItemText primary={movie.title} secondary={movie.overview} />
             </ListItem>
           ))}
         </List>
@@ -55,7 +55,7 @@ export function UserBag() {
           Favorites <FavoriteIcon />
         </Typography>
         <List>
-          {bag.favorites.map((movie) => (
+          {bag.favorites.map((movie: Movie) => (
             <ListItem
               key={movie.id}
               secondaryAction={
@@ -64,7 +64,7 @@ export function UserBag() {
                 </IconButton>
               }
             >
-              <ListItemText primary={movie.title} secondary={movie.description} />
+              <ListItemText primary={movie.title} secondary={movie.overview} />
             </ListItem>
           ))}
         </List>
@@ -77,7 +77,7 @@ export function UserBag() {
           Watched <VisibilityIcon />
         </Typography>
         <List>
-          {bag.watched.map((movie) => (
+          {bag.watched.map((movie: Movie) => (
             <ListItem
               key={movie.id}
               secondaryAction={
@@ -86,7 +86,7 @@ export function UserBag() {
                 </IconButton>
               }
             >
-              <ListItemText primary={movie.title} secondary={movie.description} />
+              <ListItemText primary={movie.title} secondary={movie.overview} />
             </ListItem>
           ))}
         </List>
