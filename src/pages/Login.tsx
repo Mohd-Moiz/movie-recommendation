@@ -14,13 +14,15 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import GoogleIcon from '@mui/icons-material/Google';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import MicrosoftIcon from '@mui/icons-material/Microsoft';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { login, googleSignIn } = useAuth();
+  const { login, googleSignIn, microsoftSignIn, facebookSignIn } = useAuth();
   const { t } = useLanguage();
   const navigate = useNavigate();
 
@@ -49,6 +51,32 @@ const Login: React.FC = () => {
       navigate('/');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to sign in with Google');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleMicrosoftSignIn = async () => {
+    try {
+      setError('');
+      setLoading(true);
+      await microsoftSignIn();
+      navigate('/');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to sign in with Microsoft');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleFacebookSignIn = async () => {
+    try {
+      setError('');
+      setLoading(true);
+      await facebookSignIn();
+      navigate('/');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to sign in with Facebook');
     } finally {
       setLoading(false);
     }
@@ -128,6 +156,26 @@ const Login: React.FC = () => {
               sx={{ mb: 2 }}
             >
               {t('login.signInWithGoogle')}
+            </Button>
+            <Button
+              fullWidth
+              variant="outlined"
+              startIcon={<MicrosoftIcon />}
+              onClick={handleMicrosoftSignIn}
+              disabled={loading}
+              sx={{ mb: 2 }}
+            >
+              {t('login.signInWithMicrosoft')}
+            </Button>
+            <Button
+              fullWidth
+              variant="outlined"
+              startIcon={<FacebookIcon />}
+              onClick={handleFacebookSignIn}
+              disabled={loading}
+              sx={{ mb: 2 }}
+            >
+              {t('login.signInWithFacebook')}
             </Button>
             <Box sx={{ textAlign: 'center' }}>
               <Link to="/register" style={{ textDecoration: 'none' }}>

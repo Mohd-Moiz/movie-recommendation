@@ -13,6 +13,8 @@ export const en = {
     password: 'Password',
     signIn: 'Sign In',
     signInWithGoogle: 'Sign in with Google',
+    signInWithMicrosoft: 'Sign in with Microsoft',
+    signInWithFacebook: 'Sign in with Facebook',
     noAccount: "Don't have an account?",
     forgotPassword: 'Forgot Password?'
   },
