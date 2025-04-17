@@ -36,23 +36,25 @@ const Footer: React.FC = () => {
           <Typography variant="body2" color="text.secondary">
             © {new Date().getFullYear()} Movie Recommendations. All rights reserved.
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Developed by{' '}
-            <Link
-              href="https://github.com/Mohammed-Moiz"
-              target="_blank"
-              rel="noopener noreferrer"
-              sx={{
-                color: theme.palette.primary.main,
-                textDecoration: 'none',
-                '&:hover': {
-                  textDecoration: 'underline',
-                },
-              }}
-            >
-              Mohammed Moiz
-            </Link>
-          </Typography>
+          <Box sx={{ textAlign: 'right' }}>
+            <Typography variant="body2" color="text.secondary">
+              Developed by{' '}
+              <Link
+                href="https://github.com/Mohd-Moiz"
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{
+                  color: theme.palette.primary.main,
+                  textDecoration: 'none',
+                  '&:hover': {
+                    textDecoration: 'underline',
+                  },
+                }}
+              >
+                Mohd Moiz
+              </Link>
+            </Typography>
+          </Box>
         </Box>
       </Container>
     </Box>

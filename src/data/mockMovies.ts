@@ -269,7 +269,7 @@ export const mockMovies: Movie[] = [
     id: 10,
     title: 'Killers of the Flower Moon',
     description: 'When oil is discovered in 1920s Oklahoma under Osage Nation land, the Osage people are murdered one by one - until the FBI steps in to unravel the mystery.',
-    imageUrl: 'https://m.media-amazon.com/images/M/MV5BZGM3MDU2YWQtNDRjYy00YzVjLThkMTYtN2M0ZWE5NGM5YzY0XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_.jpg',
+    imageUrl: 'https://image.tmdb.org/t/p/w500/dB6Krk806zeqd0YNp2ngQ9zXteH.jpg',
     rating: 8.9,
     popularity: 92,
     price: 19.99,
@@ -307,7 +307,7 @@ export const mockMovies: Movie[] = [
     id: 11,
     title: 'The Holdovers',
     description: 'A cranky history teacher at a remote prep school is forced to remain on campus over the holidays with a troubled student who has no place to go.',
-    imageUrl: 'https://m.media-amazon.com/images/M/MV5BOWY2YzA0Y2UtYjJkYy00YjM4LThkY2QtYjE0ZDRhYzY4YzM0XkEyXkFqcGdeQXVyMTUzNTgzNzM0._V1_.jpg',
+    imageUrl: 'https://image.tmdb.org/t/p/w500/eqjNCdbX1R1w33i2nCsB5X2QmIR.jpg',
     rating: 8.3,
     popularity: 88,
     price: 16.99,
@@ -329,13 +329,13 @@ export const mockMovies: Movie[] = [
         'Filmed on location in Massachusetts'
       ],
       cast: [
-        { name: 'Paul Giamatti', role: 'Paul Hunham', imageUrl: 'https://example.com/giamatti.jpg' },
-        { name: 'Da\'Vine Joy Randolph', role: 'Mary Lamb', imageUrl: 'https://example.com/randolph.jpg' },
-        { name: 'Dominic Sessa', role: 'Angus Tully', imageUrl: 'https://example.com/sessa.jpg' }
+        { name: 'Paul Giamatti', role: 'Paul Hunham', imageUrl: 'https://image.tmdb.org/t/p/w185/2Rdd6qXj5zYHv2BkpjkJYGZxTKb.jpg' },
+        { name: 'Da\'Vine Joy Randolph', role: 'Mary Lamb', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Dominic Sessa', role: 'Angus Tully', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
       ],
       crew: [
-        { name: 'Alexander Payne', role: 'Director', imageUrl: 'https://example.com/payne.jpg' },
-        { name: 'David Hemingson', role: 'Screenwriter', imageUrl: 'https://example.com/hemingson.jpg' }
+        { name: 'Alexander Payne', role: 'Director', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'David Hemingson', role: 'Screenwriter', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
       ]
     }
   },
@@ -343,7 +343,7 @@ export const mockMovies: Movie[] = [
     id: 12,
     title: 'Poor Things',
     description: 'The incredible tale about the fantastical evolution of Bella Baxter, a young woman brought back to life by the brilliant and unorthodox scientist Dr. Godwin Baxter.',
-    imageUrl: 'https://m.media-amazon.com/images/M/MV5BNGIyYWMzNjMtNDU3MC00YWQxLTk5ZTUtYmMxOWRlNmY2NzFhXkEyXkFqcGdeQXVyMTUzNTgzNzM0._V1_.jpg',
+    imageUrl: 'https://image.tmdb.org/t/p/w500/kCGlIMHnOm8JPXq3rXM6c5wMxcT.jpg',
     rating: 8.7,
     popularity: 90,
     price: 18.99,
@@ -366,13 +366,13 @@ export const mockMovies: Movie[] = [
         'Emma Stone\'s second collaboration with director Yorgos Lanthimos'
       ],
       cast: [
-        { name: 'Emma Stone', role: 'Bella Baxter', imageUrl: 'https://example.com/stone.jpg' },
-        { name: 'Mark Ruffalo', role: 'Duncan Wedderburn', imageUrl: 'https://example.com/ruffalo.jpg' },
-        { name: 'Willem Dafoe', role: 'Dr. Godwin Baxter', imageUrl: 'https://example.com/dafoe.jpg' }
+        { name: 'Emma Stone', role: 'Bella Baxter', imageUrl: 'https://image.tmdb.org/t/p/w185/r2J02Z2OpNTctfOSN1aTHxj3C6q.jpg' },
+        { name: 'Mark Ruffalo', role: 'Duncan Wedderburn', imageUrl: 'https://image.tmdb.org/t/p/w185/z3dvKqMNeXyY9FfpG1XVFmX3Z4Z.jpg' },
+        { name: 'Willem Dafoe', role: 'Dr. Godwin Baxter', imageUrl: 'https://image.tmdb.org/t/p/w185/2Rdd6qXj5zYHv2BkpjkJYGZxTKb.jpg' }
       ],
       crew: [
-        { name: 'Yorgos Lanthimos', role: 'Director', imageUrl: 'https://example.com/lanthimos.jpg' },
-        { name: 'Tony McNamara', role: 'Screenwriter', imageUrl: 'https://example.com/mcnamara.jpg' }
+        { name: 'Yorgos Lanthimos', role: 'Director', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Tony McNamara', role: 'Screenwriter', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
       ]
     }
   },
@@ -380,7 +380,7 @@ export const mockMovies: Movie[] = [
     id: 13,
     title: 'Anatomy of a Fall',
     description: 'A woman is suspected of her husband\'s murder, and their blind son faces a moral dilemma as the main witness.',
-    imageUrl: 'https://m.media-amazon.com/images/M/MV5BODZmNzYxZjEtZGE1MS00M2Q2LTg0YTQtZjM5Y2U4NjdjMjU3XkEyXkFqcGdeQXVyMTUzNTgzNzM0._V1_.jpg',
+    imageUrl: 'https://image.tmdb.org/t/p/w500/kQs6keheMwCxJxrzV83VUwFtHkB.jpg',
     rating: 8.1,
     popularity: 87,
     price: 15.99,
@@ -403,13 +403,13 @@ export const mockMovies: Movie[] = [
         'The director\'s first feature film in English'
       ],
       cast: [
-        { name: 'Sandra Hüller', role: 'Sandra Voyter', imageUrl: 'https://example.com/huller.jpg' },
-        { name: 'Swann Arlaud', role: 'Vincent Renzi', imageUrl: 'https://example.com/arlaud.jpg' },
-        { name: 'Milo Machado-Graner', role: 'Daniel Maleski', imageUrl: 'https://example.com/machado.jpg' }
+        { name: 'Sandra Hüller', role: 'Sandra Voyter', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Swann Arlaud', role: 'Vincent Renzi', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Milo Machado-Graner', role: 'Daniel Maleski', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
       ],
       crew: [
-        { name: 'Justine Triet', role: 'Director', imageUrl: 'https://example.com/triet.jpg' },
-        { name: 'Arthur Harari', role: 'Screenwriter', imageUrl: 'https://example.com/harari.jpg' }
+        { name: 'Justine Triet', role: 'Director', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Arthur Harari', role: 'Screenwriter', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
       ]
     }
   },
@@ -417,7 +417,7 @@ export const mockMovies: Movie[] = [
     id: 14,
     title: 'The Zone of Interest',
     description: 'The commandant of Auschwitz, Rudolf Höss, and his wife Hedwig strive to build a dream life for their family in a house and garden next to the camp.',
-    imageUrl: 'https://m.media-amazon.com/images/M/MV5BMTU5N2Y5YjQtYzU0Zi00Y2Q5LTg4YzYtYzY0YjQ5YzY0YzY0XkEyXkFqcGdeQXVyMTUzNTgzNzM0._V1_.jpg',
+    imageUrl: 'https://image.tmdb.org/t/p/w500/hUu9zyZmDd8VZegKi1iK1Vk0RYS.jpg',
     rating: 8.5,
     popularity: 89,
     price: 17.99,
@@ -440,13 +440,13 @@ export const mockMovies: Movie[] = [
         'Features minimal dialogue and maximum atmosphere'
       ],
       cast: [
-        { name: 'Christian Friedel', role: 'Rudolf Höss', imageUrl: 'https://example.com/friedel.jpg' },
-        { name: 'Sandra Hüller', role: 'Hedwig Höss', imageUrl: 'https://example.com/huller2.jpg' },
-        { name: 'Ralph Herforth', role: 'Gerhard Maurer', imageUrl: 'https://example.com/herforth.jpg' }
+        { name: 'Christian Friedel', role: 'Rudolf Höss', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Sandra Hüller', role: 'Hedwig Höss', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Ralph Herforth', role: 'Gerhard Maurer', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
       ],
       crew: [
-        { name: 'Jonathan Glazer', role: 'Director', imageUrl: 'https://example.com/glazer.jpg' },
-        { name: 'Martin Amis', role: 'Novel Author', imageUrl: 'https://example.com/amis.jpg' }
+        { name: 'Jonathan Glazer', role: 'Director', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Martin Amis', role: 'Novel Author', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
       ]
     }
   },
@@ -454,7 +454,7 @@ export const mockMovies: Movie[] = [
     id: 15,
     title: 'Past Lives',
     description: 'Nora and Hae Sung, two deeply connected childhood friends, are wrested apart after Nora\'s family emigrates from South Korea. Twenty years later, they are reunited for one fateful week.',
-    imageUrl: 'https://m.media-amazon.com/images/M/MV5BOTg2Zjg0YjAtYzUwYi00YjVjLWE3YzctM2Y2YzE2Y2Y2Y2Y2XkEyXkFqcGdeQXVyMTUzNTgzNzM0._V1_.jpg',
+    imageUrl: 'https://image.tmdb.org/t/p/w500/k3waqVXSnvCZWfJYNtdamTgTtTA.jpg',
     rating: 8.4,
     popularity: 86,
     price: 16.99,
@@ -477,13 +477,13 @@ export const mockMovies: Movie[] = [
         'Features dialogue in both English and Korean'
       ],
       cast: [
-        { name: 'Greta Lee', role: 'Nora', imageUrl: 'https://example.com/lee.jpg' },
-        { name: 'Teo Yoo', role: 'Hae Sung', imageUrl: 'https://example.com/yoo.jpg' },
-        { name: 'John Magaro', role: 'Arthur', imageUrl: 'https://example.com/magaro.jpg' }
+        { name: 'Greta Lee', role: 'Nora', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Teo Yoo', role: 'Hae Sung', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'John Magaro', role: 'Arthur', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
       ],
       crew: [
-        { name: 'Celine Song', role: 'Director', imageUrl: 'https://example.com/song.jpg' },
-        { name: 'Celine Song', role: 'Screenwriter', imageUrl: 'https://example.com/song.jpg' }
+        { name: 'Celine Song', role: 'Director', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Celine Song', role: 'Screenwriter', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
       ]
     }
   },
@@ -491,7 +491,7 @@ export const mockMovies: Movie[] = [
     id: 16,
     title: 'American Fiction',
     description: 'A frustrated novelist who\'s fed up with the establishment profiting from "Black" entertainment uses a pen name to write a book that propels him into the heart of hypocrisy and the madness he claims to disdain.',
-    imageUrl: 'https://m.media-amazon.com/images/M/MV5BOTg2Zjg0YjAtYzUwYi00YjVjLWE3YzctM2Y2YzE2Y2Y2Y2Y2XkEyXkFqcGdeQXVyMTUzNTgzNzM0._V1_.jpg',
+    imageUrl: 'https://image.tmdb.org/t/p/w500/5ynWWapdl45hJXUh0KIevxSG9JQ.jpg',
     rating: 8.2,
     popularity: 85,
     price: 17.99,
@@ -514,13 +514,13 @@ export const mockMovies: Movie[] = [
         'Addresses themes of race and identity in publishing'
       ],
       cast: [
-        { name: 'Jeffrey Wright', role: 'Thelonious "Monk" Ellison', imageUrl: 'https://example.com/wright.jpg' },
-        { name: 'Tracee Ellis Ross', role: 'Lisa Ellison', imageUrl: 'https://example.com/ross.jpg' },
-        { name: 'Issa Rae', role: 'Sintara Golden', imageUrl: 'https://example.com/rae.jpg' }
+        { name: 'Jeffrey Wright', role: 'Thelonious "Monk" Ellison', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Tracee Ellis Ross', role: 'Lisa Ellison', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Issa Rae', role: 'Sintara Golden', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
       ],
       crew: [
-        { name: 'Cord Jefferson', role: 'Director', imageUrl: 'https://example.com/jefferson.jpg' },
-        { name: 'Cord Jefferson', role: 'Screenwriter', imageUrl: 'https://example.com/jefferson.jpg' }
+        { name: 'Cord Jefferson', role: 'Director', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Cord Jefferson', role: 'Screenwriter', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
       ]
     }
   },
@@ -528,7 +528,7 @@ export const mockMovies: Movie[] = [
     id: 17,
     title: 'The Boy and the Heron',
     description: 'A young boy named Mahito yearning for his mother ventures into a world shared by the living and the dead. There, death comes to an end, and life finds a new beginning.',
-    imageUrl: 'https://m.media-amazon.com/images/M/MV5BZWM3MDU2YWQtNDRjYy00YzVjLThkMTYtN2M0ZWE5NGM5YzY0XkEyXkFqcGdeQXVyMTUzNTgzNzM0._V1_.jpg',
+    imageUrl: 'https://image.tmdb.org/t/p/w500/jDQPkgzerGophKRRn7MKm071vCU.jpg',
     rating: 8.6,
     popularity: 91,
     price: 19.99,
@@ -551,13 +551,13 @@ export const mockMovies: Movie[] = [
         'Inspired by the novel "How Do You Live?"'
       ],
       cast: [
-        { name: 'Soma Santoki', role: 'Mahito Maki (voice)', imageUrl: 'https://example.com/santoki.jpg' },
-        { name: 'Masaki Suda', role: 'The Gray Heron (voice)', imageUrl: 'https://example.com/suda.jpg' },
-        { name: 'Aimyon', role: 'Himi (voice)', imageUrl: 'https://example.com/aimyon.jpg' }
+        { name: 'Soma Santoki', role: 'Mahito Maki (voice)', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Masaki Suda', role: 'The Gray Heron (voice)', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Aimyon', role: 'Himi (voice)', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
       ],
       crew: [
-        { name: 'Hayao Miyazaki', role: 'Director', imageUrl: 'https://example.com/miyazaki.jpg' },
-        { name: 'Hayao Miyazaki', role: 'Screenwriter', imageUrl: 'https://example.com/miyazaki.jpg' }
+        { name: 'Hayao Miyazaki', role: 'Director', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Hayao Miyazaki', role: 'Screenwriter', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
       ]
     }
   },
@@ -565,7 +565,7 @@ export const mockMovies: Movie[] = [
     id: 18,
     title: 'Maestro',
     description: 'A love story chronicling the lifelong relationship of conductor-composer Leonard Bernstein and actress Felicia Montealegre Cohn Bernstein.',
-    imageUrl: 'https://m.media-amazon.com/images/M/MV5BOTg2Zjg0YjAtYzUwYi00YjVjLWE3YzctM2Y2YzE2Y2Y2Y2Y2XkEyXkFqcGdeQXVyMTUzNTgzNzM0._V1_.jpg',
+    imageUrl: 'https://image.tmdb.org/t/p/w500/auXrHU6O17n9Tz11SHReoorjrU6.jpg',
     rating: 8.0,
     popularity: 84,
     price: 18.99,
@@ -588,13 +588,302 @@ export const mockMovies: Movie[] = [
         'Includes actual recordings of Bernstein\'s performances'
       ],
       cast: [
-        { name: 'Bradley Cooper', role: 'Leonard Bernstein', imageUrl: 'https://example.com/cooper.jpg' },
-        { name: 'Carey Mulligan', role: 'Felicia Montealegre', imageUrl: 'https://example.com/mulligan.jpg' },
-        { name: 'Matt Bomer', role: 'David Oppenheim', imageUrl: 'https://example.com/bomer.jpg' }
+        { name: 'Bradley Cooper', role: 'Leonard Bernstein', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Carey Mulligan', role: 'Felicia Montealegre', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Matt Bomer', role: 'David Oppenheim', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
       ],
       crew: [
-        { name: 'Bradley Cooper', role: 'Director', imageUrl: 'https://example.com/cooper.jpg' },
-        { name: 'Josh Singer', role: 'Screenwriter', imageUrl: 'https://example.com/singer.jpg' }
+        { name: 'Bradley Cooper', role: 'Director', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Josh Singer', role: 'Screenwriter', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
+      ]
+    }
+  },
+  {
+    id: 19,
+    title: 'Barbie',
+    description: 'Barbie suffers a crisis that leads her to question her world and her existence.',
+    imageUrl: 'https://image.tmdb.org/t/p/w500/iuFNMS8U5cb6xfzi51Dbkovj7vM.jpg',
+    rating: 7.3,
+    popularity: 93,
+    price: 19.99,
+    genres: ['Adventure', 'Comedy', 'Fantasy'],
+    industry: 'Hollywood',
+    releaseDate: '2023-07-21',
+    trailerUrl: 'https://www.youtube.com/watch?v=pBk4NYhWNMM',
+    reviews: [],
+    tags: ['comedy', 'fantasy', 'adventure'],
+    insights: {
+      boxOffice: '$1.4 billion',
+      awards: [
+        'Academy Award for Best Original Song',
+        'Golden Globe Award for Best Motion Picture - Musical or Comedy',
+        'Critics Choice Award for Best Comedy'
+      ],
+      trivia: [
+        'Greta Gerwig\'s highest-grossing film',
+        'Features over 100 different Barbie outfits',
+        'The first live-action Barbie movie'
+      ],
+      cast: [
+        { name: 'Margot Robbie', role: 'Barbie', imageUrl: 'https://image.tmdb.org/t/p/w185/euDPyqLnuwaWMHajcU3oZ9uZezR.jpg' },
+        { name: 'Ryan Gosling', role: 'Ken', imageUrl: 'https://image.tmdb.org/t/p/w185/1Lh9LER4xRQ3INFFi2dfS2hpRwv.jpg' },
+        { name: 'America Ferrera', role: 'Gloria', imageUrl: 'https://image.tmdb.org/t/p/w185/6Dx5R6H0a6QckqFJEmiKr9Q2nAO.jpg' }
+      ],
+      crew: [
+        { name: 'Greta Gerwig', role: 'Director', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Noah Baumbach', role: 'Screenwriter', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
+      ]
+    }
+  },
+  {
+    id: 20,
+    title: 'The Creator',
+    description: 'Amid a future war between the human race and the forces of artificial intelligence, a hardened ex-special forces agent grieving the disappearance of his wife is recruited to hunt down and kill the Creator.',
+    imageUrl: 'https://image.tmdb.org/t/p/w500/vBZ0qvaRxqEhZwl6LWmruJqWE8Z.jpg',
+    rating: 7.2,
+    popularity: 87,
+    price: 17.99,
+    genres: ['Action', 'Adventure', 'Sci-Fi'],
+    industry: 'Hollywood',
+    releaseDate: '2023-09-29',
+    trailerUrl: 'https://www.youtube.com/watch?v=ex3C1-5Dhb8',
+    reviews: [],
+    tags: ['action', 'sci-fi', 'adventure'],
+    insights: {
+      boxOffice: '$104 million',
+      awards: [
+        'Academy Award for Best Visual Effects',
+        'BAFTA Award for Best Special Visual Effects'
+      ],
+      trivia: [
+        'Shot on location in Thailand',
+        'Used practical effects for many scenes',
+        'Features a unique blend of Eastern and Western aesthetics'
+      ],
+      cast: [
+        { name: 'John David Washington', role: 'Joshua', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Madeleine Yuna Voyles', role: 'Alphie', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Gemma Chan', role: 'Maya', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
+      ],
+      crew: [
+        { name: 'Gareth Edwards', role: 'Director', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Chris Weitz', role: 'Screenwriter', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
+      ]
+    }
+  },
+  {
+    id: 21,
+    title: 'The Marvels',
+    description: 'Carol Danvers, Kamala Khan, and Monica Rambeau team up to save the universe.',
+    imageUrl: 'https://image.tmdb.org/t/p/w500/9Ab63L6ieF0zVHgS2OaPAzKVm1Z.jpg',
+    rating: 6.2,
+    popularity: 85,
+    price: 16.99,
+    genres: ['Action', 'Adventure', 'Sci-Fi'],
+    industry: 'Hollywood',
+    releaseDate: '2023-11-10',
+    trailerUrl: 'https://www.youtube.com/watch?v=wS_qbDztgVY',
+    reviews: [],
+    tags: ['action', 'sci-fi', 'superhero'],
+    insights: {
+      boxOffice: '$206 million',
+      awards: [
+        'Saturn Award for Best Science Fiction Film',
+        'People\'s Choice Award for Best Action Movie'
+      ],
+      trivia: [
+        'First MCU film directed by a woman of color',
+        'Features three female leads',
+        'Connects to multiple MCU storylines'
+      ],
+      cast: [
+        { name: 'Brie Larson', role: 'Carol Danvers', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Teyonah Parris', role: 'Monica Rambeau', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Iman Vellani', role: 'Kamala Khan', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
+      ],
+      crew: [
+        { name: 'Nia DaCosta', role: 'Director', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Megan McDonnell', role: 'Screenwriter', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
+      ]
+    }
+  },
+  {
+    id: 22,
+    title: 'Napoleon',
+    description: 'An epic that details the checkered rise and fall of French Emperor Napoleon Bonaparte and his relentless journey to power through the prism of his addictive, volatile relationship with his wife, Josephine.',
+    imageUrl: 'https://image.tmdb.org/t/p/w500/jE5o7y9K6pZtWNNMEw3IdpHuncR.jpg',
+    rating: 6.4,
+    popularity: 88,
+    price: 18.99,
+    genres: ['Action', 'Adventure', 'Biography', 'Drama', 'History'],
+    industry: 'Hollywood',
+    releaseDate: '2023-11-22',
+    trailerUrl: 'https://www.youtube.com/watch?v=OAZWXUkrjPc',
+    reviews: [],
+    tags: ['biography', 'drama', 'historical'],
+    insights: {
+      boxOffice: '$221 million',
+      awards: [
+        'Academy Award for Best Visual Effects',
+        'BAFTA Award for Best Production Design'
+      ],
+      trivia: [
+        'Ridley Scott\'s first historical epic since Gladiator',
+        'Features large-scale battle sequences',
+        'Joaquin Phoenix\'s second collaboration with Ridley Scott'
+      ],
+      cast: [
+        { name: 'Joaquin Phoenix', role: 'Napoleon Bonaparte', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Vanessa Kirby', role: 'Josephine Bonaparte', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Tahar Rahim', role: 'Paul Barras', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
+      ],
+      crew: [
+        { name: 'Ridley Scott', role: 'Director', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'David Scarpa', role: 'Screenwriter', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
+      ]
+    }
+  },
+  {
+    id: 23,
+    title: 'Wonka',
+    description: 'With dreams of opening a shop in a city renowned for its chocolate, a young and poor Willy Wonka discovers that the industry is run by a cartel of greedy chocolatiers.',
+    imageUrl: 'https://image.tmdb.org/t/p/w500/qhb1qOilapbJxLUTsxH8s8IzRqk.jpg',
+    rating: 7.2,
+    popularity: 86,
+    price: 17.99,
+    genres: ['Adventure', 'Comedy', 'Family', 'Fantasy', 'Musical'],
+    industry: 'Hollywood',
+    releaseDate: '2023-12-15',
+    trailerUrl: 'https://www.youtube.com/watch?v=otNh9bTjXUw',
+    reviews: [],
+    tags: ['comedy', 'fantasy', 'musical'],
+    insights: {
+      boxOffice: '$632 million',
+      awards: [
+        'Golden Globe Award for Best Actor - Motion Picture Musical or Comedy',
+        'Critics Choice Award for Best Young Actor'
+      ],
+      trivia: [
+        'Prequel to Charlie and the Chocolate Factory',
+        'Features original songs',
+        'Timothée Chalamet\'s first musical role'
+      ],
+      cast: [
+        { name: 'Timothée Chalamet', role: 'Willy Wonka', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Calah Lane', role: 'Noodle', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Hugh Grant', role: 'Oompa-Loompa', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
+      ],
+      crew: [
+        { name: 'Paul King', role: 'Director', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Simon Farnaby', role: 'Screenwriter', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
+      ]
+    }
+  },
+  {
+    id: 24,
+    title: 'The Hunger Games: The Ballad of Songbirds & Snakes',
+    description: 'Coriolanus Snow mentors and develops feelings for the female District 12 tribute during the 10th Hunger Games.',
+    imageUrl: 'https://image.tmdb.org/t/p/w500/mBaXZ95R2OxueDbvbu5AlsjX7gJ.jpg',
+    rating: 7.2,
+    popularity: 89,
+    price: 18.99,
+    genres: ['Action', 'Adventure', 'Drama', 'Sci-Fi'],
+    industry: 'Hollywood',
+    releaseDate: '2023-11-17',
+    trailerUrl: 'https://www.youtube.com/watch?v=nbN9FkNUfX0',
+    reviews: [],
+    tags: ['action', 'drama', 'sci-fi'],
+    insights: {
+      boxOffice: '$337 million',
+      awards: [
+        'People\'s Choice Award for Best Action Movie',
+        'Teen Choice Award for Choice Movie: Action'
+      ],
+      trivia: [
+        'Prequel to The Hunger Games series',
+        'Features new cast members',
+        'Explores the origins of President Snow'
+      ],
+      cast: [
+        { name: 'Tom Blyth', role: 'Coriolanus Snow', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Rachel Zegler', role: 'Lucy Gray Baird', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Hunter Schafer', role: 'Tigris Snow', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
+      ],
+      crew: [
+        { name: 'Francis Lawrence', role: 'Director', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Michael Lesslie', role: 'Screenwriter', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
+      ]
+    }
+  },
+  {
+    id: 25,
+    title: 'The Color Purple',
+    description: 'A woman faces many hardships in her life, but ultimately finds extraordinary strength and hope in the unbreakable bonds of sisterhood.',
+    imageUrl: 'https://image.tmdb.org/t/p/w500/A3Z4pzVt5jzJd96Lt3vNEX0w0Kk.jpg',
+    rating: 7.1,
+    popularity: 84,
+    price: 16.99,
+    genres: ['Drama', 'Musical'],
+    industry: 'Hollywood',
+    releaseDate: '2023-12-25',
+    trailerUrl: 'https://www.youtube.com/watch?v=ZJ0PBRSOXCI',
+    reviews: [],
+    tags: ['drama', 'musical'],
+    insights: {
+      boxOffice: '$67 million',
+      awards: [
+        'Golden Globe Award for Best Actress - Motion Picture Musical or Comedy',
+        'Critics Choice Award for Best Young Actor'
+      ],
+      trivia: [
+        'Musical adaptation of the novel and film',
+        'Features new songs',
+        'Produced by Oprah Winfrey and Steven Spielberg'
+      ],
+      cast: [
+        { name: 'Fantasia Barrino', role: 'Celie', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Taraji P. Henson', role: 'Shug Avery', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Danielle Brooks', role: 'Sofia', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
+      ],
+      crew: [
+        { name: 'Blitz Bazawule', role: 'Director', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Marcus Gardley', role: 'Screenwriter', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
+      ]
+    }
+  },
+  {
+    id: 26,
+    title: 'Aquaman and the Lost Kingdom',
+    description: 'Aquaman must protect Atlantis and the world from an ancient power unleashed by Black Manta.',
+    imageUrl: 'https://image.tmdb.org/t/p/w500/7lxfkim5RxDcOkXZQbXwQZn6wTq.jpg',
+    rating: 6.5,
+    popularity: 87,
+    price: 19.99,
+    genres: ['Action', 'Adventure', 'Fantasy', 'Sci-Fi'],
+    industry: 'Hollywood',
+    releaseDate: '2023-12-22',
+    trailerUrl: 'https://www.youtube.com/watch?v=FV3bqvOHRQo',
+    reviews: [],
+    tags: ['action', 'adventure', 'superhero'],
+    insights: {
+      boxOffice: '$434 million',
+      awards: [
+        'People\'s Choice Award for Best Action Movie',
+        'Teen Choice Award for Choice Movie: Action'
+      ],
+      trivia: [
+        'Sequel to Aquaman (2018)',
+        'Features underwater action sequences',
+        'Final DCEU film before reboot'
+      ],
+      cast: [
+        { name: 'Jason Momoa', role: 'Arthur Curry / Aquaman', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Patrick Wilson', role: 'Orm Marius / Ocean Master', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'Yahya Abdul-Mateen II', role: 'David Kane / Black Manta', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
+      ],
+      crew: [
+        { name: 'James Wan', role: 'Director', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' },
+        { name: 'David Leslie Johnson-McGoldrick', role: 'Screenwriter', imageUrl: 'https://image.tmdb.org/t/p/w185/8QJQZQZQZQZQZQZQZQZQZQZQZQZ.jpg' }
       ]
     }
   }
