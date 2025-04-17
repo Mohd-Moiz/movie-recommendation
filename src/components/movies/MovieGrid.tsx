@@ -11,7 +11,7 @@ import {
   Button,
   useTheme
 } from '@mui/material';
-import { useUser } from '../../context/UserContext';
+import { useUser } from "../../contexts/UserContext";
 
 interface MovieGridProps {
   movies: Movie[];

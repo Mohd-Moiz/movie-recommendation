@@ -1,1 +1,0 @@
-export type { Movie, UserReview as Review } from './index';
