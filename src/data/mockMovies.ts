@@ -264,5 +264,43 @@ export const mockMovies: Movie[] = [
         { name: 'Hans Zimmer', role: 'Composer', imageUrl: 'https://example.com/hans.jpg' }
       ]
     }
+  },
+  {
+    id: 10,
+    title: 'Killers of the Flower Moon',
+    description: 'When oil is discovered in 1920s Oklahoma under Osage Nation land, the Osage people are murdered one by one - until the FBI steps in to unravel the mystery.',
+    imageUrl: 'https://m.media-amazon.com/images/M/MV5BZGM3MDU2YWQtNDRjYy00YzVjLThkMTYtN2M0ZWE5NGM5YzY0XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_.jpg',
+    rating: 8.9,
+    popularity: 92,
+    price: 19.99,
+    genres: ['Crime', 'Drama', 'History', 'Thriller'],
+    industry: 'Hollywood',
+    releaseDate: '2023-10-20',
+    trailerUrl: 'https://www.youtube.com/watch?v=EP34Yoxs3FQ',
+    reviews: [],
+    tags: ['crime', 'drama', 'historical'],
+    insights: {
+      boxOffice: '$156 million',
+      awards: [
+        'Academy Award for Best Actress',
+        'Golden Globe Award for Best Motion Picture - Drama',
+        'BAFTA Award for Best Supporting Actor'
+      ],
+      trivia: [
+        'Martin Scorsese\'s longest film to date at 3 hours and 26 minutes',
+        'Leonardo DiCaprio initially wanted to play the FBI agent but switched to the role of Ernest Burkhart',
+        'The film features many Osage Nation members in supporting roles'
+      ],
+      cast: [
+        { name: 'Leonardo DiCaprio', role: 'Ernest Burkhart', imageUrl: 'https://example.com/leo.jpg' },
+        { name: 'Robert De Niro', role: 'William Hale', imageUrl: 'https://example.com/deniro.jpg' },
+        { name: 'Lily Gladstone', role: 'Mollie Burkhart', imageUrl: 'https://example.com/lily.jpg' }
+      ],
+      crew: [
+        { name: 'Martin Scorsese', role: 'Director', imageUrl: 'https://example.com/scorsese.jpg' },
+        { name: 'Eric Roth', role: 'Screenwriter', imageUrl: 'https://example.com/roth.jpg' },
+        { name: 'Rodrigo Prieto', role: 'Cinematographer', imageUrl: 'https://example.com/prieto.jpg' }
+      ]
+    }
   }
 ];

@@ -10,27 +10,35 @@ import {
   Menu,
   MenuItem,
   Avatar,
+  useMediaQuery,
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
-import { Brightness4, Brightness7, Home as HomeIcon } from '@mui/icons-material';
+import { Brightness4, Brightness7, Home as HomeIcon, Menu as MenuIcon } from '@mui/icons-material';
 import { useAuth } from '../contexts/AuthContext';
 import { useThemeContext } from '../contexts/ThemeContext';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const Header: React.FC = () => {
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const { toggleTheme, mode } = useThemeContext();
   const { currentUser, logout } = useAuth();
   const { t } = useLanguage();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [mobileMenuAnchor, setMobileMenuAnchor] = React.useState<null | HTMLElement>(null);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
+  const handleMobileMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setMobileMenuAnchor(event.currentTarget);
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
+    setMobileMenuAnchor(null);
   };
 
   const handleLogout = async () => {
@@ -44,120 +52,178 @@ const Header: React.FC = () => {
   };
 
   return (
-    <AppBar position="static" elevation={1} sx={{ py: 1 }}>
-      <Toolbar sx={{ minHeight: 80 }}>
+    <AppBar position="static" elevation={0}>
+      <Toolbar sx={{ 
+        display: 'flex', 
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        minHeight: { xs: 56, sm: 64 },
+        px: { xs: 1, sm: 2 },
+      }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <IconButton
+            color="inherit"
             component={Link}
             to="/"
-            color="inherit"
-            sx={{ mr: 1, fontSize: '1.5rem' }}
+            sx={{ p: { xs: 0.5, sm: 1 } }}
           >
-            <HomeIcon fontSize="large" />
+            <HomeIcon />
           </IconButton>
           <Typography
-            variant="h4"
+            variant="h6"
             component={Link}
             to="/"
             sx={{
               textDecoration: 'none',
               color: 'inherit',
               display: { xs: 'none', sm: 'block' },
-              fontWeight: 700,
-              letterSpacing: 1,
             }}
           >
             Movie Recommendations
           </Typography>
         </Box>
 
-        <Box sx={{ flexGrow: 1 }} />
+        {isMobile ? (
+          <>
+            <IconButton
+              color="inherit"
+              onClick={handleMobileMenu}
+              sx={{ p: { xs: 0.5, sm: 1 } }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              anchorEl={mobileMenuAnchor}
+              open={Boolean(mobileMenuAnchor)}
+              onClose={handleClose}
+              PaperProps={{
+                sx: {
+                  mt: 1,
+                  minWidth: 200,
+                },
+              }}
+            >
+              <MenuItem component={Link} to="/about" onClick={handleClose}>
+                About
+              </MenuItem>
+              {currentUser ? (
+                <>
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <Avatar
+                      sx={{ width: 24, height: 24, mr: 1 }}
+                      alt={currentUser.email || 'User'}
+                      src={currentUser.photoURL || undefined}
+                    />
+                    Profile
+                  </MenuItem>
+                </>
+              ) : (
+                <>
+                  <MenuItem component={Link} to="/login" onClick={handleClose}>
+                    Login
+                  </MenuItem>
+                  <MenuItem component={Link} to="/register" onClick={handleClose}>
+                    Register
+                  </MenuItem>
+                </>
+              )}
+              <MenuItem onClick={toggleTheme}>
+                {mode === 'dark' ? 'Light Mode' : 'Dark Mode'}
+              </MenuItem>
+            </Menu>
+          </>
+        ) : (
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Button
+              color="inherit"
+              component={Link}
+              to="/about"
+              sx={{ 
+                fontWeight: 600,
+                fontSize: '1rem',
+                textTransform: 'none',
+                display: { xs: 'none', sm: 'block' },
+              }}
+            >
+              About
+            </Button>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
-          <Button
-            color="inherit"
-            component={Link}
-            to="/about"
-            sx={{ 
-              fontWeight: 600,
-              fontSize: '1.1rem',
-              textTransform: 'none',
-            }}
-          >
-            About
-          </Button>
+            {currentUser ? (
+              <>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleMenu}
+                  color="inherit"
+                >
+                  <Avatar
+                    sx={{ width: 32, height: 32 }}
+                    alt={currentUser.email || 'User'}
+                    src={currentUser.photoURL || undefined}
+                  />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                </Menu>
+              </>
+            ) : (
+              <>
+                <Button
+                  color="inherit"
+                  component={Link}
+                  to="/login"
+                  sx={{ 
+                    fontWeight: 600,
+                    fontSize: '1rem',
+                    textTransform: 'none',
+                  }}
+                >
+                  Login
+                </Button>
+                <Button
+                  color="inherit"
+                  component={Link}
+                  to="/register"
+                  sx={{ 
+                    fontWeight: 600,
+                    fontSize: '1rem',
+                    textTransform: 'none',
+                  }}
+                >
+                  Register
+                </Button>
+              </>
+            )}
 
-          {currentUser ? (
-            <>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <Avatar
-                  sx={{ width: 32, height: 32 }}
-                  alt={currentUser.email || 'User'}
-                  src={currentUser.photoURL || undefined}
-                />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleLogout}>{t('nav.logout')}</MenuItem>
-              </Menu>
-            </>
-          ) : (
-            <>
-              <Button
-                color="inherit"
-                component={Link}
-                to="/login"
-                sx={{ 
-                  fontWeight: 600,
-                  fontSize: '1.1rem',
-                  textTransform: 'none',
-                }}
-              >
-                Login
-              </Button>
-              <Button
-                color="inherit"
-                component={Link}
-                to="/register"
-                sx={{ 
-                  fontWeight: 600,
-                  fontSize: '1.1rem',
-                  textTransform: 'none',
-                }}
-              >
-                Register
-              </Button>
-            </>
-          )}
-
-          <IconButton
-            onClick={toggleTheme}
-            color="inherit"
-            sx={{ ml: 1, fontSize: '1.5rem' }}
-          >
-            {mode === 'dark' ? <Brightness7 fontSize="large" /> : <Brightness4 fontSize="large" />}
-          </IconButton>
-        </Box>
+            <IconButton
+              onClick={toggleTheme}
+              color="inherit"
+              sx={{ 
+                p: { xs: 0.5, sm: 1 },
+                fontSize: '1.5rem',
+              }}
+            >
+              {mode === 'dark' ? <Brightness7 fontSize="large" /> : <Brightness4 fontSize="large" />}
+            </IconButton>
+          </Box>
+        )}
       </Toolbar>
     </AppBar>
   );
