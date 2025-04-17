@@ -12,10 +12,13 @@ import {
   CircularProgress,
   Button,
   Divider,
+  Collapse,
 } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import PersonIcon from '@mui/icons-material/Person';
+import ChatIcon from '@mui/icons-material/Chat';
+import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material/styles';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useBag } from '../contexts/BagContext';
@@ -32,6 +35,7 @@ const ChatBot: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const { t } = useLanguage();
@@ -117,113 +121,151 @@ const ChatBot: React.FC = () => {
   return (
     <Box
       sx={{
-        height: '100%',
+        position: 'fixed',
+        bottom: 0,
+        right: 0,
+        zIndex: 1000,
         display: 'flex',
         flexDirection: 'column',
-        bgcolor: theme.palette.background.default,
+        alignItems: 'flex-end',
+        p: 2,
+        gap: 2,
       }}
     >
-      <Box
-        sx={{
-          p: 2,
-          borderBottom: `1px solid ${theme.palette.divider}`,
-          display: 'flex',
-          alignItems: 'center',
-          gap: 1,
-        }}
-      >
-        <SmartToyIcon color="primary" />
-        <Typography variant="h6">Movie Assistant</Typography>
-      </Box>
-
-      <Box
-        sx={{
-          flex: 1,
-          overflow: 'auto',
-          p: 2,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 2,
-        }}
-      >
-        {messages.map((message) => (
+      <Collapse in={isOpen} orientation="vertical">
+        <Paper
+          elevation={3}
+          sx={{
+            width: { xs: '100%', sm: 350 },
+            height: 500,
+            display: 'flex',
+            flexDirection: 'column',
+            bgcolor: theme.palette.background.paper,
+          }}
+        >
           <Box
-            key={message.id}
             sx={{
+              p: 2,
+              borderBottom: `1px solid ${theme.palette.divider}`,
               display: 'flex',
-              justifyContent: message.sender === 'user' ? 'flex-end' : 'flex-start',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <SmartToyIcon color="primary" />
+              <Typography variant="h6">Movie Assistant</Typography>
+            </Box>
+            <IconButton onClick={() => setIsOpen(false)} size="small">
+              <CloseIcon />
+            </IconButton>
+          </Box>
+
+          <Box
+            sx={{
+              flex: 1,
+              overflow: 'auto',
+              p: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 2,
+            }}
+          >
+            {messages.map((message) => (
+              <Box
+                key={message.id}
+                sx={{
+                  display: 'flex',
+                  justifyContent: message.sender === 'user' ? 'flex-end' : 'flex-start',
+                  gap: 1,
+                }}
+              >
+                {message.sender === 'bot' && (
+                  <Avatar sx={{ bgcolor: theme.palette.primary.main }}>
+                    <SmartToyIcon />
+                  </Avatar>
+                )}
+                <Paper
+                  sx={{
+                    p: 2,
+                    maxWidth: '70%',
+                    bgcolor: message.sender === 'user' ? theme.palette.primary.main : theme.palette.background.paper,
+                    color: message.sender === 'user' ? theme.palette.primary.contrastText : theme.palette.text.primary,
+                  }}
+                >
+                  <Typography variant="body1" sx={{ whiteSpace: 'pre-line' }}>
+                    {message.text}
+                  </Typography>
+                  <Typography variant="caption" sx={{ display: 'block', mt: 1, opacity: 0.7 }}>
+                    {message.timestamp.toLocaleTimeString()}
+                  </Typography>
+                </Paper>
+                {message.sender === 'user' && (
+                  <Avatar sx={{ bgcolor: theme.palette.secondary.main }}>
+                    <PersonIcon />
+                  </Avatar>
+                )}
+              </Box>
+            ))}
+            {isTyping && (
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <CircularProgress size={20} />
+                <Typography variant="body2" color="text.secondary">
+                  Assistant is typing...
+                </Typography>
+              </Box>
+            )}
+            <div ref={messagesEndRef} />
+          </Box>
+
+          <Box
+            sx={{
+              p: 2,
+              borderTop: `1px solid ${theme.palette.divider}`,
+              display: 'flex',
               gap: 1,
             }}
           >
-            {message.sender === 'bot' && (
-              <Avatar sx={{ bgcolor: theme.palette.primary.main }}>
-                <SmartToyIcon />
-              </Avatar>
-            )}
-            <Paper
-              sx={{
-                p: 2,
-                maxWidth: '70%',
-                bgcolor: message.sender === 'user' ? theme.palette.primary.main : theme.palette.background.paper,
-                color: message.sender === 'user' ? theme.palette.primary.contrastText : theme.palette.text.primary,
+            <TextField
+              fullWidth
+              variant="outlined"
+              placeholder="Type your message..."
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSendMessage();
+                }
               }}
+              multiline
+              maxRows={4}
+            />
+            <IconButton
+              color="primary"
+              onClick={handleSendMessage}
+              disabled={!input.trim() || isTyping}
             >
-              <Typography variant="body1" sx={{ whiteSpace: 'pre-line' }}>
-                {message.text}
-              </Typography>
-              <Typography variant="caption" sx={{ display: 'block', mt: 1, opacity: 0.7 }}>
-                {message.timestamp.toLocaleTimeString()}
-              </Typography>
-            </Paper>
-            {message.sender === 'user' && (
-              <Avatar sx={{ bgcolor: theme.palette.secondary.main }}>
-                <PersonIcon />
-              </Avatar>
-            )}
+              <SendIcon />
+            </IconButton>
           </Box>
-        ))}
-        {isTyping && (
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <CircularProgress size={20} />
-            <Typography variant="body2" color="text.secondary">
-              Assistant is typing...
-            </Typography>
-          </Box>
-        )}
-        <div ref={messagesEndRef} />
-      </Box>
+        </Paper>
+      </Collapse>
 
-      <Box
-        sx={{
-          p: 2,
-          borderTop: `1px solid ${theme.palette.divider}`,
-          display: 'flex',
-          gap: 1,
-        }}
-      >
-        <TextField
-          fullWidth
-          variant="outlined"
-          placeholder="Type your message..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyPress={(e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-              e.preventDefault();
-              handleSendMessage();
-            }
-          }}
-          multiline
-          maxRows={4}
-        />
+      {!isOpen && (
         <IconButton
-          color="primary"
-          onClick={handleSendMessage}
-          disabled={!input.trim() || isTyping}
+          onClick={() => setIsOpen(true)}
+          sx={{
+            bgcolor: theme.palette.primary.main,
+            color: theme.palette.primary.contrastText,
+            '&:hover': {
+              bgcolor: theme.palette.primary.dark,
+            },
+          }}
         >
-          <SendIcon />
+          <ChatIcon />
         </IconButton>
-      </Box>
+      )}
     </Box>
   );
 };

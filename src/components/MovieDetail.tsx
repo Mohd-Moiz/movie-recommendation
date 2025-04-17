@@ -13,9 +13,12 @@ import {
   ListItem,
   ListItemText,
   Paper,
+  IconButton,
 } from '@mui/material';
 import { Movie } from '../types/Movie';
 import { useLanguage } from '../contexts/LanguageContext';
+import CloseIcon from '@mui/icons-material/Close';
+import { useNavigate } from 'react-router-dom';
 
 interface MovieDetailProps {
   movie: Movie | null;
@@ -26,33 +29,58 @@ interface MovieDetailProps {
 
 const MovieDetail: React.FC<MovieDetailProps> = ({ movie, open, onClose, onBook }) => {
   const { t } = useLanguage();
+  const navigate = useNavigate();
 
   if (!movie) return null;
 
+  const handleClose = () => {
+    onClose();
+    navigate('/');
+  };
+
+  const handleBook = () => {
+    onBook();
+  };
+
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
+    <Dialog 
+      open={open} 
+      onClose={handleClose} 
+      maxWidth="md" 
+      fullWidth
+      PaperProps={{
+        sx: {
+          borderRadius: 2,
+          bgcolor: 'background.paper',
+        }
+      }}
+    >
       <DialogTitle>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Typography variant="h5">{movie.title}</Typography>
-          <Chip
-            label={movie.industry}
-            color="primary"
-            variant="outlined"
-            sx={{ ml: 2 }}
-          />
+          <Box display="flex" alignItems="center" gap={1}>
+            <Chip
+              label={movie.industry}
+              color="primary"
+              variant="outlined"
+            />
+            <IconButton onClick={handleClose} size="small">
+              <CloseIcon />
+            </IconButton>
+          </Box>
         </Box>
       </DialogTitle>
       <DialogContent>
-        <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 3, mt: 2 }}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 2fr' }, gap: 3, mt: 2 }}>
           <Box>
             <img
               src={movie.imageUrl}
               alt={movie.title}
-              style={{ width: '100%', borderRadius: 8 }}
+              style={{ width: '100%', borderRadius: 8, objectFit: 'cover' }}
             />
             <Box sx={{ mt: 2 }}>
               <Typography variant="h6" gutterBottom>
-                {t('movie.rating')}: {movie.rating}/10
+                Rating: {movie.rating}/10
               </Typography>
               <Typography variant="h6" color="primary">
                 ₹{(movie.price * 83.33).toFixed(2)}
@@ -74,14 +102,14 @@ const MovieDetail: React.FC<MovieDetailProps> = ({ movie, open, onClose, onBook 
             </Box>
             <Divider sx={{ my: 2 }} />
             <Typography variant="h6" gutterBottom>
-              {t('movie.insights')}
+              Movie Insights
             </Typography>
             <Paper elevation={0} sx={{ p: 2, mb: 2, bgcolor: 'background.default' }}>
               <Typography variant="subtitle1" gutterBottom>
-                {t('movie.boxOffice')}: {movie.insights.boxOffice}
+                Box Office: {movie.insights.boxOffice}
               </Typography>
               <Typography variant="subtitle1" gutterBottom>
-                {t('movie.awards')}:
+                Awards:
               </Typography>
               <List dense>
                 {movie.insights.awards.map((award, index) => (
@@ -91,7 +119,7 @@ const MovieDetail: React.FC<MovieDetailProps> = ({ movie, open, onClose, onBook 
                 ))}
               </List>
               <Typography variant="subtitle1" gutterBottom>
-                {t('movie.trivia')}:
+                Trivia:
               </Typography>
               <List dense>
                 {movie.insights.trivia.map((fact, index) => (
@@ -137,10 +165,12 @@ const MovieDetail: React.FC<MovieDetailProps> = ({ movie, open, onClose, onBook 
           </Box>
         </Box>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose}>{t('movie.close')}</Button>
-        <Button variant="contained" onClick={onBook} color="primary">
-          {t('movie.book')}
+      <DialogActions sx={{ p: 2 }}>
+        <Button onClick={handleClose} color="inherit">
+          Close
+        </Button>
+        <Button onClick={handleBook} variant="contained" color="primary">
+          Book Now
         </Button>
       </DialogActions>
     </Dialog>

@@ -1,27 +1,19 @@
 import React, { useState } from 'react';
 import { Box, Container, Typography, Grid } from '@mui/material';
 import MovieGrid from '../components/movies/MovieGrid';
-import { ChatBot } from '../components/ChatBot';
 import { mockMovies } from '../data/mockMovies';
 import { Movie } from '../types/Movie';
 import SearchBar, { SearchCriteria } from '../components/SearchBar';
-import { UserProvider } from '../context/UserContext';
 
 interface HomeProps {
   onMovieSelect: (movie: Movie) => void;
 }
 
 const Home: React.FC<HomeProps> = ({ onMovieSelect }) => {
-  const [filteredMovies, setFilteredMovies] = useState<Movie[]>(mockMovies.map(movie => ({
-    ...movie,
-    tags: movie.genres // Add tags property required by Movie type
-  })));
+  const [filteredMovies, setFilteredMovies] = useState<Movie[]>(mockMovies);
 
   const handleSearch = (searchTerm: string, criteria: SearchCriteria) => {
-    const filtered = mockMovies.map(movie => ({
-      ...movie,
-      tags: movie.genres
-    })).filter(movie => {
+    const filtered = mockMovies.filter(movie => {
       const searchLower = searchTerm.toLowerCase();
       switch (criteria) {
         case 'title':
@@ -47,27 +39,19 @@ const Home: React.FC<HomeProps> = ({ onMovieSelect }) => {
     setFilteredMovies(filtered);
   };
 
-  const handleMovieSelect = (movie: Movie) => {
-    onMovieSelect(movie);
-  };
-
   return (
-    <UserProvider>
-      <Container maxWidth="xl">
-        <Box sx={{ pb: { xs: '60vh', sm: 0 } }}>
-          <Box sx={{ mb: 4 }}>
-            <SearchBar onSearch={handleSearch} />
-          </Box>
-          
-          <MovieGrid
-            movies={filteredMovies}
-            onMovieClick={onMovieSelect}
-          />
+    <Container maxWidth="xl">
+      <Box sx={{ pb: { xs: '60vh', sm: 0 } }}>
+        <Box sx={{ mb: 4 }}>
+          <SearchBar onSearch={handleSearch} />
         </Box>
-
-        <ChatBot onMovieSelect={(movie: Movie) => handleMovieSelect(movie)} />
-      </Container>
-    </UserProvider>
+        
+        <MovieGrid
+          movies={filteredMovies}
+          onMovieClick={onMovieSelect}
+        />
+      </Box>
+    </Container>
   );
 };
 

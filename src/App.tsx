@@ -30,6 +30,10 @@ const App: React.FC = () => {
     setIsBookingOpen(false);
   };
 
+  const handleMovieSelect = (movie: Movie) => {
+    setSelectedMovie(movie);
+  };
+
   return (
     <ThemeContextProvider>
       <CssBaseline />
@@ -38,7 +42,6 @@ const App: React.FC = () => {
           <AuthProvider>
             <UserProvider>
               <Router>
-                <Header />
                 <Box
                   sx={{
                     display: 'flex',
@@ -46,8 +49,10 @@ const App: React.FC = () => {
                     minHeight: '100vh',
                     width: '100%',
                     overflowX: 'hidden',
+                    bgcolor: 'background.default',
                   }}
                 >
+                  <Header />
                   <Box
                     component="main"
                     sx={{
@@ -56,15 +61,16 @@ const App: React.FC = () => {
                       flexDirection: 'column',
                       width: '100%',
                       maxWidth: '100%',
-                      px: { xs: 2, sm: 3, md: 4 },
+                      px: { xs: 1, sm: 2, md: 4 },
                       py: { xs: 2, sm: 3 },
+                      position: 'relative',
                     }}
                   >
                     <Routes>
                       <Route
                         path="/"
                         element={
-                          <Home onMovieSelect={setSelectedMovie} />
+                          <Home onMovieSelect={handleMovieSelect} />
                         }
                       />
                       <Route path="/login" element={<Login />} />
@@ -85,6 +91,14 @@ const App: React.FC = () => {
                     </Routes>
                   </Box>
                   <Footer />
+                  {selectedMovie && (
+                    <MovieDetail
+                      movie={selectedMovie}
+                      open={Boolean(selectedMovie)}
+                      onClose={() => setSelectedMovie(null)}
+                      onBook={handleBookMovie}
+                    />
+                  )}
                   {selectedMovie && (
                     <BookingDialog
                       open={isBookingOpen}

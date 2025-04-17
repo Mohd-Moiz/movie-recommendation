@@ -11,10 +11,14 @@ import {
   Slider,
   Grid,
   Paper,
+  IconButton,
+  Chip,
+  Divider,
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import CloseIcon from '@mui/icons-material/Close';
 import { useLanguage } from '../contexts/LanguageContext';
 import { en } from '../translations/en';
 import { Movie } from '../types/Movie';
@@ -51,9 +55,25 @@ const BookingDialog: React.FC<BookingDialogProps> = ({ open, onClose, movie }) =
   };
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
+    <Dialog 
+      open={open} 
+      onClose={onClose} 
+      maxWidth="sm" 
+      fullWidth
+      PaperProps={{
+        sx: {
+          borderRadius: 2,
+          bgcolor: 'background.paper',
+        }
+      }}
+    >
       <DialogTitle>
-        {translations.title} - {movie.title}
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Typography variant="h6">Book Tickets - {movie.title}</Typography>
+          <IconButton onClick={onClose} size="small">
+            <CloseIcon />
+          </IconButton>
+        </Box>
       </DialogTitle>
       <DialogContent>
         <Box sx={{ display: 'grid', gap: 2, mt: 2 }}>
@@ -62,7 +82,7 @@ const BookingDialog: React.FC<BookingDialogProps> = ({ open, onClose, movie }) =
               <img
                 src={movie.imageUrl}
                 alt={movie.title}
-                style={{ width: '100%', borderRadius: 8 }}
+                style={{ width: '100%', borderRadius: 8, objectFit: 'cover' }}
               />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -74,19 +94,12 @@ const BookingDialog: React.FC<BookingDialogProps> = ({ open, onClose, movie }) =
               </Typography>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mb: 1 }}>
                 {movie.genres.map((genre) => (
-                  <Typography
+                  <Chip
                     key={genre}
-                    variant="caption"
-                    sx={{
-                      bgcolor: 'primary.main',
-                      color: 'white',
-                      px: 1,
-                      py: 0.5,
-                      borderRadius: 1
-                    }}
-                  >
-                    {genre}
-                  </Typography>
+                    label={genre}
+                    size="small"
+                    sx={{ mr: 0.5, mb: 0.5 }}
+                  />
                 ))}
               </Box>
             </Grid>
@@ -94,7 +107,7 @@ const BookingDialog: React.FC<BookingDialogProps> = ({ open, onClose, movie }) =
 
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
-              label={translations.date}
+              label="Select Date"
               value={date}
               onChange={(newValue) => setDate(newValue)}
               slotProps={{ textField: { fullWidth: true } }}
@@ -102,21 +115,16 @@ const BookingDialog: React.FC<BookingDialogProps> = ({ open, onClose, movie }) =
           </LocalizationProvider>
 
           <TextField
-            label={translations.time}
+            label="Select Time"
             type="time"
             value={time}
             onChange={(e) => setTime(e.target.value)}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            inputProps={{
-              step: 300, // 5 min
-            }}
             fullWidth
+            InputLabelProps={{ shrink: true }}
           />
 
-          <Box>
-            <Typography gutterBottom>{translations.seats}</Typography>
+          <Box sx={{ mt: 2 }}>
+            <Typography gutterBottom>Number of Seats: {seats}</Typography>
             <Slider
               value={seats}
               onChange={(_, value) => setSeats(value as number)}
@@ -128,58 +136,68 @@ const BookingDialog: React.FC<BookingDialogProps> = ({ open, onClose, movie }) =
             />
           </Box>
 
+          <Typography variant="h6" sx={{ mt: 2 }}>
+            Personal Information
+          </Typography>
+
           <TextField
-            label={translations.name}
+            label="Full Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             fullWidth
+            required
           />
 
           <TextField
-            label={translations.email}
+            label="Email Address"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             fullWidth
+            required
           />
 
           <TextField
-            label={translations.phone}
+            label="Phone Number"
+            type="tel"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             fullWidth
+            required
           />
 
-          <Paper sx={{ p: 2, mt: 2 }}>
+          <Paper elevation={0} sx={{ p: 2, mt: 2, bgcolor: 'background.default' }}>
             <Typography variant="h6" gutterBottom>
               Booking Summary
             </Typography>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <Typography variant="body2">Base Price:</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="body2" align="right">₹{(movie.price * 83.33).toFixed(2)}</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="body2">Number of Seats:</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="body2" align="right">{seats}</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="h6">Total Price:</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="h6" align="right">₹{(movie.price * seats * 83.33).toFixed(2)}</Typography>
-              </Grid>
-            </Grid>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+              <Typography>Ticket Price:</Typography>
+              <Typography>₹{(movie.price * 83.33).toFixed(2)}</Typography>
+            </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+              <Typography>Number of Seats:</Typography>
+              <Typography>{seats}</Typography>
+            </Box>
+            <Divider sx={{ my: 1 }} />
+            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Typography variant="h6">Total:</Typography>
+              <Typography variant="h6" color="primary">
+                ₹{(movie.price * seats * 83.33).toFixed(2)}
+              </Typography>
+            </Box>
           </Paper>
         </Box>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
-        <Button variant="contained" onClick={handleBooking} color="primary">
+      <DialogActions sx={{ p: 2 }}>
+        <Button onClick={onClose} color="inherit">
+          Cancel
+        </Button>
+        <Button 
+          onClick={handleBooking} 
+          variant="contained" 
+          color="primary"
+          disabled={!date || !time || !name || !email || !phone}
+        >
           Confirm Booking
         </Button>
       </DialogActions>
