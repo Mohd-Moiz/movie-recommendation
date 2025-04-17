@@ -13,6 +13,10 @@ export interface UserProfile {
 }
 
 export interface UserReview {
+  id: string;
+  userId: string;
+  userName: string;
+  createdAt: string;
   movieId: number;
   rating: number;
   comment: string;
@@ -26,6 +30,7 @@ export interface Movie {
   description: string;
   imageUrl: string;
   rating: number;
+  userRating?: number;
   popularity: number;
   price: number;
   genres: string[];
@@ -37,7 +42,7 @@ export interface Movie {
     boxOffice: string;
     awards: string[];
     trivia: string[];
-    cast: { name: string; role: string; imageUrl: string; }[];
+    cast: { name: string; role: string; imageUrl?: string; }[];
     crew: { name: string; role: string; imageUrl?: string; }[];
   };
   similarMovies?: number[];

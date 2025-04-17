@@ -7,7 +7,7 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import SendIcon from '@mui/icons-material/Send';
-import { Movie } from '../types';
+import { Movie } from '../types/Movie';
 import { mockMovies } from '../data/mockMovies';
 
 interface Message {

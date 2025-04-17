@@ -37,6 +37,17 @@ export const en = {
     cancel: 'Cancel',
     confirm: 'Confirm Booking'
   },
+  movie: {
+    rating: 'Rating',
+    insights: 'Movie Insights',
+    boxOffice: 'Box Office',
+    awards: 'Awards',
+    trivia: 'Trivia',
+    cast: 'Cast',
+    crew: 'Crew',
+    close: 'Close',
+    book: 'Book Now'
+  },
   errors: {
     emailRequired: 'Email is required',
     emailInvalid: 'Invalid email address',

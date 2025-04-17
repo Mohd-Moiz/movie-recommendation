@@ -2,12 +2,12 @@ import React, { createContext, useContext, useState } from 'react';
 import { en } from '../translations/en';
 
 type Language = 'en';
-export type TranslationKey = keyof typeof en;
+export type TranslationKey = string;
 
 type LanguageContextType = {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: TranslationKey) => any;
+  t: (key: string) => any;
 };
 
 const translations = { en };
