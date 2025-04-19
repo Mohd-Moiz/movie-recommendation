@@ -38,6 +38,7 @@ const Recommendations: React.FC = () => {
         }
 
         const recs = await getRecommendations(user.uid, preferences);
+        console.log('Fetched recommendations:', recs); // Debug log
         setRecommendations(recs);
       } catch (err) {
         setError('Failed to fetch recommendations. Please try again later.');
@@ -95,8 +96,9 @@ const Recommendations: React.FC = () => {
               <CardMedia
                 component="img"
                 height="300"
-                image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                image={movie.imageUrl || 'https://via.placeholder.com/300x450?text=No+Poster'}
                 alt={movie.title}
+                sx={{ objectFit: 'cover' }}
               />
               <CardContent sx={{ flexGrow: 1 }}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -119,9 +121,9 @@ const Recommendations: React.FC = () => {
                   </Tooltip>
                 </Box>
                 <Box mb={1}>
-                  <Rating value={movie.vote_average / 2} precision={0.5} readOnly />
+                  <Rating value={movie.rating / 2} precision={0.5} readOnly />
                   <Typography variant="body2" color="text.secondary">
-                    ({movie.vote_average}/10)
+                    ({movie.rating}/10)
                   </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mb: 1 }}>
@@ -138,13 +140,22 @@ const Recommendations: React.FC = () => {
                 <Collapse in={expandedMovie === movie.id} timeout="auto" unmountOnExit>
                   <Box sx={{ mt: 1 }}>
                     <Typography variant="body2" color="text.secondary" paragraph>
-                      {movie.overview}
+                      {movie.description}
                     </Typography>
                     <Typography variant="caption" color="text.secondary">
                       Recommendation Score: {score.toFixed(1)}
                     </Typography>
                     <Typography variant="caption" display="block" color="text.secondary">
                       {reason}
+                    </Typography>
+                    <Typography variant="caption" display="block" color="text.secondary">
+                      Industry: {movie.industry}
+                    </Typography>
+                    <Typography variant="caption" display="block" color="text.secondary">
+                      Release Date: {movie.releaseDate}
+                    </Typography>
+                    <Typography variant="caption" display="block" color="text.secondary">
+                      Price: ₹{movie.price}
                     </Typography>
                   </Box>
                 </Collapse>

@@ -649,6 +649,22 @@ export const getRecommendations = async (
   userId: string,
   preferences: any
 ): Promise<MovieRecommendation[]> => {
+  console.log('Getting recommendations for user:', userId, 'with preferences:', preferences);
+  
+  // For now, return mock recommendations based on our mock movies
+  const mockRecommendations: MovieRecommendation[] = MOCK_MOVIES.map(movie => ({
+    movie,
+    score: Math.random() * 10, // Random score between 0 and 10
+    reason: `Recommended based on your preferences for ${movie.genres.join(', ')} movies`
+  }))
+  .sort((a, b) => b.score - a.score) // Sort by score in descending order
+  .slice(0, 8); // Return top 8 recommendations
+
+  console.log('Generated recommendations:', mockRecommendations);
+  return mockRecommendations;
+
+  // The following code is commented out as we're using mock data for now
+  /*
   try {
     // Get user's watched movies
     const watchedMovies = preferences.watchedMovies || [];
@@ -708,6 +724,7 @@ export const getRecommendations = async (
     console.error('Error getting recommendations:', error);
     throw error;
   }
+  */
 };
 
 export const getMovieVideoUrl = (movieTitle: string): string => {
