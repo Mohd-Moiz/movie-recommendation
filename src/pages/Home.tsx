@@ -112,28 +112,34 @@ const Home: React.FC = () => {
   const filteredMovies = movies
     .filter(movie => {
       const industryMatch = selectedIndustry === 'All' || movie.industry === selectedIndustry;
-      const genreMatch = selectedGenre === 'All' || movie.genres.includes(selectedGenre);
-      const ageRatingMatch = selectedAgeRating === 'All' || movie.ageRating === selectedAgeRating;
-      const yearMatch = movie.releaseDate && 
-        parseInt(movie.releaseDate.split('-')[0]) >= yearRange[0] && 
-        parseInt(movie.releaseDate.split('-')[0]) <= yearRange[1];
-      const ratingMatch = movie.rating >= ratingRange[0] && movie.rating <= ratingRange[1];
-      const priceMatch = movie.price >= priceRange[0] && movie.price <= priceRange[1];
+      const genreMatch = selectedGenre === 'All' || movie.genres.some(g => g === selectedGenre);
+      const ageRatingMatch = selectedAgeRating === 'All' || 
+        movie.ageRating === selectedAgeRating ||
+        !movie.ageRating;
+      const releaseYear = movie.releaseDate ? parseInt(movie.releaseDate.split('-')[0]) : 2000;
+      const yearMatch = releaseYear >= yearRange[0] && releaseYear <= yearRange[1];
+      const ratingMatch = (movie.rating || 0) >= ratingRange[0] && (movie.rating || 0) <= ratingRange[1];
+      const priceMatch = (movie.price || 0) >= priceRange[0] && (movie.price || 0) <= priceRange[1];
+      const searchMatch = !searchQuery || 
+        movie.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        movie.genres.some(genre => genre.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        movie.industry.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (movie.description && movie.description.toLowerCase().includes(searchQuery.toLowerCase()));
       
-      return industryMatch && genreMatch && ageRatingMatch && yearMatch && ratingMatch && priceMatch;
+      return industryMatch && genreMatch && ageRatingMatch && yearMatch && ratingMatch && priceMatch && searchMatch;
     })
     .sort((a, b) => {
       switch (sortBy) {
         case 'popularity':
-          return b.popularity - a.popularity;
+          return (b.popularity || 0) - (a.popularity || 0);
         case 'rating':
-          return b.rating - a.rating;
+          return (b.rating || 0) - (a.rating || 0);
         case 'releaseDate':
-          return new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime();
+          return new Date(b.releaseDate || '').getTime() - new Date(a.releaseDate || '').getTime();
         case 'price':
-          return a.price - b.price;
+          return (a.price || 0) - (b.price || 0);
         case 'price-desc':
-          return b.price - a.price;
+          return (b.price || 0) - (a.price || 0);
         default:
           return 0;
       }
@@ -266,55 +272,32 @@ const Home: React.FC = () => {
           </Grid>
         </Paper>
         
-        {loading && movies.length === 0 && (
-          <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
+        {loading && (
+          <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
             <CircularProgress />
           </Box>
         )}
 
         {error && (
-          <Alert severity="error" sx={{ mb: 2 }}>
+          <Alert severity="error" sx={{ my: 2 }}>
             {error}
           </Alert>
         )}
 
         {!loading && !error && filteredMovies.length === 0 && (
-          <Typography sx={{ py: 2 }}>
-            No movies found matching your criteria. Please try different filters.
-          </Typography>
+          <Alert severity="info" sx={{ my: 2 }}>
+            No movies found matching your criteria. Try adjusting your filters.
+          </Alert>
         )}
 
-        <Grid container spacing={3}>
-          {filteredMovies.map((movie) => (
-            <Grid 
-              item 
-              xs={12} 
-              sm={6} 
-              md={4} 
-              lg={3} 
-              key={movie.id}
-              sx={{
-                transition: 'transform 0.2s',
-                '&:hover': {
-                  transform: 'scale(1.02)',
-                },
-              }}
-            >
-              <MovieCard 
-                movie={{
-                  ...movie,
-                  imageUrl: movie.imageUrl || 'https://via.placeholder.com/300x450?text=No+Poster',
-                  price: movie.price,
-                }} 
-              />
-            </Grid>
-          ))}
-        </Grid>
-
-        {loading && movies.length > 0 && (
-          <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
-            <CircularProgress />
-          </Box>
+        {!loading && !error && filteredMovies.length > 0 && (
+          <Grid container spacing={3}>
+            {filteredMovies.map((movie) => (
+              <Grid item key={movie.id} xs={12} sm={6} md={4} lg={3}>
+                <MovieCard movie={movie} />
+              </Grid>
+            ))}
+          </Grid>
         )}
       </Box>
     </Container>

@@ -209,6 +209,142 @@ const MOCK_MOVIES: Movie[] = [
         { name: "Hans Zimmer", role: "Composer" }
       ]
     }
+  },
+  {
+    id: 7,
+    title: "Pathaan",
+    description: "An Indian spy takes on the leader of a group of mercenaries who have nefarious plans to target his homeland.",
+    imageUrl: "https://m.media-amazon.com/images/M/MV5BM2QzM2JiNTMtYjU4Ny00MDZkLTk3MmUtYTRjMzVkZGJlNmYyXkEyXkFqcGdeQXVyMTUzNTgzNzM0._V1_.jpg",
+    rating: 7.5,
+    popularity: 85,
+    price: 199,
+    genres: ["Action", "Thriller"],
+    industry: "Bollywood",
+    releaseDate: "2023-01-25",
+    trailerUrl: "https://www.youtube.com/watch?v=vqu4z34wENw",
+    streamingUrl: "https://www.youtube.com/watch?v=vqu4z34wENw",
+    duration: "146 min",
+    ageRating: "PG-13",
+    reviews: [],
+    tags: [],
+    insights: {
+      boxOffice: "₹1,050 crore",
+      awards: ["Filmfare Award for Best Action"],
+      trivia: [
+        "Shah Rukh Khan's comeback film after 4 years",
+        "Biggest Bollywood opener of 2023"
+      ],
+      cast: [
+        { name: "Shah Rukh Khan", role: "Pathaan" },
+        { name: "Deepika Padukone", role: "Rubina" }
+      ],
+      crew: [
+        { name: "Siddharth Anand", role: "Director" },
+        { name: "Vishal-Shekhar", role: "Composers" }
+      ]
+    }
+  },
+  {
+    id: 8,
+    title: "Pushpa: The Rise",
+    description: "A laborer rises through the ranks of a red sandalwood smuggling syndicate, making enemies along the way.",
+    imageUrl: "https://m.media-amazon.com/images/M/MV5BMmQ4YmM3NjgtNTExNC00ZTZhLWEwZTctYjdhOWI4ZWFlMDk2XkEyXkFqcGdeQXVyMTI1NDEyNTM5._V1_.jpg",
+    rating: 7.6,
+    popularity: 88,
+    price: 149,
+    genres: ["Action", "Crime", "Drama"],
+    industry: "Tollywood",
+    releaseDate: "2021-12-17",
+    trailerUrl: "https://www.youtube.com/watch?v=Q1NKMPhP8PY",
+    streamingUrl: "https://www.youtube.com/watch?v=Q1NKMPhP8PY",
+    duration: "179 min",
+    ageRating: "PG-13",
+    reviews: [],
+    tags: [],
+    insights: {
+      boxOffice: "₹365 crore",
+      awards: ["National Film Award South"],
+      trivia: [
+        "Shot simultaneously in Telugu and dubbed in multiple languages",
+        "Known for its iconic songs and dialogues"
+      ],
+      cast: [
+        { name: "Allu Arjun", role: "Pushpa Raj" },
+        { name: "Rashmika Mandanna", role: "Srivalli" }
+      ],
+      crew: [
+        { name: "Sukumar", role: "Director" },
+        { name: "Devi Sri Prasad", role: "Composer" }
+      ]
+    }
+  },
+  {
+    id: 9,
+    title: "The Dark Knight",
+    description: "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
+    imageUrl: "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_.jpg",
+    rating: 9.0,
+    popularity: 98,
+    price: 299,
+    genres: ["Action", "Crime", "Drama"],
+    industry: "Hollywood",
+    releaseDate: "2008-07-18",
+    trailerUrl: "https://www.youtube.com/watch?v=EXeTwQWrcwY",
+    streamingUrl: "https://www.youtube.com/watch?v=EXeTwQWrcwY",
+    duration: "152 min",
+    ageRating: "PG-13",
+    reviews: [],
+    tags: [],
+    insights: {
+      boxOffice: "₹1,005 crore",
+      awards: ["Won 2 Oscars", "Won 2 BAFTAs"],
+      trivia: [
+        "Heath Ledger posthumously won an Oscar for his role as the Joker",
+        "Christopher Nolan's highest-grossing Batman film"
+      ],
+      cast: [
+        { name: "Christian Bale", role: "Bruce Wayne/Batman" },
+        { name: "Heath Ledger", role: "Joker" }
+      ],
+      crew: [
+        { name: "Christopher Nolan", role: "Director" },
+        { name: "Hans Zimmer", role: "Composer" }
+      ]
+    }
+  },
+  {
+    id: 10,
+    title: "KGF: Chapter 2",
+    description: "In the blood-soaked Kolar Gold Fields, Rocky's name strikes fear into his foes. While his allies look up to him, the government sees him as a threat to law and order.",
+    imageUrl: "https://m.media-amazon.com/images/M/MV5BMjMwMDgyOGQtMWZjNC00MDUwLTllZDYtZWM3NDBmN2YzNGZmXkEyXkFqcGdeQXVyMTQyMTMwOTk0._V1_.jpg",
+    rating: 8.3,
+    popularity: 92,
+    price: 179,
+    genres: ["Action", "Drama", "Period"],
+    industry: "Tollywood",
+    releaseDate: "2022-04-14",
+    trailerUrl: "https://www.youtube.com/watch?v=JKa05nyUmuQ",
+    streamingUrl: "https://www.youtube.com/watch?v=JKa05nyUmuQ",
+    duration: "168 min",
+    ageRating: "PG-13",
+    reviews: [],
+    tags: [],
+    insights: {
+      boxOffice: "₹1,250 crore",
+      awards: ["Best Action Film - South"],
+      trivia: [
+        "Highest-grossing Kannada film of all time",
+        "Shot in IMAX format"
+      ],
+      cast: [
+        { name: "Yash", role: "Rocky" },
+        { name: "Sanjay Dutt", role: "Adheera" }
+      ],
+      crew: [
+        { name: "Prashanth Neel", role: "Director" },
+        { name: "Ravi Basrur", role: "Composer" }
+      ]
+    }
   }
 ];
 
@@ -272,12 +408,13 @@ const calculateMovieSimilarity = (movie1: Movie, movie2: Movie): number => {
 };
 
 export const getPopularMovies = async (page: number = 1): Promise<Movie[]> => {
-  try {
-    if (!API_KEY || API_KEY === 'demo') {
-      console.log('Using mock data as API key is not set');
-      return MOCK_MOVIES;
-    }
+  // If API key is not set or is demo, return mock data
+  if (!API_KEY || API_KEY === 'demo') {
+    console.log('Using mock data as API key is not set');
+    return MOCK_MOVIES;
+  }
 
+  try {
     const url = `${OMDb_BASE_URL}?apikey=${API_KEY}&s=movie&type=movie&page=${page}`;
     const response = await fetch(url);
     
@@ -288,43 +425,19 @@ export const getPopularMovies = async (page: number = 1): Promise<Movie[]> => {
     
     const data = await response.json();
     
-    if (data.Response === 'True') {
+    if (data.Response === 'True' && data.Search) {
       const detailedMovies = await Promise.all(
         data.Search.map(async (movie: any) => {
           const details = await getMovieById(movie.imdbID);
-          return details || {
-            id: parseInt(movie.imdbID.replace('tt', '')),
-            title: movie.Title,
-            description: '',
-            imageUrl: movie.Poster,
-            rating: 0,
-            popularity: 0,
-            price: 199, // Default price in INR
-            genres: [],
-            industry: '',
-            releaseDate: movie.Year,
-            trailerUrl: `https://www.youtube.com/watch?v=${movie.imdbID}`,
-            streamingUrl: '',
-            duration: '',
-            ageRating: '',
-            reviews: [],
-            tags: [],
-            insights: {
-              boxOffice: '',
-              awards: [],
-              trivia: [],
-              cast: [],
-              crew: []
-            }
-          };
+          return details;
         })
       );
       
       return detailedMovies.filter((movie): movie is Movie => movie !== null);
-    } else {
-      console.error('API response error, falling back to mock data');
-      return MOCK_MOVIES;
     }
+    
+    console.error('API response error, falling back to mock data');
+    return MOCK_MOVIES;
   } catch (error) {
     console.error('Error fetching popular movies, falling back to mock data:', error);
     return MOCK_MOVIES;
@@ -438,67 +551,55 @@ export const getMovieById = async (id: string): Promise<Movie | null> => {
 };
 
 export const searchMovies = async (query: string): Promise<Movie[]> => {
-  try {
-    if (!API_KEY || API_KEY === 'demo') {
-      console.log('Using mock data for search as API key is not set');
-      // Filter mock movies based on search query
-      return MOCK_MOVIES.filter(movie => 
-        movie.title.toLowerCase().includes(query.toLowerCase()) ||
-        movie.genres.some(genre => genre.toLowerCase().includes(query.toLowerCase()))
-      );
-    }
+  // If API key is not set or is demo, search through mock data
+  if (!API_KEY || API_KEY === 'demo') {
+    console.log('Using mock data for search as API key is not set');
+    return MOCK_MOVIES.filter(movie => 
+      movie.title.toLowerCase().includes(query.toLowerCase()) ||
+      movie.genres.some(genre => genre.toLowerCase().includes(query.toLowerCase())) ||
+      movie.industry.toLowerCase().includes(query.toLowerCase())
+    );
+  }
 
+  try {
     const url = `${OMDb_BASE_URL}?apikey=${API_KEY}&s=${encodeURIComponent(query)}&type=movie`;
     const response = await fetch(url);
     
     if (!response.ok) {
-      console.error('API request failed, falling back to mock data');
-      return MOCK_MOVIES;
+      console.error('API request failed, falling back to mock data search');
+      return MOCK_MOVIES.filter(movie => 
+        movie.title.toLowerCase().includes(query.toLowerCase()) ||
+        movie.genres.some(genre => genre.toLowerCase().includes(query.toLowerCase())) ||
+        movie.industry.toLowerCase().includes(query.toLowerCase())
+      );
     }
     
     const data = await response.json();
     
-    if (data.Response === 'True') {
-      // Fetch detailed information for each movie
+    if (data.Response === 'True' && data.Search) {
       const detailedMovies = await Promise.all(
         data.Search.map(async (movie: any) => {
           const details = await getMovieById(movie.imdbID);
-          return details || {
-            id: parseInt(movie.imdbID.replace('tt', '')),
-            title: movie.Title,
-            description: '',
-            imageUrl: movie.Poster,
-            rating: 0,
-            popularity: 0,
-            price: 2.99,
-            genres: [],
-            industry: '',
-            releaseDate: movie.Year,
-            trailerUrl: `https://www.youtube.com/watch?v=${movie.imdbID}`,
-            streamingUrl: '',
-            duration: '',
-            ageRating: '',
-            reviews: [],
-            tags: [],
-            insights: {
-              boxOffice: '',
-              awards: [],
-              trivia: [],
-              cast: [],
-              crew: []
-            }
-          };
+          return details;
         })
       );
       
       return detailedMovies.filter((movie): movie is Movie => movie !== null);
-    } else {
-      console.error('API response error, falling back to mock data');
-      return MOCK_MOVIES;
     }
+    
+    console.error('API response error, falling back to mock data search');
+    return MOCK_MOVIES.filter(movie => 
+      movie.title.toLowerCase().includes(query.toLowerCase()) ||
+      movie.genres.some(genre => genre.toLowerCase().includes(query.toLowerCase())) ||
+      movie.industry.toLowerCase().includes(query.toLowerCase())
+    );
   } catch (error) {
-    console.error('Error searching movies, falling back to mock data:', error);
-    return MOCK_MOVIES;
+    console.error('Error searching movies, falling back to mock data search:', error);
+    return MOCK_MOVIES.filter(movie => 
+      movie.title.toLowerCase().includes(query.toLowerCase()) ||
+      movie.genres.some(genre => genre.toLowerCase().includes(query.toLowerCase())) ||
+      movie.industry.toLowerCase().includes(query.toLowerCase())
+    );
   }
 };
 
