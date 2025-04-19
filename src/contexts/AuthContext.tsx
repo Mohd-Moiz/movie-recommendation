@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -14,7 +14,7 @@ import {
 import { auth } from '../config/firebase';
 
 interface AuthContextType {
-  currentUser: User | null;
+  user: User | null;
   loading: boolean;
   signup: (email: string, password: string) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
@@ -24,48 +24,10 @@ interface AuthContextType {
   facebookSignIn: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType | null>(null);
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
-};
-
-const getErrorMessage = (error: AuthError): string => {
-  console.error('Firebase Auth Error:', error.code, error.message);
-  switch (error.code) {
-    case 'auth/invalid-email':
-      return 'Invalid email address';
-    case 'auth/user-disabled':
-      return 'This account has been disabled';
-    case 'auth/user-not-found':
-      return 'No account found with this email';
-    case 'auth/wrong-password':
-      return 'Incorrect password';
-    case 'auth/invalid-credential':
-      return 'Invalid email or password';
-    case 'auth/email-already-in-use':
-      return 'Email is already in use';
-    case 'auth/weak-password':
-      return 'Password is too weak';
-    case 'auth/operation-not-allowed':
-      return 'This operation is not allowed';
-    case 'auth/popup-closed-by-user':
-      return 'Sign in was cancelled';
-    case 'auth/popup-blocked':
-      return 'Popup was blocked by the browser';
-    case 'auth/network-request-failed':
-      return 'Network error occurred';
-    default:
-      return error.message;
-  }
-};
-
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   const signup = async (email: string, password: string) => {
@@ -99,44 +61,37 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const googleSignIn = async () => {
+    const provider = new GoogleAuthProvider();
     try {
-      const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
     } catch (error) {
-      throw new Error(getErrorMessage(error as AuthError));
+      console.error('Error signing in with Google:', error);
+      throw error;
     }
   };
 
   const microsoftSignIn = async () => {
-    try {
-      const provider = new OAuthProvider('microsoft.com');
-      await signInWithPopup(auth, provider);
-    } catch (error) {
-      throw new Error(getErrorMessage(error as AuthError));
-    }
+    // Implement Microsoft sign-in
+    throw new Error('Microsoft sign-in not implemented');
   };
 
   const facebookSignIn = async () => {
-    try {
-      const provider = new FacebookAuthProvider();
-      await signInWithPopup(auth, provider);
-    } catch (error) {
-      throw new Error(getErrorMessage(error as AuthError));
-    }
+    // Implement Facebook sign-in
+    throw new Error('Facebook sign-in not implemented');
   };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       console.log('Auth state changed:', user?.email);
-      setCurrentUser(user);
+      setUser(user);
       setLoading(false);
     });
 
-    return unsubscribe;
+    return () => unsubscribe();
   }, []);
 
   const value = {
-    currentUser,
+    user,
     loading,
     signup,
     login,
@@ -148,7 +103,57 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {loading ? (
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center', 
+          height: '100vh',
+          backgroundColor: '#f5f5f5'
+        }}>
+          <div>Loading...</div>
+        </div>
+      ) : (
+        children
+      )}
     </AuthContext.Provider>
   );
+};
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};
+
+const getErrorMessage = (error: AuthError): string => {
+  console.error('Firebase Auth Error:', error.code, error.message);
+  switch (error.code) {
+    case 'auth/invalid-email':
+      return 'Invalid email address';
+    case 'auth/user-disabled':
+      return 'This account has been disabled';
+    case 'auth/user-not-found':
+      return 'No account found with this email';
+    case 'auth/wrong-password':
+      return 'Incorrect password';
+    case 'auth/invalid-credential':
+      return 'Invalid email or password';
+    case 'auth/email-already-in-use':
+      return 'Email is already in use';
+    case 'auth/weak-password':
+      return 'Password is too weak';
+    case 'auth/operation-not-allowed':
+      return 'This operation is not allowed';
+    case 'auth/popup-closed-by-user':
+      return 'Sign in was cancelled';
+    case 'auth/popup-blocked':
+      return 'Popup was blocked by the browser';
+    case 'auth/network-request-failed':
+      return 'Network error occurred';
+    default:
+      return error.message;
+  }
 }; 

@@ -42,7 +42,6 @@ export interface Movie {
   description: string;
   imageUrl: string;
   rating: number;
-  userRating?: number;
   popularity: number;
   price: number;
   genres: string[];
@@ -50,6 +49,7 @@ export interface Movie {
   releaseDate: string;
   trailerUrl: string;
   reviews: Review[];
+  tags: string[];
   insights: {
     boxOffice: string;
     awards: string[];
@@ -57,8 +57,6 @@ export interface Movie {
     cast: { name: string; role: string; imageUrl?: string; }[];
     crew: { name: string; role: string; imageUrl?: string; }[];
   };
-  similarMovies?: number[];
-  tags: string[];
 }
 
 export interface AdminUser extends UserProfile {

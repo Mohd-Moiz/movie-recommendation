@@ -1,82 +1,100 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Typography, List, ListItem, ListItemText, ListItemSecondaryAction, IconButton, Divider } from '@mui/material';
+import React, { useState } from 'react';
+import {
+  Box,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemSecondaryAction,
+  IconButton,
+  Tabs,
+  Tab,
+  CircularProgress,
+} from '@mui/material';
 import { Delete as DeleteIcon } from '@mui/icons-material';
-import { useTranslation } from 'react-i18next';
 import { useBag } from '../contexts/BagContext';
 import { Movie } from '../types/movie';
-import { getMovieById } from '../services/movieService';
 
-export const UserBag = () => {
-  const { t } = useTranslation();
+const UserBag: React.FC = () => {
   const { bag, removeFromWatchlist, removeFromFavorites, removeFromWatched } = useBag();
-  const [movies, setMovies] = useState<{ [key: number]: Movie }>({});
+  const [activeTab, setActiveTab] = useState(0);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchMovies = async () => {
-      const allMovieIds = [...bag.watchlist, ...bag.favorites, ...bag.watched];
-      const uniqueMovieIds = Array.from(new Set(allMovieIds));
-      
-      const moviePromises = uniqueMovieIds.map(id => getMovieById(id));
-      const movieResults = await Promise.all(moviePromises);
-      
-      const movieMap = movieResults.reduce((acc, movie) => {
-        if (movie) acc[movie.id] = movie;
-        return acc;
-      }, {} as { [key: number]: Movie });
-      
-      setMovies(movieMap);
-    };
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
+    setActiveTab(newValue);
+  };
 
-    fetchMovies();
-  }, [bag]);
+  const handleRemoveFromWatchlist = (movie: Movie) => {
+    removeFromWatchlist(movie);
+  };
 
-  const renderMovieList = (movieIds: number[], onRemove: (id: number) => void) => (
-    <List>
-      {movieIds.map(id => {
-        const movie = movies[id];
-        if (!movie) return null;
-        
-        return (
-          <ListItem key={id}>
+  const handleRemoveFromFavorites = (movie: Movie) => {
+    removeFromFavorites(movie);
+  };
+
+  const handleRemoveFromWatched = (movie: Movie) => {
+    removeFromWatched(movie);
+  };
+
+  const renderMovieList = (movies: Movie[], onRemove: (movie: Movie) => void) => {
+    if (loading) {
+      return (
+        <Box display="flex" justifyContent="center" p={3}>
+          <CircularProgress />
+        </Box>
+      );
+    }
+
+    if (movies.length === 0) {
+      return (
+        <Box p={3}>
+          <Typography variant="body1" color="textSecondary">
+            No movies in this list
+          </Typography>
+        </Box>
+      );
+    }
+
+    return (
+      <List>
+        {movies.map((movie) => (
+          <ListItem key={movie.id}>
             <ListItemText
               primary={movie.title}
-              secondary={movie.overview}
+              secondary={movie.description}
             />
             <ListItemSecondaryAction>
-              <IconButton edge="end" onClick={() => onRemove(id)}>
+              <IconButton
+                edge="end"
+                aria-label="delete"
+                onClick={() => onRemove(movie)}
+              >
                 <DeleteIcon />
               </IconButton>
             </ListItemSecondaryAction>
           </ListItem>
-        );
-      })}
-    </List>
-  );
+        ))}
+      </List>
+    );
+  };
 
   return (
-    <Box sx={{ p: 2 }}>
-      <Typography variant="h5" gutterBottom>
-        {t('userBag.title')}
+    <Box>
+      <Typography variant="h4" gutterBottom>
+        My Movie Lists
       </Typography>
-      
-      <Typography variant="h6" gutterBottom>
-        {t('userBag.watchlist')}
-      </Typography>
-      {renderMovieList(bag.watchlist, removeFromWatchlist)}
-      
-      <Divider sx={{ my: 2 }} />
-      
-      <Typography variant="h6" gutterBottom>
-        {t('userBag.favorites')}
-      </Typography>
-      {renderMovieList(bag.favorites, removeFromFavorites)}
-      
-      <Divider sx={{ my: 2 }} />
-      
-      <Typography variant="h6" gutterBottom>
-        {t('userBag.watched')}
-      </Typography>
-      {renderMovieList(bag.watched, removeFromWatched)}
+      <Tabs value={activeTab} onChange={handleTabChange}>
+        <Tab label="Watchlist" />
+        <Tab label="Favorites" />
+        <Tab label="Watched" />
+      </Tabs>
+      <Box mt={2}>
+        {activeTab === 0 && renderMovieList(bag.watchlist, handleRemoveFromWatchlist)}
+        {activeTab === 1 && renderMovieList(bag.favorites, handleRemoveFromFavorites)}
+        {activeTab === 2 && renderMovieList(bag.watched, handleRemoveFromWatched)}
+      </Box>
     </Box>
   );
-}; 
+};
+
+export default UserBag; 

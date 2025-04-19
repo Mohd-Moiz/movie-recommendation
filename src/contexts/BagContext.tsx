@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { Movie } from '../types/movie';
 
 interface Bag {
@@ -10,11 +10,11 @@ interface Bag {
 interface BagContextType {
   bag: Bag;
   addToWatchlist: (movie: Movie) => void;
+  removeFromWatchlist: (movie: Movie) => void;
   addToFavorites: (movie: Movie) => void;
+  removeFromFavorites: (movie: Movie) => void;
   addToWatched: (movie: Movie) => void;
-  removeFromWatchlist: (movieId: number) => void;
-  removeFromFavorites: (movieId: number) => void;
-  removeFromWatched: (movieId: number) => void;
+  removeFromWatched: (movie: Movie) => void;
 }
 
 const BagContext = createContext<BagContextType | undefined>(undefined);
@@ -27,71 +27,67 @@ export const useBag = () => {
   return context;
 };
 
-interface BagProviderProps {
-  children: ReactNode;
-}
-
-export const BagProvider = ({ children }: BagProviderProps) => {
+export const BagProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [bag, setBag] = useState<Bag>({
     watchlist: [],
     favorites: [],
-    watched: []
+    watched: [],
   });
 
   const addToWatchlist = (movie: Movie) => {
-    setBag(prev => ({
+    setBag((prev) => ({
       ...prev,
-      watchlist: [...prev.watchlist, movie]
+      watchlist: [...prev.watchlist, movie],
+    }));
+  };
+
+  const removeFromWatchlist = (movie: Movie) => {
+    setBag((prev) => ({
+      ...prev,
+      watchlist: prev.watchlist.filter((m) => m.id !== movie.id),
     }));
   };
 
   const addToFavorites = (movie: Movie) => {
-    setBag(prev => ({
+    setBag((prev) => ({
       ...prev,
-      favorites: [...prev.favorites, movie]
+      favorites: [...prev.favorites, movie],
+    }));
+  };
+
+  const removeFromFavorites = (movie: Movie) => {
+    setBag((prev) => ({
+      ...prev,
+      favorites: prev.favorites.filter((m) => m.id !== movie.id),
     }));
   };
 
   const addToWatched = (movie: Movie) => {
-    setBag(prev => ({
+    setBag((prev) => ({
       ...prev,
-      watched: [...prev.watched, movie]
+      watched: [...prev.watched, movie],
     }));
   };
 
-  const removeFromWatchlist = (movieId: number) => {
-    setBag(prev => ({
+  const removeFromWatched = (movie: Movie) => {
+    setBag((prev) => ({
       ...prev,
-      watchlist: prev.watchlist.filter(movie => movie.id !== movieId)
+      watched: prev.watched.filter((m) => m.id !== movie.id),
     }));
-  };
-
-  const removeFromFavorites = (movieId: number) => {
-    setBag(prev => ({
-      ...prev,
-      favorites: prev.favorites.filter(movie => movie.id !== movieId)
-    }));
-  };
-
-  const removeFromWatched = (movieId: number) => {
-    setBag(prev => ({
-      ...prev,
-      watched: prev.watched.filter(movie => movie.id !== movieId)
-    }));
-  };
-
-  const value = {
-    bag,
-    addToWatchlist,
-    addToFavorites,
-    addToWatched,
-    removeFromWatchlist,
-    removeFromFavorites,
-    removeFromWatched
   };
 
   return (
-    <BagContext.Provider value={value}>
+    <BagContext.Provider
+      value={{
+        bag,
+        addToWatchlist,
+        removeFromWatchlist,
+        addToFavorites,
+        removeFromFavorites,
+        addToWatched,
+        removeFromWatched,
+      }}
+    >
       {children}
     </BagContext.Provider>
   );

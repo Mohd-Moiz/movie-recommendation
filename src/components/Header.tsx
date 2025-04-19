@@ -13,7 +13,14 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
-import { Brightness4, Brightness7, Home as HomeIcon, Menu as MenuIcon } from '@mui/icons-material';
+import { 
+  Brightness4, 
+  Brightness7, 
+  Home as HomeIcon, 
+  Menu as MenuIcon,
+  Movie as MovieIcon,
+  LocalMovies as LocalMoviesIcon,
+} from '@mui/icons-material';
 import { useAuth } from '../contexts/AuthContext';
 import { useThemeContext } from '../contexts/ThemeContext';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -22,7 +29,7 @@ const Header: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const { toggleTheme, mode } = useThemeContext();
-  const { currentUser, logout } = useAuth();
+  const { user, logout } = useAuth();
   const { t } = useLanguage();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -106,14 +113,26 @@ const Header: React.FC = () => {
               <MenuItem component={Link} to="/about" onClick={handleClose}>
                 About
               </MenuItem>
-              {currentUser ? (
+              {user && (
+                <>
+                  <MenuItem component={Link} to="/recommendations" onClick={handleClose}>
+                    <MovieIcon sx={{ mr: 1 }} />
+                    Recommendations
+                  </MenuItem>
+                  <MenuItem component={Link} to="/my-bag" onClick={handleClose}>
+                    <LocalMoviesIcon sx={{ mr: 1 }} />
+                    My Movies
+                  </MenuItem>
+                </>
+              )}
+              {user ? (
                 <>
                   <MenuItem onClick={handleLogout}>Logout</MenuItem>
                   <MenuItem onClick={handleClose}>
                     <Avatar
                       sx={{ width: 24, height: 24, mr: 1 }}
-                      alt={currentUser.email || 'User'}
-                      src={currentUser.photoURL || undefined}
+                      alt={user.email || 'User'}
+                      src={user.photoURL || undefined}
                     />
                     Profile
                   </MenuItem>
@@ -149,7 +168,40 @@ const Header: React.FC = () => {
               About
             </Button>
 
-            {currentUser ? (
+            {user && (
+              <>
+                <Button
+                  color="inherit"
+                  component={Link}
+                  to="/recommendations"
+                  startIcon={<MovieIcon />}
+                  sx={{ 
+                    fontWeight: 600,
+                    fontSize: '1rem',
+                    textTransform: 'none',
+                    display: { xs: 'none', sm: 'block' },
+                  }}
+                >
+                  Recommendations
+                </Button>
+                <Button
+                  color="inherit"
+                  component={Link}
+                  to="/my-bag"
+                  startIcon={<LocalMoviesIcon />}
+                  sx={{ 
+                    fontWeight: 600,
+                    fontSize: '1rem',
+                    textTransform: 'none',
+                    display: { xs: 'none', sm: 'block' },
+                  }}
+                >
+                  My Movies
+                </Button>
+              </>
+            )}
+
+            {user ? (
               <>
                 <IconButton
                   size="large"
@@ -161,8 +213,8 @@ const Header: React.FC = () => {
                 >
                   <Avatar
                     sx={{ width: 32, height: 32 }}
-                    alt={currentUser.email || 'User'}
-                    src={currentUser.photoURL || undefined}
+                    alt={user.email || 'User'}
+                    src={user.photoURL || undefined}
                   />
                 </IconButton>
                 <Menu

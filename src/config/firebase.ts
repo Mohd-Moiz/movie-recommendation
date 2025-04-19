@@ -1,4 +1,4 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 
 // Check if all required environment variables are set
@@ -16,6 +16,7 @@ const missingVars = requiredEnvVars.filter(varName => !import.meta.env[varName])
 if (missingVars.length > 0) {
   console.error('Missing required Firebase environment variables:', missingVars);
   console.error('Please set these variables in your .env file');
+  throw new Error('Missing required Firebase environment variables');
 }
 
 const firebaseConfig = {
@@ -27,6 +28,9 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+// Initialize Firebase
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+const auth = getAuth(app);
+
+export { auth };
 export default app; 

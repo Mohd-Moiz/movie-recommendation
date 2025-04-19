@@ -1,55 +1,321 @@
-import React, { useState } from 'react';
-import { Box, Container, Typography, Grid } from '@mui/material';
-import MovieGrid from '../components/movies/MovieGrid';
-import { mockMovies } from '../data/mockMovies';
-import { Movie } from '../types';
-import SearchBar, { SearchCriteria } from '../components/SearchBar';
+import React, { useEffect, useState } from 'react';
+import { 
+  Box, 
+  Container, 
+  Grid, 
+  Typography, 
+  CircularProgress, 
+  Alert, 
+  TextField, 
+  InputAdornment, 
+  useTheme, 
+  useMediaQuery, 
+  Chip, 
+  Stack,
+  Slider,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Paper
+} from '@mui/material';
+import { Search as SearchIcon } from '@mui/icons-material';
+import MovieCard from '../components/MovieCard';
+import { getPopularMovies, searchMovies } from '../services/movieService';
+import { Movie } from '../types/movie';
 
-interface HomeProps {
-  onMovieSelect: (movie: Movie) => void;
-}
+const INDUSTRIES = ['All', 'Hollywood', 'Bollywood', 'Tollywood'];
+const GENRES = ['All', 'Action', 'Adventure', 'Comedy', 'Drama', 'Sci-Fi', 'Thriller', 'Biography', 'Sport', 'Period'];
+const AGE_RATINGS = ['All', 'G', 'PG', 'PG-13', 'R', 'NC-17'];
+const SORT_OPTIONS = [
+  { value: 'popularity', label: 'Most Popular' },
+  { value: 'rating', label: 'Highest Rated' },
+  { value: 'releaseDate', label: 'Newest First' },
+  { value: 'price', label: 'Price: Low to High' },
+  { value: 'price-desc', label: 'Price: High to Low' }
+];
 
-const Home: React.FC<HomeProps> = ({ onMovieSelect }) => {
-  const [filteredMovies, setFilteredMovies] = useState<Movie[]>(mockMovies);
+const Home: React.FC = () => {
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [page, setPage] = useState(1);
+  const [selectedIndustry, setSelectedIndustry] = useState('All');
+  const [selectedGenre, setSelectedGenre] = useState('All');
+  const [selectedAgeRating, setSelectedAgeRating] = useState('All');
+  const [yearRange, setYearRange] = useState<[number, number]>([1990, 2024]);
+  const [ratingRange, setRatingRange] = useState<[number, number]>([0, 10]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
+  const [sortBy, setSortBy] = useState('popularity');
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
 
-  const handleSearch = (searchTerm: string, criteria: SearchCriteria) => {
-    const filtered = mockMovies.filter(movie => {
-      const searchLower = searchTerm.toLowerCase();
-      switch (criteria) {
-        case 'title':
-          return movie.title.toLowerCase().includes(searchLower);
-        case 'actor':
-          return movie.insights.cast.some(actor =>
-            actor.name.toLowerCase().includes(searchLower)
-          );
-        case 'director':
-          return movie.insights.crew.some(
-            member =>
-              member.role === 'Director' &&
-              member.name.toLowerCase().includes(searchLower)
-          );
-        case 'genre':
-          return movie.genres.some(genre =>
-            genre.toLowerCase().includes(searchLower)
-          );
-        default:
-          return true;
+  useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const popularMovies = await getPopularMovies(page);
+        setMovies(prevMovies => [...prevMovies, ...popularMovies]);
+      } catch (err) {
+        console.error('Error fetching movies:', err);
+        setError('Failed to load movies. Please try again later.');
+      } finally {
+        setLoading(false);
       }
-    });
-    setFilteredMovies(filtered);
+    };
+
+    fetchMovies();
+  }, [page]);
+
+  const handleSearch = async (query: string) => {
+    try {
+      setLoading(true);
+      setError(null);
+      setMovies([]);
+      
+      if (query.trim() === '') {
+        const popularMovies = await getPopularMovies(1);
+        setMovies(popularMovies);
+      } else {
+        const searchResults = await searchMovies(query);
+        if (searchResults.length === 0) {
+          setError('No movies found matching your search.');
+        } else {
+          setMovies(searchResults);
+        }
+      }
+    } catch (err) {
+      console.error('Error searching movies:', err);
+      setError('Failed to search movies. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
   };
 
+  const handleScroll = () => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop ===
+      document.documentElement.offsetHeight
+    ) {
+      setPage(prevPage => prevPage + 1);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const filteredMovies = movies
+    .filter(movie => {
+      const industryMatch = selectedIndustry === 'All' || movie.industry === selectedIndustry;
+      const genreMatch = selectedGenre === 'All' || movie.genres.includes(selectedGenre);
+      const ageRatingMatch = selectedAgeRating === 'All' || movie.ageRating === selectedAgeRating;
+      const yearMatch = movie.releaseDate && 
+        parseInt(movie.releaseDate.split('-')[0]) >= yearRange[0] && 
+        parseInt(movie.releaseDate.split('-')[0]) <= yearRange[1];
+      const ratingMatch = movie.rating >= ratingRange[0] && movie.rating <= ratingRange[1];
+      const priceMatch = movie.price >= priceRange[0] && movie.price <= priceRange[1];
+      
+      return industryMatch && genreMatch && ageRatingMatch && yearMatch && ratingMatch && priceMatch;
+    })
+    .sort((a, b) => {
+      switch (sortBy) {
+        case 'popularity':
+          return b.popularity - a.popularity;
+        case 'rating':
+          return b.rating - a.rating;
+        case 'releaseDate':
+          return new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime();
+        case 'price':
+          return a.price - b.price;
+        case 'price-desc':
+          return b.price - a.price;
+        default:
+          return 0;
+      }
+    });
+
   return (
-    <Container maxWidth="xl">
-      <Box sx={{ pb: { xs: '60vh', sm: 0 } }}>
-        <Box sx={{ mb: 4 }}>
-          <SearchBar onSearch={handleSearch} />
-        </Box>
+    <Container maxWidth="lg">
+      <Box sx={{ py: 4 }}>
+        <Typography variant="h4" component="h1" gutterBottom>
+          Popular Movies
+        </Typography>
+
+        <Paper elevation={3} sx={{ p: 3, mb: 4 }}>
+          <Box sx={{ mb: 4 }}>
+            <TextField
+              fullWidth
+              variant="outlined"
+              placeholder="Search movies..."
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                handleSearch(e.target.value);
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Box>
+
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6} md={3}>
+              <FormControl fullWidth>
+                <InputLabel>Sort By</InputLabel>
+                <Select
+                  value={sortBy}
+                  label="Sort By"
+                  onChange={(e) => setSortBy(e.target.value)}
+                >
+                  {SORT_OPTIONS.map(option => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12} sm={6} md={3}>
+              <FormControl fullWidth>
+                <InputLabel>Age Rating</InputLabel>
+                <Select
+                  value={selectedAgeRating}
+                  label="Age Rating"
+                  onChange={(e) => setSelectedAgeRating(e.target.value)}
+                >
+                  {AGE_RATINGS.map(rating => (
+                    <MenuItem key={rating} value={rating}>
+                      {rating}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+
+          <Stack direction="row" spacing={1} sx={{ mb: 3, mt: 3, flexWrap: 'wrap', gap: 1 }}>
+            <Typography variant="subtitle1" sx={{ mr: 1 }}>Industry:</Typography>
+            {INDUSTRIES.map((industry) => (
+              <Chip
+                key={industry}
+                label={industry}
+                onClick={() => setSelectedIndustry(industry)}
+                color={selectedIndustry === industry ? 'primary' : 'default'}
+                sx={{ m: 0.5 }}
+              />
+            ))}
+          </Stack>
+
+          <Stack direction="row" spacing={1} sx={{ mb: 3, flexWrap: 'wrap', gap: 1 }}>
+            <Typography variant="subtitle1" sx={{ mr: 1 }}>Genre:</Typography>
+            {GENRES.map((genre) => (
+              <Chip
+                key={genre}
+                label={genre}
+                onClick={() => setSelectedGenre(genre)}
+                color={selectedGenre === genre ? 'primary' : 'default'}
+                sx={{ m: 0.5 }}
+              />
+            ))}
+          </Stack>
+
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6} md={4}>
+              <Typography gutterBottom>Year Range</Typography>
+              <Slider
+                value={yearRange}
+                onChange={(_, newValue) => setYearRange(newValue as [number, number])}
+                valueLabelDisplay="auto"
+                min={1990}
+                max={2024}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Typography gutterBottom>Rating Range</Typography>
+              <Slider
+                value={ratingRange}
+                onChange={(_, newValue) => setRatingRange(newValue as [number, number])}
+                valueLabelDisplay="auto"
+                min={0}
+                max={10}
+                step={0.1}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Typography gutterBottom>Price Range (₹)</Typography>
+              <Slider
+                value={priceRange}
+                onChange={(_, newValue) => setPriceRange(newValue as [number, number])}
+                valueLabelDisplay="auto"
+                valueLabelFormat={(value) => `₹${value}`}
+                min={0}
+                max={500}
+                step={10}
+              />
+            </Grid>
+          </Grid>
+        </Paper>
         
-        <MovieGrid
-          movies={filteredMovies}
-          onMovieClick={onMovieSelect}
-        />
+        {loading && movies.length === 0 && (
+          <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
+            <CircularProgress />
+          </Box>
+        )}
+
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
+
+        {!loading && !error && filteredMovies.length === 0 && (
+          <Typography sx={{ py: 2 }}>
+            No movies found matching your criteria. Please try different filters.
+          </Typography>
+        )}
+
+        <Grid container spacing={3}>
+          {filteredMovies.map((movie) => (
+            <Grid 
+              item 
+              xs={12} 
+              sm={6} 
+              md={4} 
+              lg={3} 
+              key={movie.id}
+              sx={{
+                transition: 'transform 0.2s',
+                '&:hover': {
+                  transform: 'scale(1.02)',
+                },
+              }}
+            >
+              <MovieCard 
+                movie={{
+                  ...movie,
+                  imageUrl: movie.imageUrl || 'https://via.placeholder.com/300x450?text=No+Poster',
+                  price: movie.price,
+                }} 
+              />
+            </Grid>
+          ))}
+        </Grid>
+
+        {loading && movies.length > 0 && (
+          <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
+            <CircularProgress />
+          </Box>
+        )}
       </Box>
     </Container>
   );

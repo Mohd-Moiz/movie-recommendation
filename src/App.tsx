@@ -5,6 +5,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { ThemeContextProvider } from './contexts/ThemeContext';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { UserProvider } from './contexts/UserContext';
+import { UserPreferencesProvider } from './contexts/UserPreferencesContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import MovieDetail from './components/MovieDetail';
@@ -12,11 +13,13 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import About from './pages/About';
 import Home from './pages/Home';
+import Recommendations from './pages/Recommendations';
 import { Movie } from './types';
 import BookingDialog from './components/BookingDialog';
 import { BagProvider } from './contexts/BagContext';
-import { UserBag } from './components/UserBag';
+import UserBag from './components/UserBag';
 import ChatBot from './components/ChatBot';
+import TestApi from './components/TestApi';
 
 const App: React.FC = () => {
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
@@ -41,74 +44,80 @@ const App: React.FC = () => {
           <CssBaseline />
           <LanguageProvider>
             <UserProvider>
-              <Router>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    minHeight: '100vh',
-                    width: '100%',
-                    overflowX: 'hidden',
-                    bgcolor: 'background.default',
-                  }}
-                >
-                  <Header />
+              <UserPreferencesProvider>
+                <Router>
                   <Box
-                    component="main"
                     sx={{
-                      flexGrow: 1,
                       display: 'flex',
                       flexDirection: 'column',
+                      minHeight: '100vh',
                       width: '100%',
-                      maxWidth: '100%',
-                      px: { xs: 1, sm: 2, md: 4 },
-                      py: { xs: 2, sm: 3 },
-                      position: 'relative',
+                      overflowX: 'hidden',
+                      bgcolor: 'background.default',
                     }}
                   >
-                    <Routes>
-                      <Route
-                        path="/"
-                        element={
-                          <Home onMovieSelect={handleMovieSelect} />
-                        }
+                    <Header />
+                    <Box
+                      component="main"
+                      sx={{
+                        flexGrow: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        width: '100%',
+                        maxWidth: '100%',
+                        px: { xs: 1, sm: 2, md: 4 },
+                        py: { xs: 2, sm: 3 },
+                        position: 'relative',
+                      }}
+                    >
+                      <Routes>
+                        <Route
+                          path="/"
+                          element={
+                            <>
+                              <TestApi />
+                              <Home onMovieSelect={handleMovieSelect} />
+                            </>
+                          }
+                        />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
+                        <Route path="/about" element={<About />} />
+                        <Route path="/recommendations" element={<Recommendations />} />
+                        <Route 
+                          path="/movie/:id" 
+                          element={
+                            <MovieDetail 
+                              movie={selectedMovie}
+                              open={Boolean(selectedMovie)}
+                              onClose={() => setSelectedMovie(null)}
+                              onBook={handleBookMovie}
+                            />
+                          } 
+                        />
+                        <Route path="/my-bag" element={<UserBag />} />
+                      </Routes>
+                    </Box>
+                    <Footer />
+                    {selectedMovie && (
+                      <MovieDetail
+                        movie={selectedMovie}
+                        open={Boolean(selectedMovie)}
+                        onClose={() => setSelectedMovie(null)}
+                        onBook={handleBookMovie}
                       />
-                      <Route path="/login" element={<Login />} />
-                      <Route path="/register" element={<Register />} />
-                      <Route path="/about" element={<About />} />
-                      <Route 
-                        path="/movie/:id" 
-                        element={
-                          <MovieDetail 
-                            movie={selectedMovie}
-                            open={Boolean(selectedMovie)}
-                            onClose={() => setSelectedMovie(null)}
-                            onBook={handleBookMovie}
-                          />
-                        } 
+                    )}
+                    {selectedMovie && (
+                      <BookingDialog
+                        open={isBookingOpen}
+                        onClose={handleCloseBooking}
+                        movie={selectedMovie}
                       />
-                      <Route path="/my-bag" element={<UserBag />} />
-                    </Routes>
+                    )}
+                    <ChatBot />
                   </Box>
-                  <Footer />
-                  {selectedMovie && (
-                    <MovieDetail
-                      movie={selectedMovie}
-                      open={Boolean(selectedMovie)}
-                      onClose={() => setSelectedMovie(null)}
-                      onBook={handleBookMovie}
-                    />
-                  )}
-                  {selectedMovie && (
-                    <BookingDialog
-                      open={isBookingOpen}
-                      onClose={handleCloseBooking}
-                      movie={selectedMovie}
-                    />
-                  )}
-                  <ChatBot />
-                </Box>
-              </Router>
+                </Router>
+              </UserPreferencesProvider>
             </UserProvider>
           </LanguageProvider>
         </ThemeContextProvider>
