@@ -58,7 +58,8 @@ const Home: React.FC = () => {
         setLoading(true);
         setError(null);
         const popularMovies = await getPopularMovies(page);
-        setMovies(prevMovies => [...prevMovies, ...popularMovies]);
+        console.log('Fetched movies:', popularMovies); // Debug log
+        setMovies(popularMovies);
       } catch (err) {
         console.error('Error fetching movies:', err);
         setError('Failed to load movies. Please try again later.');
@@ -74,18 +75,13 @@ const Home: React.FC = () => {
     try {
       setLoading(true);
       setError(null);
-      setMovies([]);
       
       if (query.trim() === '') {
         const popularMovies = await getPopularMovies(1);
         setMovies(popularMovies);
       } else {
         const searchResults = await searchMovies(query);
-        if (searchResults.length === 0) {
-          setError('No movies found matching your search.');
-        } else {
-          setMovies(searchResults);
-        }
+        setMovies(searchResults);
       }
     } catch (err) {
       console.error('Error searching movies:', err);
@@ -109,41 +105,57 @@ const Home: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const filteredMovies = movies
-    .filter(movie => {
-      const industryMatch = selectedIndustry === 'All' || movie.industry === selectedIndustry;
-      const genreMatch = selectedGenre === 'All' || movie.genres.some(g => g === selectedGenre);
-      const ageRatingMatch = selectedAgeRating === 'All' || 
-        movie.ageRating === selectedAgeRating ||
-        !movie.ageRating;
-      const releaseYear = movie.releaseDate ? parseInt(movie.releaseDate.split('-')[0]) : 2000;
-      const yearMatch = releaseYear >= yearRange[0] && releaseYear <= yearRange[1];
-      const ratingMatch = (movie.rating || 0) >= ratingRange[0] && (movie.rating || 0) <= ratingRange[1];
-      const priceMatch = (movie.price || 0) >= priceRange[0] && (movie.price || 0) <= priceRange[1];
-      const searchMatch = !searchQuery || 
-        movie.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        movie.genres.some(genre => genre.toLowerCase().includes(searchQuery.toLowerCase())) ||
-        movie.industry.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (movie.description && movie.description.toLowerCase().includes(searchQuery.toLowerCase()));
-      
-      return industryMatch && genreMatch && ageRatingMatch && yearMatch && ratingMatch && priceMatch && searchMatch;
-    })
-    .sort((a, b) => {
-      switch (sortBy) {
-        case 'popularity':
-          return (b.popularity || 0) - (a.popularity || 0);
-        case 'rating':
-          return (b.rating || 0) - (a.rating || 0);
-        case 'releaseDate':
-          return new Date(b.releaseDate || '').getTime() - new Date(a.releaseDate || '').getTime();
-        case 'price':
-          return (a.price || 0) - (b.price || 0);
-        case 'price-desc':
-          return (b.price || 0) - (a.price || 0);
-        default:
-          return 0;
-      }
-    });
+  const filteredMovies = React.useMemo(() => {
+    console.log('Filtering movies:', movies); // Debug log
+    return movies
+      .filter(movie => {
+        // Industry filter
+        const industryMatch = selectedIndustry === 'All' || movie.industry === selectedIndustry;
+        
+        // Genre filter
+        const genreMatch = selectedGenre === 'All' || movie.genres.some(g => g === selectedGenre);
+        
+        // Age rating filter
+        const ageRatingMatch = selectedAgeRating === 'All' || 
+          movie.ageRating === selectedAgeRating ||
+          !movie.ageRating;
+        
+        // Year filter
+        const releaseYear = movie.releaseDate ? parseInt(movie.releaseDate.split('-')[0]) : 2000;
+        const yearMatch = releaseYear >= yearRange[0] && releaseYear <= yearRange[1];
+        
+        // Rating filter
+        const ratingMatch = (movie.rating || 0) >= ratingRange[0] && (movie.rating || 0) <= ratingRange[1];
+        
+        // Price filter
+        const priceMatch = (movie.price || 0) >= priceRange[0] && (movie.price || 0) <= priceRange[1];
+        
+        // Search query filter
+        const searchMatch = !searchQuery || 
+          movie.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          movie.genres.some(genre => genre.toLowerCase().includes(searchQuery.toLowerCase())) ||
+          movie.industry.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          (movie.description && movie.description.toLowerCase().includes(searchQuery.toLowerCase()));
+        
+        return industryMatch && genreMatch && ageRatingMatch && yearMatch && ratingMatch && priceMatch && searchMatch;
+      })
+      .sort((a, b) => {
+        switch (sortBy) {
+          case 'popularity':
+            return (b.popularity || 0) - (a.popularity || 0);
+          case 'rating':
+            return (b.rating || 0) - (a.rating || 0);
+          case 'releaseDate':
+            return new Date(b.releaseDate || '').getTime() - new Date(a.releaseDate || '').getTime();
+          case 'price':
+            return (a.price || 0) - (b.price || 0);
+          case 'price-desc':
+            return (b.price || 0) - (a.price || 0);
+          default:
+            return 0;
+        }
+      });
+  }, [movies, selectedIndustry, selectedGenre, selectedAgeRating, yearRange, ratingRange, priceRange, searchQuery, sortBy]);
 
   return (
     <Container maxWidth="lg">

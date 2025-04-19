@@ -408,7 +408,15 @@ const calculateMovieSimilarity = (movie1: Movie, movie2: Movie): number => {
 };
 
 export const getPopularMovies = async (page: number = 1): Promise<Movie[]> => {
-  // If API key is not set or is demo, return mock data
+  console.log('API Key:', API_KEY); // Debug log
+  console.log('Mock Movies:', MOCK_MOVIES); // Debug log
+
+  // Always return mock data for now
+  console.log('Returning mock movies:', MOCK_MOVIES);
+  return MOCK_MOVIES;
+
+  // The following code is commented out to ensure we always use mock data
+  /*
   if (!API_KEY || API_KEY === 'demo') {
     console.log('Using mock data as API key is not set');
     return MOCK_MOVIES;
@@ -442,6 +450,7 @@ export const getPopularMovies = async (page: number = 1): Promise<Movie[]> => {
     console.error('Error fetching popular movies, falling back to mock data:', error);
     return MOCK_MOVIES;
   }
+  */
 };
 
 // Function to get video information from Piped
@@ -551,7 +560,21 @@ export const getMovieById = async (id: string): Promise<Movie | null> => {
 };
 
 export const searchMovies = async (query: string): Promise<Movie[]> => {
-  // If API key is not set or is demo, search through mock data
+  console.log('Searching movies with query:', query); // Debug log
+  
+  // Always search through mock data
+  const searchResults = MOCK_MOVIES.filter(movie => 
+    movie.title.toLowerCase().includes(query.toLowerCase()) ||
+    movie.genres.some(genre => genre.toLowerCase().includes(query.toLowerCase())) ||
+    movie.industry.toLowerCase().includes(query.toLowerCase()) ||
+    (movie.description && movie.description.toLowerCase().includes(query.toLowerCase()))
+  );
+  
+  console.log('Search results:', searchResults); // Debug log
+  return searchResults;
+
+  // The following code is commented out to ensure we always use mock data
+  /*
   if (!API_KEY || API_KEY === 'demo') {
     console.log('Using mock data for search as API key is not set');
     return MOCK_MOVIES.filter(movie => 
@@ -601,6 +624,7 @@ export const searchMovies = async (query: string): Promise<Movie[]> => {
       movie.industry.toLowerCase().includes(query.toLowerCase())
     );
   }
+  */
 };
 
 export const getStreamingUrl = async (movieTitle: string): Promise<string> => {
