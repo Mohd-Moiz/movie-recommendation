@@ -61,17 +61,24 @@ const MovieDetail: React.FC<MovieDetailProps> = ({ movie, open, onClose, onBook 
   const handleWatchTrailer = async () => {
     if (!movie) return;
     try {
+      console.log('Fetching videos for movie:', movie.id, movie.title);
       const videos = await fetchMovieVideos(movie.id);
+      console.log('Fetched videos:', videos);
+      
       const trailer = videos.find((v: TmdbVideo) => v.site === 'YouTube' && v.type === 'Trailer');
+      console.log('Found trailer:', trailer);
+      
       if (trailer) {
         setTrailerKey(trailer.key);
         setShowTrailerDialog(true);
+        console.log('Opening trailer dialog with key:', trailer.key);
       } else {
-        alert(t('movie.watchTrailer') + ' not available');
+        console.log('No YouTube trailer found. Available videos:', videos);
+        alert(t('movie.watchTrailer') + ' not available for this movie');
       }
     } catch (error) {
-      console.error(error);
-      alert('Failed to load trailer');
+      console.error('Error in handleWatchTrailer:', error);
+      alert('Failed to load trailer. Please try again.');
     }
   };
 

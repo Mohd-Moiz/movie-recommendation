@@ -7,6 +7,7 @@ import {
   Container,
   Paper,
   Link,
+  Alert,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -17,11 +18,17 @@ const Register: React.FC = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { register } = useAuth();
+  const { register, isFirebaseAvailable } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    
+    if (!isFirebaseAvailable) {
+      setError('Registration is not available. Please configure Firebase environment variables.');
+      return;
+    }
+    
     try {
       await register(name, email, password);
       navigate('/');
@@ -54,6 +61,13 @@ const Register: React.FC = () => {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
+          
+          {!isFirebaseAvailable && (
+            <Alert severity="warning" sx={{ mt: 2, width: '100%' }}>
+              Firebase authentication is not configured. Please set up Firebase environment variables to enable registration functionality.
+            </Alert>
+          )}
+          
           <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
               margin="normal"
@@ -66,6 +80,7 @@ const Register: React.FC = () => {
               autoFocus
               value={name}
               onChange={(e) => setName(e.target.value)}
+              disabled={!isFirebaseAvailable}
             />
             <TextField
               margin="normal"
@@ -77,6 +92,7 @@ const Register: React.FC = () => {
               autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              disabled={!isFirebaseAvailable}
             />
             <TextField
               margin="normal"
@@ -89,6 +105,7 @@ const Register: React.FC = () => {
               autoComplete="new-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              disabled={!isFirebaseAvailable}
             />
             {error && (
               <Typography color="error" sx={{ mt: 2 }}>
@@ -100,6 +117,7 @@ const Register: React.FC = () => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={!isFirebaseAvailable}
             >
               Sign Up
             </Button>

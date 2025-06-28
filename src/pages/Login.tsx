@@ -8,6 +8,7 @@ import {
   Paper,
   CircularProgress,
   Divider,
+  Alert,
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -24,7 +25,7 @@ const Login: React.FC = () => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const navigate = useNavigate();
-  const { login, signInWithGoogle, signInWithFacebook, signInWithMicrosoft } = useAuth();
+  const { login, signInWithGoogle, signInWithFacebook, signInWithMicrosoft, isFirebaseAvailable } = useAuth();
   const { t } = useLanguage();
 
   const validateForm = () => {
@@ -59,6 +60,11 @@ const Login: React.FC = () => {
       return;
     }
 
+    if (!isFirebaseAvailable) {
+      setError('Authentication is not available. Please configure Firebase environment variables.');
+      return;
+    }
+
     setIsLoading(true);
     try {
       await login(email, password);
@@ -73,6 +79,10 @@ const Login: React.FC = () => {
 
   const handleGoogleLogin = async () => {
     setError('');
+    if (!isFirebaseAvailable) {
+      setError('Google authentication is not available. Please configure Firebase environment variables.');
+      return;
+    }
     setIsLoading(true);
     try {
       await signInWithGoogle();
@@ -87,6 +97,10 @@ const Login: React.FC = () => {
 
   const handleMicrosoftLogin = async () => {
     setError('');
+    if (!isFirebaseAvailable) {
+      setError('Microsoft authentication is not available. Please configure Firebase environment variables.');
+      return;
+    }
     setIsLoading(true);
     try {
       await signInWithMicrosoft();
@@ -101,6 +115,10 @@ const Login: React.FC = () => {
 
   const handleFacebookLogin = async () => {
     setError('');
+    if (!isFirebaseAvailable) {
+      setError('Facebook authentication is not available. Please configure Firebase environment variables.');
+      return;
+    }
     setIsLoading(true);
     try {
       await signInWithFacebook();
@@ -136,6 +154,13 @@ const Login: React.FC = () => {
           <Typography component="h1" variant="h5">
             {t('nav.login')}
           </Typography>
+          
+          {!isFirebaseAvailable && (
+            <Alert severity="warning" sx={{ mt: 2, width: '100%' }}>
+              Firebase authentication is not configured. Please set up Firebase environment variables to enable login functionality.
+            </Alert>
+          )}
+          
           <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
               sx={{ mt: 2, mb: 1 }}
@@ -150,7 +175,7 @@ const Login: React.FC = () => {
               onChange={(e) => setEmail(e.target.value)}
               error={!!emailError}
               helperText={emailError}
-              disabled={isLoading}
+              disabled={isLoading || !isFirebaseAvailable}
             />
             <TextField
               sx={{ mt: 2, mb: 1 }}
@@ -165,11 +190,11 @@ const Login: React.FC = () => {
               onChange={(e) => setPassword(e.target.value)}
               error={!!passwordError}
               helperText={passwordError}
-              disabled={isLoading}
+              disabled={isLoading || !isFirebaseAvailable}
             />
             {error && (
               <Typography color="error" sx={{ mt: 2 }}>
-                {t('login.error.failed')}
+                {error}
               </Typography>
             )}
             <Button
@@ -177,7 +202,7 @@ const Login: React.FC = () => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              disabled={isLoading}
+              disabled={isLoading || !isFirebaseAvailable}
             >
               {isLoading ? (
                 <CircularProgress size={24} color="inherit" />
@@ -201,30 +226,29 @@ const Login: React.FC = () => {
               variant="outlined"
               startIcon={<GoogleIcon />}
               onClick={handleGoogleLogin}
-              disabled={isLoading}
-              sx={{ mt: 1 }}
+              disabled={isLoading || !isFirebaseAvailable}
+              sx={{ mb: 2 }}
             >
               Continue with Google
             </Button>
             <Button
               fullWidth
               variant="outlined"
-              startIcon={<PublicIcon />}
-              onClick={handleMicrosoftLogin}
-              disabled={isLoading}
-              sx={{ mt: 1 }}
+              startIcon={<FacebookIcon />}
+              onClick={handleFacebookLogin}
+              disabled={isLoading || !isFirebaseAvailable}
+              sx={{ mb: 2 }}
             >
-              Continue with Microsoft
+              Continue with Facebook
             </Button>
             <Button
               fullWidth
               variant="outlined"
-              startIcon={<FacebookIcon />}
-              onClick={handleFacebookLogin}
-              disabled={isLoading}
-              sx={{ mt: 1, mb: 2 }}
+              startIcon={<PublicIcon />}
+              onClick={handleMicrosoftLogin}
+              disabled={isLoading || !isFirebaseAvailable}
             >
-              Continue with Facebook
+              Continue with Microsoft
             </Button>
           </Box>
         </Paper>
