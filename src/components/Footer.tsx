@@ -39,7 +39,7 @@ const Footer: React.FC = () => {
           <Typography variant="body2" color="text.secondary">
             Developed by{' '}
             <Link
-              href="https://github.com/Mohammed-Moiz"
+              href="https://github.com/Mohd-Moiz"
               target="_blank"
               rel="noopener noreferrer"
               sx={{

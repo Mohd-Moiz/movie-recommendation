@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Container, Typography, Grid, Box, CircularProgress, Autocomplete, TextField, Slider, Button, IconButton, Tooltip, Skeleton, useTheme, useMediaQuery } from '@mui/material';
+import { Container, Typography, Grid, Box, CircularProgress, Autocomplete, TextField, Slider, Button, IconButton, Tooltip, Skeleton, useTheme, useMediaQuery, Card, CardActionArea, Chip } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import MicIcon from '@mui/icons-material/Mic';
+import { Movie as MovieIcon, Star as StarIcon, Favorite as FavoriteIcon, TrendingUp as TrendingUpIcon } from '@mui/icons-material';
 import { fetchGenres, discoverMovies, fetchPopularMovies, searchMovies, TmdbMovie, Genre } from '../api/tmdb';
 import MovieCard from '../components/MovieCard';
 import { Movie } from '../types/Movie';
@@ -20,6 +21,7 @@ const Recommendations: React.FC<RecommendationsProps> = ({ onMovieSelect }) => {
   const [minRating, setMinRating] = useState<number>(0);
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const scrollRef = useRef<HTMLDivElement>(null);
   const scrollOffset = isDesktop ? 400 : 300;
 
@@ -111,8 +113,88 @@ const Recommendations: React.FC<RecommendationsProps> = ({ onMovieSelect }) => {
     }
   }, [transcript]);
 
+  // --- New: Features for 2026 ---
+  const features = [
+    {
+      icon: <MovieIcon color='primary' fontSize='large' />, 
+      title: 'AI Movie Recommendations', 
+      desc: 'Personalized suggestions powered by AI.'
+    },
+    {
+      icon: <FavoriteIcon color='secondary' fontSize='large' />, 
+      title: 'Smart Watchlist', 
+      desc: 'Save and organize your favorite movies.'
+    },
+    {
+      icon: <TrendingUpIcon color='success' fontSize='large' />, 
+      title: 'Trending Now', 
+      desc: 'See what\'s popular worldwide.'
+    },
+    {
+      icon: <StarIcon color='warning' fontSize='large' />, 
+      title: 'Top Rated', 
+      desc: 'Discover the best movies as rated by users.'
+    },
+  ];
+
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
+      {/* Hero Section */}
+      <Box
+        sx={{
+          py: { xs: 4, sm: 6 },
+          mb: { xs: 3, sm: 5 },
+          textAlign: 'center',
+          background: `linear-gradient(90deg, ${theme.palette.primary.light} 0%, ${theme.palette.secondary.light} 100%)`,
+          borderRadius: 4,
+          boxShadow: 3,
+        }}
+      >
+        <Typography
+          variant={isMobile ? 'h4' : 'h2'}
+          sx={{
+            fontWeight: 800,
+            background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+            backgroundClip: 'text',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            mb: 2,
+          }}
+        >
+          Movie Recommendations for the Future
+        </Typography>
+        <Typography
+          variant={isMobile ? 'body1' : 'h6'}
+          color="text.secondary"
+          sx={{ mb: 3, maxWidth: 600, mx: 'auto' }}
+        >
+          Discover, save, and share the best movies with AI-powered recommendations and a global community. Welcome to the next generation of movie discovery.
+        </Typography>
+      </Box>
+
+      {/* Features Preview */}
+      <Grid container spacing={3} sx={{ mb: { xs: 3, sm: 5 } }} justifyContent="center">
+        {features.map((feature, idx) => (
+          <Grid item xs={12} sm={6} md={3} key={idx}>
+            <Card elevation={2} sx={{ borderRadius: 3, textAlign: 'center', py: 3, px: 1, height: '100%', transition: 'transform 0.2s', '&:hover': { transform: 'translateY(-4px)', boxShadow: 6 } }}>
+              <CardActionArea sx={{ py: 2 }} disableRipple>
+                <Box sx={{ mb: 1 }}>{feature.icon}</Box>
+                <Typography variant="h6" sx={{ fontWeight: 700, mb: 1 }}>{feature.title}</Typography>
+                <Typography variant="body2" color="text.secondary">{feature.desc}</Typography>
+              </CardActionArea>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+
+      {/* Vision 2026 Section */}
+      <Box sx={{ mb: { xs: 3, sm: 5 }, textAlign: 'center' }}>
+        <Chip label="Vision 2026" color="primary" sx={{ fontWeight: 700, fontSize: 16, mb: 2, px: 2, py: 1 }} />
+        <Typography variant={isMobile ? 'body1' : 'h5'} color="text.secondary" sx={{ maxWidth: 600, mx: 'auto' }}>
+          Our vision for 2026: Seamless, AI-powered, global movie discovery for everyone.
+        </Typography>
+      </Box>
+
       {/* Preference selectors */}
       <Box sx={{ mb: 3, display: 'flex', gap: 2, flexWrap: 'wrap', alignItems: 'center' }}>
         <Tooltip title="Voice Search">
