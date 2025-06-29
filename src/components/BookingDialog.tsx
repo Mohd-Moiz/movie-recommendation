@@ -71,12 +71,6 @@ const BookingDialog: React.FC<BookingDialogProps> = ({ open, onClose, movie }) =
   const handleClose = () => { setActiveStep(0); setTicketInfo(null); setBookingData(null); onClose(); };
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'upi'>('upi');
 
-  const handleBooking = () => {
-    if (!movie) return;
-    const totalPrice = movie.price * seats;
-    setBookingData({ movie: movie.title, date, time, seats, name, email, phone, total: totalPrice });
-  };
-
   const handlePaymentSuccess = () => {
     if (!bookingData) return;
     setTicketInfo(bookingData);
@@ -91,7 +85,7 @@ const BookingDialog: React.FC<BookingDialogProps> = ({ open, onClose, movie }) =
       }, 15000);
       return () => clearTimeout(timer);
     }
-  }, [handlePaymentSuccess]);
+  }, [bookingData]);
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>

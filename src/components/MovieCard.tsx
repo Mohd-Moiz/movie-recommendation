@@ -11,7 +11,6 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { Movie } from '../types/Movie';
-import { useLanguage } from '../contexts/LanguageContext';
 
 interface MovieCardProps {
   movie: Movie;

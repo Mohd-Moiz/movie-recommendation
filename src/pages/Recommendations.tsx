@@ -62,7 +62,7 @@ const Recommendations: React.FC<RecommendationsProps> = ({ onMovieSelect }) => {
         }
       })
       .catch(err => console.error('Failed fetching genres:', err));
-  }, [minRating, genres]);
+  }, [genres, minRating]);
 
   const handleFilter = () => {
     setLoading(true);
