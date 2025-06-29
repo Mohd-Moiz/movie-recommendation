@@ -21,7 +21,6 @@ interface MovieCardProps {
 const MovieCard: React.FC<MovieCardProps> = ({ movie, onClick }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const { t } = useLanguage();
 
   return (
     <Card

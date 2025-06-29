@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useRef, useEffect, FormEvent, KeyboardEvent } from 'react';
+import React, { useState, useRef, useEffect, FormEvent } from 'react';
 import { IconButton, TextField, Avatar, CircularProgress, Grid, Paper, Box, Typography, Snackbar, Alert } from '@mui/material';
 import MovieIcon from '@mui/icons-material/Movie';
 import SendIcon from '@mui/icons-material/Send';
@@ -11,7 +11,6 @@ import MovieCard from './MovieCard';
 import BookingDialog from './BookingDialog';
 import { fetchPopularMovies, searchMovies, fetchGenres, discoverAdvancedMovies, searchPerson, fetchMovieDetails, fetchMovieVideos, TmdbMovie, Genre } from '../api/tmdb';
 import { Movie } from '../types/Movie';
-import { useAuth } from '../contexts/AuthContext';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 interface Message {
@@ -33,7 +32,6 @@ export default function AIChat() {
   const [isLoading, setIsLoading] = useState(false)
   const [genresList, setGenresList] = useState<Genre[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null)
-  const { user } = useAuth()
   const [selectedMovie, setSelectedMovie] = useState<Movie|null>(null);
   const [bookingOpen, setBookingOpen] = useState(false);
   const [snackbar, setSnackbar] = useState<{ open: boolean; message: string }>({ open: false, message: '' });

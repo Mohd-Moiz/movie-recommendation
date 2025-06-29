@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Container, Typography, Grid, Box, CircularProgress, Autocomplete, TextField, Slider, Button, IconButton, Tooltip, Skeleton, useTheme, useMediaQuery, Card, CardActionArea, Chip } from '@mui/material';
+import { Container, Typography, Grid, Box, Autocomplete, TextField, Slider, Button, IconButton, Tooltip, Skeleton, useTheme, useMediaQuery, Card, CardActionArea, Chip } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import MicIcon from '@mui/icons-material/Mic';
@@ -62,7 +62,7 @@ const Recommendations: React.FC<RecommendationsProps> = ({ onMovieSelect }) => {
         }
       })
       .catch(err => console.error('Failed fetching genres:', err));
-  }, []);
+  }, [minRating, genres]);
 
   const handleFilter = () => {
     setLoading(true);

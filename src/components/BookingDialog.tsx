@@ -91,7 +91,7 @@ const BookingDialog: React.FC<BookingDialogProps> = ({ open, onClose, movie }) =
       }, 15000);
       return () => clearTimeout(timer);
     }
-  }, [bookingData]);
+  }, [handlePaymentSuccess]);
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
